@@ -1,0 +1,95 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>:: SGH :: </title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'fonts/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styling plus plugins -->
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'css/icheck/flat/green.css' %}" rel="stylesheet">
+
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+          <script src="{% static 'js/html5shiv.min.js' %}"></script>
+          <script src="{% static 'js/respond.min.js' %}"></script>
+        <![endif]-->
+
+</head>
+
+<body style="background:#F7F7F7;">
+
+    <div class="">
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
+
+        <div id="wrapper">
+            <div id="login" class="animate form">
+                <section class="login_content">
+                    <img src="{{ MEDIA_URL }}logo/login-SIHAC.png" width="214px" height="185px">
+                    <form method="post" action="/{{action}}/" role="form"> {% csrf_token %}
+                        <h1>Ingreso de Usuario</h1>
+
+                        {% if mensaje != '' %}
+                        <div  class="alert alert-{{alert}}" id={{alert}}>
+                            <a href="#" class="close" data-hide="alert">&times;</a>
+                            {{ mensaje }}
+                        </div>
+                        {% endif %}
+                        <div>
+                            {% if action != 'autenticar_usuario' %}
+                                <input type="text" class="form-control" name="usuario" placeholder="Usuario" required="" readonly value={{usuario}}/>
+                            {%else%}
+                                <input type="text" class="form-control" name="usuario" placeholder="Usuario" required="" />
+                            {%endif%}
+                        </div>
+                        <div>
+                            {% if action != 'autenticar_usuario' %}
+                                <input type="password" class="form-control" name="password" placeholder="Contraseña" required="" />
+                            {% else %}
+                                <input type="password" class="form-control" name="password" placeholder="Contraseña" required="" />
+                            {% endif %}
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <p>&copy; 2015 Copyright - HAC "Pte. Juan Domingo Perón"</p>
+                                <p>Todos los derechos reservados.</p>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- form -->
+                </section>
+                <!-- content -->
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

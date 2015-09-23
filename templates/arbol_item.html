@@ -1,0 +1,50 @@
+{% extends 'base_site.html' %}
+{% load staticfiles %}
+
+{% block css %}
+
+{% endblock%}
+
+
+{% block arbolitem %}
+
+    <ul class="nav side-menu">
+        <li><a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_clientes" class="nav child_menu" style="display: none">
+                <li><a href="/clientes/alta/">Nuevo Cliente</a></li>
+                <li><a href="/clientes/listado/">Lista de Clientes</a></li>
+            </ul>
+        </li>
+        <li><a><i class="fa fa-file-text"></i> Tramites <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_empleados" class="nav child_menu" style="display: none">
+                <li><a href="/tramites/alta/">Nuevo Tramite</a></li>
+                <li><a href="/tramites/listado/">Lista de Tramites</a></li>
+            </ul>
+        </li>
+        <!--li><a><i class="fa fa-users"></i> Pacientes <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_pacientes" class="nav child_menu" style="display: none">
+                <li><a href="/pacientes/alta/">Nuevo Paciente</a></li>
+                <li><a href="/pacientes/listado/">Lista de Pacientes</a></li>
+            </ul>
+        </li>
+
+        <li><a><i class="fa fa-briefcase"></i> Administracion <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_expedientes" class="nav child_menu" style="display: none">
+                <li><a href="/expedientes/alta/">Nuevo Expediente</a></li>
+                <li><a href="/expedientes/listado/">Lista de Expedientes</a></li>
+            </ul>
+        </li-->
+
+    </ul>
+
+    <script type="text/javascript">
+        var url_completa = window.location.toString();
+        var url = url_completa.split('/');
+        $('#ul_' + url[3]).append('<li style="display: none"><a href="/' + url[3] + '/' + url[4] + '/' + url[5] + '/"></a></li>');
+    </script>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>LISTA DE CLIENTES</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="input-group form-horizontal top_search col-md-6 col-sm-6 col-xs-6">
+                    <input type="text" name="q" class="form-control" placeholder="Buscar por...">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>FOTO </th>
+                                <th>PERSONA </th>
+                                <th>DOCUMENTO</th>
+                                <th>FECHA NACIMIENTO</th>
+                                <th>FECHA ALTA </th>
+                                <th class=" no-link last">
+                                    <span class="nobr">Acción</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cliente in cliente_list %}
+                            <tr class="odd pointer">
+                                <td class=" ">
+                                    {% if empleado.foto != "" %}
+                                    <img src="{{ MEDIA_URL }}{{ cliente.persona.foto }}" class="img-circle" width="48px" height="48px">
+                                    {% else %}
+                                    <img src="usuario.png" class="img-circle" width="48px" height="48px">
+                                    {% endif %}
+                                </td>
+                                <td class=" ">{{ cliente.persona }}</td>
+                                <td class=" ">{{ cliente.persona.tipo_documento }} - {{ cliente.persona.numero_documento }}</td>
+                                <td class=" ">
+                                    {{ cliente.persona.fecha_nacimiento |date:"d/m/Y" }}
+                                </td>
+                                <td class=" ">
+                                    {{ cliente.fecha_alta_sistema |date:"d/m/Y" }}
+                                </td>
+                                <td class=" last">
+                                    <a href="/clientes/modi/{{ cliente.persona.id }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                                <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                    No se encontraron registros
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if is_paginated %}
+
+                    <center>
+                    <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
+                    </center>
+                    <center>
+                       <ul class="pagination">
+                           <li id="n_pag_inicio" ><a href="/empleados/listado" title="Ir al inicio"> << </a></li>
+
+                            {% if page_obj.has_previous %}
+                                <li id="n_pag_{{page_obj.number}}">
+                                  <a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a>
+                                </li>
+                            {% endif %}
+
+                            <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                            {% if page_obj.has_next %}
+                                <li id="n_pag_{{page_obj.number}}">
+                                  <a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a>
+                                </li>
+                            {% endif %}
+
+                            <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
+                        </ul>
+                    </center>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+
+{% endblock %}
+
+
+
