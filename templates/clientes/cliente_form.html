@@ -58,7 +58,6 @@
                     <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
                         {{ form.as_p }}
                         {{ cliente_form.as_p }}
-                        <!--a href="/clientes/listado/" type="button" class="btn btn-primary">Cancelar</a-->
                         <button type="button" class="btn btn-primary" onclick="window.location='/clientes/listado/'">Cancelar</button>
                         <button type="submit" class="btn btn-success">Guardar</button>
 

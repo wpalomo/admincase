@@ -4,7 +4,6 @@
 
 {% block content %}
 
-    <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
@@ -17,12 +16,9 @@
                     <button class="btn btn-default" type="button">Go!</button>
                     </span>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
+                <div style="text-align: right">
+                    <button type="button" class="btn btn-primary" onclick="window.location='/clientes/alta/'">Nuevo Cliente</button>
+                </div>
                 <div class="x_content">
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
                         <thead>
@@ -44,7 +40,7 @@
                                     {% if empleado.foto != "" %}
                                     <img src="{{ MEDIA_URL }}{{ cliente.persona.foto }}" class="img-circle" width="48px" height="48px">
                                     {% else %}
-                                    <img src="usuario.png" class="img-circle" width="48px" height="48px">
+                                    <img src="usuario.png" class="img-circle" width="38px" height="28px">
                                     {% endif %}
                                 </td>
                                 <td class=" ">{{ cliente.persona }}</td>
@@ -99,10 +95,10 @@
                     </center>
                     {% endif %}
 
+
                 </div>
             </div>
         </div>
-    </div>
 
     <br />
     <br />
