@@ -7,7 +7,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>LISTA DE CLIENTES</h2>
+                    <h2>CLIENTES CON TRAMITE ANSES</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="input-group form-horizontal top_search col-md-6 col-sm-6 col-xs-6">
@@ -17,7 +17,7 @@
                     </span>
                 </div>
                 <div style="text-align: right">
-                    <button type="button" class="btn btn-primary" onclick="window.location='/clientes/alta/'">Nuevo Cliente</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location='/clientes/alta/'">Iniciar Trámite</button>
                 </div>
                 <div class="x_content">
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
@@ -26,30 +26,34 @@
                                 <th>FOTO </th>
                                 <th>PERSONA </th>
                                 <th>DOCUMENTO</th>
-                                <th>FECHA NACIMIENTO</th>
-                                <th>FECHA ALTA </th>
+                                <th>ESTADO CIVIL</th>
+                                <th>CASO</th>
+                                <th>FECHA TURNO</th>
+                                <th>ESTADO TRAMITE</th>
                                 <th class=" no-link last">
                                     <span class="nobr">Acción</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cliente in cliente_list %}
+                            {% for cliente_tramite in cliente_anses %}
                             <tr class="odd pointer">
                                 <td class=" ">
-                                    {% if cliente.foto != "" %}
-                                    <img src="{{ MEDIA_URL }}{{ cliente.persona.foto }}" class="img-circle" width="48px" height="48px">
+                                    {% if cliente_tramite.foto != "" %}
+                                    <img src="{{ MEDIA_URL }}{{ cliente_tramite.persona.foto }}" class="img-circle" width="48px" height="48px">
                                     {% else %}
                                     <img src="usuario.png" class="img-circle" width="38px" height="28px">
                                     {% endif %}
                                 </td>
-                                <td class=" ">{{ cliente.persona }}</td>
-                                <td class=" ">{{ cliente.persona.tipo_documento }} - {{ cliente.persona.numero_documento }}</td>
-                                <td class=" ">{{ cliente.persona.fecha_nacimiento |date:"d/m/Y" }}</td>
-                                <td class=" ">{{ cliente.fecha_alta_sistema |date:"d/m/Y" }}</td>
+                                <td class=" ">{{ cliente_tramite.persona | upper }}</td>
+                                <td class=" ">{{ cliente_tramite.persona.tipo_documento }} - {{ cliente_tramite.persona.numero_documento }}</td>
+                                <td class=" ">{{ cliente_tramite.persona.estado_civil | upper }}</td>
+                                <td class=" ">{{ cliente_tramite.tipo | upper }}</td>
+                                <td class=" ">20/10/2015</td>
+                                <td class=" ">EN CURSO</td>
                                 <td class=" last">
-                                    <a href="/clientes/modi/{{ cliente.persona.id }}">
-                                        <i class="fa fa-pencil"></i>
+                                    <a href="/clientes/modi/{{ cliente_tramite.persona.id }}">
+                                        <i class="fa fa-archive"></i>
                                     </a>
                                 </td>
                             </tr>

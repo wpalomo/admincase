@@ -1,0 +1,48 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+    <!--style>
+        .animated{
+            cursor: pointer;
+        }
+    </style-->
+
+    <!-- content -->
+
+    <div class="row top_tiles">
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="window.location='/tramites/anses/listado'">
+            <div class="tile-stats">
+                <div class="count"><img src="{{ MEDIA_URL }}logo/tramites/ANSES_ICO.png" width="300" height="120"></div>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="window.location='/tramites/caja/listado'">
+            <div class="tile-stats">
+                <div class="count"><img src="{{ MEDIA_URL }}logo/tramites/CAJA_PREVISION_ICO.png" width="320" height="120"></div>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="window.location='/tramites/familia/listado'">
+            <div class="tile-stats">
+                <div class="count"><img src="{{ MEDIA_URL }}logo/tramites/FAMILIA_ICO.png" width="300" height="120"></div>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="window.location='/tramites/civil_comercial/listado'">
+            <div class="tile-stats">
+                <div class="count"><img src="{{ MEDIA_URL }}logo/tramites/CIVIL_COMERCIAL_ICO.png" width="300" height="120"></div>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+
+    </div>
+    <!-- end content -->
+
+{% endblock %}
+
+

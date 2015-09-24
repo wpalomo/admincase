@@ -33,5 +33,6 @@ urlpatterns = [
         {'document_root': settings.MEDIA_ROOT, }),
     url(r'^personas/', include('apps.personas.urls', namespace='personas')),
     url(r'^salir/', views.salir),
+    url(r'^tramites/', include('apps.tramites.urls', namespace='tramites')),
 ]
 
