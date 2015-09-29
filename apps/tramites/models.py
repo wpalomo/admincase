@@ -22,7 +22,7 @@ class Tramite(models.Model):
     entidad = models.ForeignKey(Entidad)
 
     def __str__(self):
-        return str(self.tipo) + ' - ' + str(self.entidad)
+        return str(self.tipo)
 
     class Meta:
         verbose_name_plural = "Tramites"
