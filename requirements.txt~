@@ -1,0 +1,8 @@
+#Django==1.8.3
+#Pillow==2.9.0
+Pygments==2.0.2
+django-debug-toolbar==1.3.2
+#django-pyodbc-azure==1.8.3.0
+#pyodbc==3.0.10
+redgreenunittest==0.1.1
+#sqlparse==0.1.16
