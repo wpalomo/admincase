@@ -43,14 +43,12 @@ class RequisitoAdmin(admin.ModelAdmin):
 
     list_display = [
         'id',
-        'nombre',
-        'tipo_tramite'
+        'nombre'
     ]
 
     search_fields = [
         'id',
-        'nombre',
-        'tipo_tramite'
+        'nombre'
     ]
 
     ordering = ['tipo_tramite']

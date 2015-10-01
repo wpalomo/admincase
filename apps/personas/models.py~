@@ -30,8 +30,6 @@ def _generar_ruta_imagen(instance, filename):
 
 
 class Persona(models.Model):
-    foto = models.ImageField(upload_to=_generar_ruta_imagen, blank=True,
-                             null=True)
     apellido = models.CharField(max_length=30, null=True, blank=True)
     nombre = models.CharField(max_length=30, null=True, blank=True)
     tipo_documento = models.ForeignKey(TipoDocumento, null=False, blank=False,

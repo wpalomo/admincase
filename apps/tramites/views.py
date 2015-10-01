@@ -15,7 +15,7 @@ def home(request):
 
 class AnsesListView(ListView):
     # model = Cliente
-    queryset = Tramite.objects.filter(tipo__entidad__id=1)
+    queryset = Tramite.objects.filter(tipo__entidad__nombre='ANSES')
     context_object_name = 'cliente_anses'
     template_name = 'tramites/tramite_anses_list.html'
     paginate_by = 10
@@ -38,8 +38,8 @@ class AnsesUpdate(UpdateView):
 
 
 class CajaPrevisionListView(ListView):
-    model = Cliente
-    # queryset = Tramite.objects.filter(entidad__id=2)
+    # model = Cliente
+    queryset = Tramite.objects.filter(tipo__entidad__nombre='CAJA')
     context_object_name = 'cliente_caja'
     template_name = 'tramites/tramite_caja_list.html'
     paginate_by = 10
