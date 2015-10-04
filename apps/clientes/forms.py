@@ -9,6 +9,14 @@ from .models import Cliente
 
 class ClienteForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(ClienteForm, self).__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            print(name)
+            field.widget.attrs.update({
+                'class': 'form-control has-feedback-right'
+            })
+
     class Meta:
         model = Cliente
         fields = '__all__'
@@ -23,6 +31,13 @@ class PersonaForm(forms.ModelForm):
     numero_documento = forms.CharField(required=True)
     sexo = forms.ModelChoiceField(
         required=True, queryset=Sexo.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        super(PersonaForm, self).__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control has-feedback-right'
+            })
 
     def clean_apellido(self):
         data = self.cleaned_data['apellido']

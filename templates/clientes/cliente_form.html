@@ -29,85 +29,109 @@
                         </ul>
                     {% endif %}
                     <br />
-                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Apellido">
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Apellido</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.apellido }}
+                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Nombre</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.nombre }}
+                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Nombre">
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Tipo de Documento</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.tipo_documento }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Número</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.numero_documento }}
+                                <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                        <select id="heard" class="form-control" required>
-                            <option value="">Tipo Documento</option>
-                            <option value="press">Press</option>
-                            <option value="net">Internet</option>
-                            <option value="mouth">Word of mouth</option>
-                        </select>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">CUIL</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ cliente_form.cuil }}
+                                <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Nacimiento</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.fecha_nacimiento }}
+                                <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número">
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Sexo</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.sexo }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Edad</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Edad" readonly>
+                                <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="CUIL">
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Estado Civil</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.estado_civil }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Obra Social</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.obra_social }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Fecha de Nacimiento">
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Nivel de Educación</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.nivel_educacion }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Profesión</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.profesion }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Edad" readonly>
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <select id="heard" class="form-control" required>
-                            <option value="">Sexo</option>
-                            <option value="press">Press</option>
-                            <option value="net">Internet</option>
-                            <option value="mouth">Word of mouth</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <select id="heard" class="form-control" required>
-                            <option value="">Estado Civil</option>
-                            <option value="press">Press</option>
-                            <option value="net">Internet</option>
-                            <option value="mouth">Word of mouth</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <select id="heard" class="form-control" required>
-                            <option value="">Obra Social</option>
-                            <option value="press">Press</option>
-                            <option value="net">Internet</option>
-                            <option value="mouth">Word of mouth</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <select id="heard" class="form-control" required>
-                            <option value="">Nivel de Estudios</option>
-                            <option value="press">Press</option>
-                            <option value="net">Internet</option>
-                            <option value="mouth">Word of mouth</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <select id="heard" class="form-control" required>
-                            <option value="">Profesion</option>
-                            <option value="press">Press</option>
-                            <option value="net">Internet</option>
-                            <option value="mouth">Word of mouth</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <select id="heard" class="form-control" required>
-                            <option value="">Situación Laboral</option>
-                            <option value="press">Press</option>
-                            <option value="net">Internet</option>
-                            <option value="mouth">Word of mouth</option>
-                        </select>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Situación Laboral</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ cliente_form.situacion_laboral }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
