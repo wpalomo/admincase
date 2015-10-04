@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, url
 
 from .views import (ClienteListView, ClienteCreate, ClienteUpdate,
-                    ClienteDelete, ClienteAnsesListView)
+                    ClienteDelete, ClienteAnsesListView, ClienteCajaListView)
 
 
 urlpatterns = patterns('',
@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     #     EmpleadoDelete.as_view(), name='empleado_delete'),
     url(r'^anses/listado/$', ClienteAnsesListView.as_view(),
         name='anses_listado'),
+    url(r'^caja/listado/$', ClienteCajaListView.as_view(),
+        name='caja_listado'),
 )
 
 # url(r'^anses/listado/$', AnsesListView.as_view(), name='anses_listado'),

@@ -28,26 +28,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/tramites/models.py">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/clientes/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="954">
-              <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1774" max-vertical-offset="2394">
+              <caret line="125" column="39" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
               <folding>
-                <element signature="e#0#28#0" expanded="true" />
+                <element signature="e#1#36#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/clientes/views.py">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/clientes/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1372" max-vertical-offset="2250">
-              <caret line="100" column="29" selection-start-line="100" selection-start-column="17" selection-end-line="100" selection-end-column="29" />
-              <folding>
-                <element signature="e#1#36#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="594">
+              <caret line="4" column="76" selection-start-line="4" selection-start-column="57" selection-end-line="4" selection-end-column="76" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -62,14 +60,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cliente_form.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cliente_form.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/clientes/cliente_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.519573" vertical-offset="1490" max-vertical-offset="4014">
-              <caret line="99" column="100" selection-start-line="99" selection-start-column="100" selection-end-line="99" selection-end-column="100" />
+            <state vertical-scroll-proportion="-1.6666666" vertical-offset="0" max-vertical-offset="4806">
+              <caret line="5" column="52" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
               <folding>
-                <element signature="e#63#92#0#HTML" expanded="true" />
+                <element signature="e#82#111#0#HTML" expanded="true" />
+                <element signature="e#8992#9017#0#HTML" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tramites/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="558">
+              <caret line="24" column="42" selection-start-line="17" selection-start-column="6" selection-end-line="24" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tramite_anses_list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_anses_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.666667" vertical-offset="198" max-vertical-offset="2916">
+              <caret line="24" column="79" selection-start-line="24" selection-start-column="79" selection-end-line="24" selection-end-column="79" />
+              <folding>
+                <element signature="e#3047#3072#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tramite_caja_list.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_caja_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.25622776" vertical-offset="198" max-vertical-offset="2970">
+              <caret line="19" column="79" selection-start-line="19" selection-start-column="79" selection-end-line="19" selection-end-column="79" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -84,22 +115,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/clientes/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="558">
-              <caret line="4" column="55" selection-start-line="4" selection-start-column="55" selection-end-line="4" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tramite_form.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.740741" vertical-offset="565" max-vertical-offset="1494">
-              <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
-              <folding />
+            <state vertical-scroll-proportion="-4.6666665" vertical-offset="0" max-vertical-offset="1494">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="25" />
+              <folding>
+                <element signature="e#104#133#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,30 +130,8 @@
       <file leaf-file-name="form.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/production/form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37037036" vertical-offset="10514" max-vertical-offset="28782">
-              <caret line="583" column="121" selection-start-line="582" selection-start-column="40" selection-end-line="583" selection-end-column="121" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/tramites/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1155" max-vertical-offset="3636">
-              <caret line="88" column="9" selection-start-line="71" selection-start-column="4" selection-end-line="88" selection-end-column="9" />
-              <folding>
-                <element signature="e#1#36#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cliente_list.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/clientes/cliente_list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.666667" vertical-offset="1404" max-vertical-offset="2772">
-              <caret line="94" column="40" selection-start-line="53" selection-start-column="32" selection-end-line="94" selection-end-column="40" />
+            <state vertical-scroll-proportion="-7.6666665" vertical-offset="5778" max-vertical-offset="28782">
+              <caret line="344" column="48" selection-start-line="329" selection-start-column="20" selection-end-line="344" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -163,8 +164,6 @@
         <option value="$PROJECT_DIR$/templates/tramites/tramite_familia_list.html" />
         <option value="$PROJECT_DIR$/apps/complementos/organigrama/models.py" />
         <option value="$PROJECT_DIR$/templates/arbol_item.html" />
-        <option value="$PROJECT_DIR$/templates/tramites/tramite_caja_list.html" />
-        <option value="$PROJECT_DIR$/templates/tramites/tramite_anses_list.html" />
         <option value="$PROJECT_DIR$/templates/tramites/tramite_anses_form.html" />
         <option value="$PROJECT_DIR$/apps/complementos/tests.py" />
         <option value="$PROJECT_DIR$/admincase/settings.py" />
@@ -175,15 +174,17 @@
         <option value="$PROJECT_DIR$/templates/tramites/requisitopresentado_form.html" />
         <option value="$PROJECT_DIR$/apps/tramites/urls.py" />
         <option value="$PROJECT_DIR$/templates/clientes/cliente_list.html" />
-        <option value="$PROJECT_DIR$/apps/clientes/urls.py" />
         <option value="$PROJECT_DIR$/apps/tramites/views.py" />
-        <option value="$PROJECT_DIR$/apps/clientes/views.py" />
         <option value="$PROJECT_DIR$/templates/tramites/tramite_form.html" />
         <option value="$PROJECT_DIR$/apps/tramites/models.py" />
         <option value="$PROJECT_DIR$/templates/production/form.html" />
         <option value="$PROJECT_DIR$/apps/tramites/forms.py" />
         <option value="$PROJECT_DIR$/apps/clientes/forms.py" />
         <option value="$PROJECT_DIR$/templates/clientes/cliente_form.html" />
+        <option value="$PROJECT_DIR$/apps/clientes/urls.py" />
+        <option value="$PROJECT_DIR$/apps/clientes/views.py" />
+        <option value="$PROJECT_DIR$/templates/tramites/tramite_anses_list.html" />
+        <option value="$PROJECT_DIR$/templates/tramites/tramite_caja_list.html" />
       </list>
     </option>
   </component>
@@ -282,24 +283,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="tramites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admincase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admincase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="production" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -849,23 +832,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_caja_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.0" vertical-offset="630" max-vertical-offset="2970">
-          <caret line="50" column="151" selection-start-line="50" selection-start-column="151" selection-end-line="50" selection-end-column="151" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_anses_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1764" max-vertical-offset="2916">
-          <caret line="98" column="89" selection-start-line="98" selection-start-column="89" selection-end-line="98" selection-end-column="89" />
-          <folding>
-            <element signature="e#3047#3072#0#HTML" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_anses_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5207987" vertical-offset="731" max-vertical-offset="1332">
@@ -973,28 +939,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tramites/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="594">
-          <caret line="24" column="42" selection-start-line="17" selection-start-column="6" selection-end-line="24" selection-end-column="42" />
-          <folding>
-            <element signature="e#1#33#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2916">
           <caret line="10" column="39" selection-start-line="7" selection-start-column="8" selection-end-line="10" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/clientes/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="558">
-          <caret line="4" column="55" selection-start-line="4" selection-start-column="55" selection-end-line="4" selection-end-column="55" />
           <folding />
         </state>
       </provider>
@@ -1027,14 +975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.740741" vertical-offset="565" max-vertical-offset="1494">
-          <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tramites/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24040067" vertical-offset="0" max-vertical-offset="599">
@@ -1042,24 +982,6 @@
           <folding>
             <element signature="e#25#49#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/clientes/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1372" max-vertical-offset="2250">
-          <caret line="100" column="29" selection-start-line="100" selection-start-column="17" selection-end-line="100" selection-end-column="29" />
-          <folding>
-            <element signature="e#1#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/clientes/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="198" max-vertical-offset="1278">
-          <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1073,19 +995,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/production/form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37037036" vertical-offset="10514" max-vertical-offset="28782">
-          <caret line="583" column="121" selection-start-line="582" selection-start-column="40" selection-end-line="583" selection-end-column="121" />
+        <state vertical-scroll-proportion="-7.6666665" vertical-offset="5778" max-vertical-offset="28782">
+          <caret line="344" column="48" selection-start-line="329" selection-start-column="20" selection-end-line="344" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.6666665" vertical-offset="0" max-vertical-offset="1494">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="25" />
+          <folding>
+            <element signature="e#104#133#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/clientes/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="198" max-vertical-offset="1278">
+          <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/clientes/cliente_form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.519573" vertical-offset="1490" max-vertical-offset="4014">
-          <caret line="99" column="100" selection-start-line="99" selection-start-column="100" selection-end-line="99" selection-end-column="100" />
+        <state vertical-scroll-proportion="-1.6666666" vertical-offset="0" max-vertical-offset="4806">
+          <caret line="5" column="52" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
           <folding>
-            <element signature="e#63#92#0#HTML" expanded="true" />
+            <element signature="e#82#111#0#HTML" expanded="true" />
+            <element signature="e#8992#9017#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tramites/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="558">
+          <caret line="24" column="42" selection-start-line="17" selection-start-column="6" selection-end-line="24" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/clientes/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="594">
+          <caret line="4" column="76" selection-start-line="4" selection-start-column="57" selection-end-line="4" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/clientes/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1774" max-vertical-offset="2394">
+          <caret line="125" column="39" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
+          <folding>
+            <element signature="e#1#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_anses_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.666667" vertical-offset="198" max-vertical-offset="2916">
+          <caret line="24" column="79" selection-start-line="24" selection-start-column="79" selection-end-line="24" selection-end-column="79" />
+          <folding>
+            <element signature="e#3047#3072#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tramites/tramite_caja_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25622776" vertical-offset="198" max-vertical-offset="2970">
+          <caret line="19" column="79" selection-start-line="19" selection-start-column="79" selection-end-line="19" selection-end-column="79" />
+          <folding />
         </state>
       </provider>
     </entry>

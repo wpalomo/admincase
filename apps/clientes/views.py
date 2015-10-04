@@ -118,3 +118,11 @@ class ClienteAnsesListView(ListView):
     context_object_name = 'cliente_anses'
     template_name = 'tramites/tramite_anses_list.html'
     paginate_by = 10
+
+
+class ClienteCajaListView(ListView):
+    queryset = Cliente.objects.filter(
+        persona__tramite__tipo__entidad__nombre='CAJA')
+    context_object_name = 'cliente_caja'
+    template_name = 'tramites/tramite_caja_list.html'
+    paginate_by = 10

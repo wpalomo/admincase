@@ -1,16 +1,14 @@
 {% extends 'arbol_item.html' %}
 
 {% block content %}
-
-    <div style="background-color:#ccc">
-        <a href='/clientes/listado'><strong>LISTADO</strong></a> --
-        {% if persona %}
-            <a href='/domicilios/alta/{{ persona.id }}'><strong>Domicilio</strong></a> --
-            <a href='/tramites/alta/{{ persona.id }}'><strong>Tramites</strong></a>
-        {% endif %}
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/'><strong>HOME</strong></a> --
+            <a href='/clientes/listado'><strong>LISTADO</strong></a>
+        </div>
     </div>
-
     <div class="clearfix"></div>
+
     <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
     <div class="row">
 
@@ -168,10 +166,11 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>TRAMITES <small></small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
+                    <div style="text-align: right">
+                        {% if persona %}
+                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/{{ persona.id }}'">Iniciar Tramite</button>
+                        {% endif %}
+                    </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -190,12 +189,12 @@
                         <tbody>
                             {% for tramite in persona_tramites %}
                             <tr class="odd pointer">
-                                <td class=" ">{{ tramite.tipo.entidad }}</td>
-                                <td class=" ">{{ tramite.tipo }}</td>
-                                <td class=" ">{{ tramite.estado }}</td>
-                                <td class=" ">{{ tramite.observaciones }}</td>
+                                <td class=" ">{{ tramite.tipo.entidad | upper }}</td>
+                                <td class=" ">{{ tramite.tipo | upper  }}</td>
+                                <td class=" ">{{ tramite.estado | upper  }}</td>
+                                <td class=" ">{{ tramite.observaciones | upper  }}</td>
                                 <td class=" last">
-                                    <a href="/clientes/modi/{{ cliente.persona.id }}">
+                                    <a href="/tramites/modi/{{ tramite.id }}">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                 </td>
@@ -209,6 +208,51 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>DOMICILIO <small></small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">País</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.estado_civil }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Provincia</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.obra_social }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Departamento</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.estado_civil }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Localidad</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.obra_social }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Descripción</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <textarea class="form-control" rows="3" placeholder='Descripción'></textarea>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
