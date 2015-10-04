@@ -2,69 +2,193 @@
 
 {% block content %}
 
+    <div style="background-color:#ccc">
+        <a href='/clientes/listado'><strong>LISTADO</strong></a> --
+        {% if persona %}
+            <a href='/domicilios/alta/{{ persona.id }}'><strong>Domicilio</strong></a> --
+            <a href='/tramites/alta/{{ persona.id }}'><strong>Tramites</strong></a>
+        {% endif %}
+    </div>
 
-<div style="background-color:#ccc">
-    <a href='/clientes/listado'><strong>LISTADO</strong></a> --
-    {% if persona %}
-        <a href='/domicilios/alta/{{ persona.id }}'><strong>Domicilio</strong></a>
-    {% endif %}
-</div>
-
-
-<!--
-<a href=''>Datos Personales</a> ---
-
-{% if domicilio.id %}
-    <a href='/domicilios/empleados/modi/{{ domicilio.id }}'>Domicilio</a>
-{% endif %}
-
--->
-
-
-<br><br>
-
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
     <div class="clearfix"></div>
+    <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
     <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Cliente <small></small></h2>
+                    <h2><strong>DATOS PERSONALES</strong></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <br />
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Apellido">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Nombre">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                        <select id="heard" class="form-control" required>
+                            <option value="">Tipo Documento</option>
+                            <option value="press">Press</option>
+                            <option value="net">Internet</option>
+                            <option value="mouth">Word of mouth</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="CUIL">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Fecha de Nacimiento">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Edad" readonly>
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <select id="heard" class="form-control" required>
+                            <option value="">Sexo</option>
+                            <option value="press">Press</option>
+                            <option value="net">Internet</option>
+                            <option value="mouth">Word of mouth</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <select id="heard" class="form-control" required>
+                            <option value="">Estado Civil</option>
+                            <option value="press">Press</option>
+                            <option value="net">Internet</option>
+                            <option value="mouth">Word of mouth</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <select id="heard" class="form-control" required>
+                            <option value="">Obra Social</option>
+                            <option value="press">Press</option>
+                            <option value="net">Internet</option>
+                            <option value="mouth">Word of mouth</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <select id="heard" class="form-control" required>
+                            <option value="">Nivel de Estudios</option>
+                            <option value="press">Press</option>
+                            <option value="net">Internet</option>
+                            <option value="mouth">Word of mouth</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <select id="heard" class="form-control" required>
+                            <option value="">Profesion</option>
+                            <option value="press">Press</option>
+                            <option value="net">Internet</option>
+                            <option value="mouth">Word of mouth</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <select id="heard" class="form-control" required>
+                            <option value="">Situación Laboral</option>
+                            <option value="press">Press</option>
+                            <option value="net">Internet</option>
+                            <option value="mouth">Word of mouth</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><strong>CONTACTOS</strong></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número Celular">
+                        <span class="fa fa-mobile form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número Fijo">
+                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <textarea class="form-control" rows="3" placeholder='Observaciones'></textarea>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary" onclick="window.location='/clientes/listado/'">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>TRAMITES <small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Settings 1</a>
-                                </li>
-                                <li><a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <br />
-                    <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
-                        {{ form.as_p }}
-                        {{ cliente_form.as_p }}
-                        <button type="button" class="btn btn-primary" onclick="window.location='/clientes/listado/'">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Guardar</button>
-
-                    </form>
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>ORIGEN</th>
+                                <th>TIPO</th>
+                                <th>ESTADO</th>
+                                <th>OBSERVACIONES</th>
+                                <th class=" no-link last">
+                                    <span class="nobr">Ver</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tramite in persona_tramites %}
+                            <tr class="odd pointer">
+                                <td class=" ">{{ tramite.tipo.entidad }}</td>
+                                <td class=" ">{{ tramite.tipo }}</td>
+                                <td class=" ">{{ tramite.estado }}</td>
+                                <td class=" ">{{ tramite.observaciones }}</td>
+                                <td class=" last">
+                                    <a href="/clientes/modi/{{ cliente.persona.id }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                                <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                    No se encontraron registros
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
     </div>
 
 {% endblock %}

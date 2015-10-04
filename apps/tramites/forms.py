@@ -2,7 +2,7 @@
 
 from django import forms
 
-from .models import Tramite
+from .models import Tramite, RequisitoPresentado
 
 
 class TramiteForm(forms.ModelForm):

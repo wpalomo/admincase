@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, url
 
 from .views import (ClienteListView, ClienteCreate, ClienteUpdate,
-                    ClienteDelete)
+                    ClienteDelete, ClienteAnsesListView)
 
 
 urlpatterns = patterns('',
@@ -12,5 +12,15 @@ urlpatterns = patterns('',
         ClienteUpdate.as_view(), name='cliente_update'),
     # url(r'^delete/(?P<pk>[0-9]+)/$',
     #     EmpleadoDelete.as_view(), name='empleado_delete'),
+    url(r'^anses/listado/$', ClienteAnsesListView.as_view(),
+        name='anses_listado'),
 )
 
+# url(r'^anses/listado/$', AnsesListView.as_view(), name='anses_listado'),
+#     url(r'^anses/modi/(?P<pk>[0-9]+)/$', AnsesUpdate.as_view(), name='anses_modi'),
+#     url(r'^caja/listado/$', CajaPrevisionListView.as_view(),
+#         name='anses_listado'),
+#     url(r'^familia/listado/$', FamiliaListView.as_view(),
+#         name='familia_listado'),
+#     url(r'^civil_comercial/listado/$', CivilComercialListView.as_view(),
+#         name='civil_comercial_listado'),

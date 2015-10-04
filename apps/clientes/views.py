@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from apps.personas.models import Persona
+from apps.tramites.models import Tramite
 
 from .forms import PersonaForm, ClienteForm
 from .models import Cliente
@@ -67,6 +68,10 @@ class ClienteUpdate(UpdateView):
         cliente = Cliente.objects.get(persona=self.object)
         context['cliente_form'] = ClienteForm(instance=cliente)
         context['persona'] = self.object
+        context['persona_tramites'] = Tramite.objects.filter(
+            persona__id=int(self.object.id))
+
+        print(context['persona_tramites'])
         return context
 
     def post(self, request, *args, **kwargs):
@@ -105,3 +110,11 @@ class ClienteUpdate(UpdateView):
 
 class ClienteDelete(DeleteView):
     model = Cliente
+
+
+class ClienteAnsesListView(ListView):
+    queryset = Cliente.objects.filter(
+        persona__tramite__tipo__entidad__nombre='ANSES')
+    context_object_name = 'cliente_anses'
+    template_name = 'tramites/tramite_anses_list.html'
+    paginate_by = 10
