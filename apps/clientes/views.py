@@ -69,7 +69,7 @@ class ClienteUpdate(UpdateView):
         context['cliente_form'] = ClienteForm(instance=cliente)
         context['persona'] = self.object
         context['persona_tramites'] = Tramite.objects.filter(
-            persona__id=int(self.object.id))
+            persona__id=int(self.object.id))[:3]
 
         print(context['persona_tramites'])
         return context

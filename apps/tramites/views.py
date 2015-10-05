@@ -10,7 +10,8 @@ from .forms import TramiteForm
 
 from apps.clientes.models import Cliente
 from apps.personas.models import Persona
-from apps.tramites.models import Tramite, RequisitoPresentado
+from apps.tramites.models import (Tramite, RequisitoPresentado, TipoTramite,
+                                  Requisito)
 
 
 # def home(request):
@@ -33,20 +34,39 @@ class TramiteCreate(CreateView):
 
         persona = Persona.objects.get(pk=self.request.POST['persona'])
 
-        # print(self.request.POST)
-        # print('####')
-        # print(persona)
-        #
-        # return
+        print(self.request.POST)
+        print('####')
+        print(persona)
 
         if form.is_valid():
 
             tramite = form.save()
 
+            tipo_tramite = TipoTramite.objects.filter(
+                pk=int(self.request.POST['tipo'])
+            )
+
+            print('@@@@@@')
+            print(tipo_tramite)
+            print('@@@@@@')
+
+            # ['DNI', 'ACTA DE NACIMIENTO', 'FOTO 3X3']
+
+            for item in tipo_tramite.requisitos:
+
+                print(item)
+
+                requisito = Requisito.objects.get(descripcion=item)
+
+                RequisitoPresentado.objects.create(
+                    tramite=tramite,
+                    requisito=requisito
+                )
+
+
             messages.add_message(
                 request, messages.SUCCESS, 'SE HA CREADO CON EXITO')
 
-            # requisitos_a_presentar = RequisitoPresentado
 
             return HttpResponseRedirect(
                 '/tramites/modi/' +
