@@ -46,15 +46,7 @@ class TramiteCreate(CreateView):
                 pk=int(self.request.POST['tipo'])
             )
 
-            print('@@@@@@')
-            print(tipo_tramite)
-            print('@@@@@@')
-
-            # ['DNI', 'ACTA DE NACIMIENTO', 'FOTO 3X3']
-
             for item in tipo_tramite.requisitos.all():
-
-                print(item)
 
                 requisito = Requisito.objects.get(descripcion=item)
 
@@ -63,14 +55,10 @@ class TramiteCreate(CreateView):
                     requisito=requisito
                 )
 
-
             messages.add_message(
                 request, messages.SUCCESS, 'SE HA CREADO CON EXITO')
 
-
-            return HttpResponseRedirect(
-                '/tramites/modi/' +
-                str(tramite.id))
+            return HttpResponseRedirect('/tramites/modi/' + str(tramite.id))
 
         messages.add_message(
             request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
@@ -112,8 +100,7 @@ class TramiteUpdate(UpdateView):
 
         tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        requisitos = RequisitoPresentado.objects.filter(
-            tramite=tramite)
+        requisitos = RequisitoPresentado.objects.filter(tramite=tramite)
 
         form = TramiteForm(self.request.POST, instance=tramite)
 
@@ -124,8 +111,6 @@ class TramiteUpdate(UpdateView):
                 'requisitos_presentados'].split('|')
 
             for item in requisitos_presentados:
-
-                print(item)
 
                 requisito = item.split('#')
 
