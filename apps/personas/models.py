@@ -49,6 +49,19 @@ class Persona(models.Model):
     def __str__(self):
         return str(self.apellido) + ", " + str(self.nombre)
 
+    def edad(self):
+        #CALCULO DE EDAD
+        if self.fecha_nacimiento:
+            fecha_nacimiento_persona = datetime.strptime(str(self.fecha_nacimiento), "%Y-%m-%d").date()
+            f_actual = datetime.today().date()
+            anios = int((f_actual - fecha_nacimiento_persona).days / 365.25)
+            meses = int(((f_actual - fecha_nacimiento_persona).days / 365.25 - anios) * 12)
+            dias = int((((f_actual - fecha_nacimiento_persona).days / 365.25 - anios) * 12 - meses) * 30)
+            edad = str(anios) + " años, " + str(meses) + " meses y " + str(dias) + " días"
+        else:
+            edad = ""
+        return str(edad)
+
 
 class UserProfile(models.Model):
     usuario = models.OneToOneField(User)
