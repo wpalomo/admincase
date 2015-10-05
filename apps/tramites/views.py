@@ -42,7 +42,7 @@ class TramiteCreate(CreateView):
 
             tramite = form.save()
 
-            tipo_tramite = TipoTramite.objects.filter(
+            tipo_tramite = TipoTramite.objects.get(
                 pk=int(self.request.POST['tipo'])
             )
 
@@ -52,7 +52,7 @@ class TramiteCreate(CreateView):
 
             # ['DNI', 'ACTA DE NACIMIENTO', 'FOTO 3X3']
 
-            for item in tipo_tramite.requisitos:
+            for item in tipo_tramite.requisitos.all():
 
                 print(item)
 
