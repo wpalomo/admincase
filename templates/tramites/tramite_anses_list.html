@@ -22,7 +22,7 @@
                                 </a>
                             </li>
                             <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/tramites/caja/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
+                                <a href="#" onclick="window.location='/clientes/caja/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
                                     <img src="{{ MEDIA_URL }}logo/tramites/CAJA_PREVISION_ICO.png" width="50" height="20">
                                 </a>
                             </li>
@@ -67,7 +67,6 @@
                                 <table id="example" class="table table-striped responsive-utilities jambo_table">
                                     <thead>
                                         <tr class="headings">
-                                            <th>FOTO </th>
                                             <th>PERSONA </th>
                                             <th>DOCUMENTO</th>
                                             <th>ESTADO CIVIL</th>
@@ -82,13 +81,6 @@
                                     <tbody>
                                         {% for cliente in cliente_anses %}
                                         <tr class="odd pointer">
-                                            <td class=" ">
-                                                {% if cliente.foto != "" %}
-                                                <img src="{{ MEDIA_URL }}{{ cliente.persona.foto }}" class="img-circle" width="48px" height="48px">
-                                                {% else %}
-                                                <img src="usuario.png" class="img-circle" width="38px" height="28px">
-                                                {% endif %}
-                                            </td>
                                             <td class=" ">{{ cliente.persona | upper }}</td>
                                             <td class=" ">{{ cliente.persona.tipo_documento }} - {{ cliente.persona.numero_documento }}</td>
                                             <td class=" ">{{ cliente.persona.estado_civil | upper }}</td>

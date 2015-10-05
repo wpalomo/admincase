@@ -16,12 +16,12 @@
                                     <img src="{{ MEDIA_URL }}logo/tramites/CLIENTE_ICO.png" width="32" height="20"><strong>CLIENTES</strong>
                                 </a>
                             </li>
-                            <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/clientes/anses/listado/'" role="tab" id="profile-tab" data-toggle="tab"  aria-expanded="false">
+                            <li role="presentation" class="active">
+                                <a href="#" onclick="window.location='/tramites/anses/listado/'" role="tab" id="profile-tab" data-toggle="tab"  aria-expanded="false">
                                     <img src="{{ MEDIA_URL }}logo/tramites/ANSES_ICO.png" width="50" height="20">
                                 </a>
                             </li>
-                            <li role="presentation" class="active">
+                            <li role="presentation" class="">
                                 <a href="#" onclick="window.location='/tramites/caja/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
                                     <img src="{{ MEDIA_URL }}logo/tramites/CAJA_PREVISION_ICO.png" width="50" height="20">
                                 </a>
@@ -41,12 +41,9 @@
                             <div role="tabpanel" class="tab-pane fade" id="tab_content1" aria-labelledby="home-tab">
 
                             </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content3" aria-labelledby="profile-tab">
+                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content2" aria-labelledby="profile-tab">
                                 <div class="x_title">
-                                    <h2>CLIENTES CON TRAMITE EN LA CAJA DE PREVISION SOCIAL</h2>
+                                    <h2>CLIENTES CON TRAMITE ANSES</h2>
                                     <div style="text-align: right">
                                         <button type="button" class="btn btn-primary" onclick="window.location='/tramites/anses/alta/'">Iniciar Tramite</button>
                                     </div>
@@ -55,7 +52,7 @@
                                 <div class="form-group form-horizontal">
                                     <div class="col-md-5 col-sm-5 col-xs-5">
                                         <select class="select2_single form-control" tabindex="-1">
-                                            {% for tramite in cliente_caja %}
+                                            {% for tramite in tipo_tramite_anses %}
                                             <option value="AK">{{ tramite }}</option>
                                             {% endfor %}
                                         </select>
@@ -70,6 +67,7 @@
                                 <table id="example" class="table table-striped responsive-utilities jambo_table">
                                     <thead>
                                         <tr class="headings">
+                                            <th>FOTO </th>
                                             <th>PERSONA </th>
                                             <th>DOCUMENTO</th>
                                             <th>ESTADO CIVIL</th>
@@ -82,8 +80,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for cliente in cliente_caja %}
+                                        {% for cliente in cliente_anses %}
                                         <tr class="odd pointer">
+                                            <td class=" ">
+                                                {% if cliente.foto != "" %}
+                                                <img src="{{ MEDIA_URL }}{{ cliente.persona.foto }}" class="img-circle" width="48px" height="48px">
+                                                {% else %}
+                                                <img src="usuario.png" class="img-circle" width="38px" height="28px">
+                                                {% endif %}
+                                            </td>
                                             <td class=" ">{{ cliente.persona | upper }}</td>
                                             <td class=" ">{{ cliente.persona.tipo_documento }} - {{ cliente.persona.numero_documento }}</td>
                                             <td class=" ">{{ cliente.persona.estado_civil | upper }}</td>
@@ -91,7 +96,7 @@
                                             <td class=" ">20/10/2015</td>
                                             <td class=" ">EN CURSO</td>
                                             <td class=" last">
-                                                <a href="/clientes/modi/{{ cliente.persona.id }}">
+                                                <a href="/tramites/anses/modi/{{ cliente.id }}">
                                                     <i class="fa fa-archive"></i>
                                                 </a>
                                             </td>
@@ -112,7 +117,7 @@
                                 </center>
                                 <center>
                                    <ul class="pagination">
-                                       <li id="n_pag_inicio" ><a href="/tramites/caja/listado" title="Ir al inicio"> << </a></li>
+                                       <li id="n_pag_inicio" ><a href="/tramites/anses/listado" title="Ir al inicio"> << </a></li>
 
                                         {% if page_obj.has_previous %}
                                             <li id="n_pag_{{page_obj.number}}">
@@ -133,6 +138,9 @@
                                 </center>
                                 {% endif %}
                             </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk </p>
+                            </div>
                         </div>
                     </div>
 
@@ -145,7 +153,5 @@
     <br />
     <br />
     <br />
+
 {% endblock %}
-
-
-

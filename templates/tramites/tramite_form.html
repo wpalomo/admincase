@@ -1,0 +1,78 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+
+
+{% block content %}
+
+<div class="title_right" style="background-color:#ccc">
+    <div class="x_title">
+
+        <a href='/clientes/listado'><strong>LISTADO</strong></a> --
+        <a href='/clientes/modi/{{ tramite.persona.id }}'><strong>CLIENTE</strong></a> --
+        <strong>TRAMITE</strong>
+
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                {% for msg in messages %}
+                    <strong>{{ msg }}</strong>
+                    <br>
+                {% endfor %}
+                <br>
+
+                <form id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+                    {{ form.as_p }}
+
+                    <br>
+                    {% if tramite %}
+                    <label>REQUISITOS</label>
+                    <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
+
+                    {% for opcion in requisitos %}
+                    <div class="checkbox" id="check_requisitos">
+                        <label>
+                            <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion.requisito }}" value="0" {% if  opcion.estado %} checked="checked" {% endif %}>
+                            {{ opcion.requisito }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <br>
+                    <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var frm = document.getElementById('frm');
+    var requisito = "";
+
+    $('#btnGuardar').click(function(){
+
+        $('div#check_requisitos input[type=checkbox]').each(function() {
+           if ($(this).is(":checked")) {
+               requisito += $(this).attr('name') + '#1|';
+           } else {
+               requisito += $(this).attr('name') + '#0|';
+           }
+        });
+
+        $('#id_requisitos_presentados').val(requisito.slice(0,-1));
+
+        frm.submit();
+    });
+</script>
+
+
+
+{% endblock %}

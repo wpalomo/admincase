@@ -1,0 +1,77 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+
+
+{% block content %}
+
+<div style="background-color:#ccc">
+
+    <a href='/clientes/listado'><strong>LISTADO</strong></a> --
+    <a href='/cliente/modi/{{ persona.id }}'><strong>CLIENTE</strong></a> --
+    <a href='/cliente/modi/{{ tramite.id }}'><strong>TRAMITE</strong></a> --
+    <strong>REQUISITO</strong>
+
+</div>
+
+    <br>
+
+{% for msg in messages %}
+
+    <strong>{{ msg }}</strong>
+    <br><br>
+
+{% endfor %}
+
+<br><br>
+
+    {{ form.as_p }}
+
+    <form id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+    <br>
+        <label>REQUISITOS PARA: {{ tramite }}</label>
+        <input type="hidden" id="id_tramite" name="tramite" value="{{ tramite.id }}"/>
+        <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
+        {% for opcion in tramite.tipo.requisitos.all %}
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion }}" {% if  opcion.estado %} checked="checked" {% endif %}>
+                    {{ opcion }}
+                </label>
+            </div>
+        {% endfor %}
+        <br>
+        <br>
+        <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
+    </form>
+
+    <script>
+        var frm = document.getElementById("frm");
+        var requisito = "";
+
+
+
+        $('#btnGuardar').click(function(){
+
+            //alert(frm.length);
+
+            for (var x=0; x < frm.length; x++) {
+                if (frm[x].type == 'checkbox') {
+                    if(frm[x].checked){
+                        requisito += frm[x].name + '|';
+                        //requisito = requisito + checkboxes[x].name;
+                    }
+                }
+            }
+
+            alert(requisito.slice(0,-1));
+
+            $('#id_requisitos_presentados').val(requisito.slice(0,-1));
+
+            frm.submit();
+        });
+    </script>
+
+
+
+{% endblock %}
