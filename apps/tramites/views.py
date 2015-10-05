@@ -113,15 +113,13 @@ class TramiteUpdate(UpdateView):
             for item in requisitos_presentados:
 
                 requisito = item.split('#')
-
+                
                 if int(requisito[1]) != 0:
-
                     requisito_presentado = requisitos.get(
                         requisito__descripcion=requisito[0])
                     requisito_presentado.estado = True
 
                 else:
-
                     requisito_presentado = requisitos.get(
                         requisito__descripcion=requisito[0])
                     requisito_presentado.estado = False
