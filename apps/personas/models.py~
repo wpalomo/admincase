@@ -52,11 +52,11 @@ class Persona(models.Model):
     def edad(self):
         #CALCULO DE EDAD
         if self.fecha_nacimiento:
-            fecha_nac_empleado = datetime.strptime(str(self.fecha_nacimiento), "%Y-%m-%d").date()
+            fecha_nacimiento_persona = datetime.strptime(str(self.fecha_nacimiento), "%Y-%m-%d").date()
             f_actual = datetime.today().date()
-            anios = int((f_actual - fecha_nac_empleado).days / 365.25)
-            meses = int(((f_actual - fecha_nac_empleado).days / 365.25 - anios) * 12)
-            dias = int((((f_actual - fecha_nac_empleado).days / 365.25 - anios) * 12 - meses) * 30)
+            anios = int((f_actual - fecha_nacimiento_persona).days / 365.25)
+            meses = int(((f_actual - fecha_nacimiento_persona).days / 365.25 - anios) * 12)
+            dias = int((((f_actual - fecha_nacimiento_persona).days / 365.25 - anios) * 12 - meses) * 30)
             edad = str(anios) + " años, " + str(meses) + " meses y " + str(dias) + " días"
         else:
             edad = ""
