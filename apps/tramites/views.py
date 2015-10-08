@@ -23,6 +23,25 @@ class TramiteListView(ListView):
     model = Tramite
     paginate_by = 10
 
+    # def get(self, request, *args, **kwargs):
+    #
+    #     clientes_con_tramites = Cli
+    #
+    #     requisitos = RequisitoPresentado.objects.filter(
+    #         tramite=tramite)
+    #
+    #     form = TramiteForm(instance=tramite)
+    #
+    #     return render_to_response(
+    #         'tramites/tramite_form.html',
+    #         {
+    #             'form': form,
+    #             'tramite': tramite,
+    #             'requisitos': requisitos
+    #         },
+    #         context_instance=RequestContext(request)
+    #     )
+
 
 class TramiteCreate(CreateView):
     model = Tramite
@@ -113,7 +132,7 @@ class TramiteUpdate(UpdateView):
             for item in requisitos_presentados:
 
                 requisito = item.split('#')
-                
+
                 if int(requisito[1]) != 0:
                     requisito_presentado = requisitos.get(
                         requisito__descripcion=requisito[0])
@@ -146,6 +165,25 @@ class TramiteUpdate(UpdateView):
 
     def get_success_url(self):
         return self.request.get_full_path()
+
+
+class TramiteClienteListView(ListView):
+    model = Tramite
+    paginate_by = 10
+
+    def get(self, request, *args, **kwargs):
+
+        tramite_cliente = Tramite.objects.filter(persona__id=kwargs['pk'])
+        cliente = Cliente.objects.get(pk=kwargs['pk'])
+
+        return render_to_response(
+            'tramites/tramite_cliente_list.html',
+            {
+                'cliente': cliente,
+                'tramite_cliente': tramite_cliente
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 class AnsesListView(ListView):

@@ -11,12 +11,12 @@
                 <div class="x_content">
                     <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                            <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/clientes/listado/'" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">
-                                    <img src="{{ MEDIA_URL }}logo/tramites/CLIENTE_ICO.png" width="32" height="20"><strong>CLIENTES</strong>
+                            <li role="presentation" class="active">
+                                <a href="#" onclick="window.location='/tramites/listado/'" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                                    <i class="fa fa-list"></i> <strong>TODOS</strong>
                                 </a>
                             </li>
-                            <li role="presentation" class="active">
+                            <li role="presentation" class="">
                                 <a href="#" onclick="window.location='/tramites/anses/listado/'" role="tab" id="profile-tab" data-toggle="tab"  aria-expanded="false">
                                     <img src="{{ MEDIA_URL }}logo/tramites/ANSES_ICO.png" width="50" height="20">
                                 </a>
@@ -43,7 +43,7 @@
                             </div>
                             <div role="tabpanel" class="tab-pane fade active in" id="tab_content2" aria-labelledby="profile-tab">
                                 <div class="x_title">
-                                    <h2>CLIENTES CON TRAMITE ANSES</h2>
+                                    <h2>CLIENTES CON TRAMITE EN CURSO</h2>
                                     <div style="text-align: right">
                                         <button type="button" class="btn btn-primary" onclick="window.location='/tramites/anses/alta/'">Iniciar Tramite</button>
                                     </div>
@@ -52,7 +52,7 @@
                                 <div class="form-group form-horizontal">
                                     <div class="col-md-5 col-sm-5 col-xs-5">
                                         <select class="select2_single form-control" tabindex="-1">
-                                            {% for tramite in tipo_tramite_anses %}
+                                            {% for tramite in tramite_list %}
                                             <option value="AK">{{ tramite }}</option>
                                             {% endfor %}
                                         </select>
@@ -80,15 +80,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for cliente in cliente_anses %}
+                                        {% for cliente in tramite_list %}
                                         <tr class="odd pointer">
-                                            <td class=" ">
-                                                {% if cliente.foto != "" %}
-                                                <img src="{{ MEDIA_URL }}{{ cliente.persona.foto }}" class="img-circle" width="48px" height="48px">
-                                                {% else %}
-                                                <img src="usuario.png" class="img-circle" width="38px" height="28px">
-                                                {% endif %}
-                                            </td>
                                             <td class=" ">{{ cliente.persona | upper }}</td>
                                             <td class=" ">{{ cliente.persona.tipo_documento }} - {{ cliente.persona.numero_documento }}</td>
                                             <td class=" ">{{ cliente.persona.estado_civil | upper }}</td>
