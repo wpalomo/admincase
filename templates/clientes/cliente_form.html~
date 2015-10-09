@@ -1,0 +1,262 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/'><strong>HOME</strong></a> --
+            <a href='/clientes/listado'><strong>LISTADO</strong></a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+    <div class="row">
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><strong>DATOS PERSONALES</strong></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <br />
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Apellido</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.apellido }}
+                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Nombre</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.nombre }}
+                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Tipo de Documento</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.tipo_documento }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Número</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.numero_documento }}
+                                <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">CUIL</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ cliente_form.cuil }}
+                                <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Nacimiento</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.fecha_nacimiento }}
+                                <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Sexo</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.sexo }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Edad</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Edad" value="{{ cliente.edad }}" readonly>
+                                <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Estado Civil</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.estado_civil }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Obra Social</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.obra_social }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Nivel de Educación</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.nivel_educacion }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Profesión</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.profesion }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Situación Laboral</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ cliente_form.situacion_laboral }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><strong>CONTACTOS</strong></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número Celular">
+                        <span class="fa fa-mobile form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número Fijo">
+                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <textarea class="form-control" rows="3" placeholder='Observaciones'></textarea>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary" onclick="window.location='/clientes/listado/'">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>TRAMITES <small></small></h2>
+                    <div style="text-align: right">
+                        {% if persona %}
+                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/{{ persona.id }}'">Iniciar Tramite</button>
+                        {% endif %}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>ORIGEN</th>
+                                <th>TIPO</th>
+                                <th>ESTADO</th>
+                                <th>OBSERVACIONES</th>
+                                <th class=" no-link last">
+                                    <span class="nobr">Ver</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tramite in persona_tramites %}
+                            <tr class="odd pointer">
+                                <td class=" ">{{ tramite.tipo.entidad | upper }}</td>
+                                <td class=" ">{{ tramite.tipo | upper  }}</td>
+                                <td class=" ">{{ tramite.estado | upper  }}</td>
+                                <td class=" ">{{ tramite.observaciones | upper  }}</td>
+                                <td class=" last">
+                                    <a href="/tramites/modi/{{ tramite.id }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                                <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                    No se encontraron registros
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>DOMICILIO <small></small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">País</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.estado_civil }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Provincia</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.obra_social }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Departamento</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.estado_civil }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Localidad</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.obra_social }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Descripción</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <textarea class="form-control" rows="3" placeholder='Descripción'></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
