@@ -23,24 +23,25 @@ class TramiteListView(ListView):
     model = Tramite
     paginate_by = 10
 
-    # def get(self, request, *args, **kwargs):
-    #
-    #     clientes_con_tramites = Cli
-    #
-    #     requisitos = RequisitoPresentado.objects.filter(
-    #         tramite=tramite)
-    #
-    #     form = TramiteForm(instance=tramite)
-    #
-    #     return render_to_response(
-    #         'tramites/tramite_form.html',
-    #         {
-    #             'form': form,
-    #             'tramite': tramite,
-    #             'requisitos': requisitos
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
+    def get(self, request, *args, **kwargs):
+
+        tramites = Tramite.objects.filter(
+            estado=False
+        ).values('persona_id')
+
+        persona_id = set(
+            i['persona_id'] for i in tramites
+        )
+
+        clientes = Cliente.objects.filter(pk__in=persona_id)
+
+        return render_to_response(
+            'tramites/tramite_list.html',
+            {
+                'clientes_con_tramites': clientes
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 class TramiteCreate(CreateView):

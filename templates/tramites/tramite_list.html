@@ -67,7 +67,6 @@
                                 <table id="example" class="table table-striped responsive-utilities jambo_table">
                                     <thead>
                                         <tr class="headings">
-                                            <th>FOTO </th>
                                             <th>PERSONA </th>
                                             <th>DOCUMENTO</th>
                                             <th>ESTADO CIVIL</th>
@@ -80,17 +79,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for cliente in tramite_list %}
+                                        {% for cliente in clientes_con_tramites %}
                                         <tr class="odd pointer">
                                             <td class=" ">{{ cliente.persona | upper }}</td>
                                             <td class=" ">{{ cliente.persona.tipo_documento }} - {{ cliente.persona.numero_documento }}</td>
                                             <td class=" ">{{ cliente.persona.estado_civil | upper }}</td>
-                                            <td class=" ">{{ cliente.tipo | upper }}</td>
+                                            <td class=" ">
+                                                {% for tramite in cliente.persona.tramite_set.all %}
+                                                    {{ tramite }}<br>
+                                                {% endfor %}
+                                            </td>
                                             <td class=" ">20/10/2015</td>
                                             <td class=" ">EN CURSO</td>
                                             <td class=" last">
                                                 <a href="/tramites/anses/modi/{{ cliente.id }}">
-                                                    <i class="fa fa-archive"></i>
+                                                    <i class="fa fa-pencil"></i>
                                                 </a>
                                             </td>
                                         </tr>
