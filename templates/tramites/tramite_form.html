@@ -8,8 +8,12 @@
 <div class="title_right" style="background-color:#ccc">
     <div class="x_title">
 
-        <a href='/clientes/listado'><strong>LISTADO</strong></a> --
-        <a href='/clientes/modi/{{ tramite.persona.id }}'><strong>CLIENTE</strong></a> --
+        {% if tramite %}
+            <a href='/clientes/listado'><strong>LISTADO</strong></a> --
+            <a href='/clientes/modi/{{ tramite.persona.id }}'><strong>CLIENTE</strong></a> --
+        {% else %}
+            <a href='/tramites/listado'><strong>LISTADO</strong></a> --
+        {% endif %}
         <strong>TRAMITE</strong>
 
     </div>
@@ -29,21 +33,32 @@
                 <br>
 
                 <form id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
-                    {{ form.as_p }}
 
+                    <p><label for="id_persona">Persona:</label>
+                        {{ form.persona }}
+                    </p>{{ form.persona.errors }}
+                    <p><label for="id_tipo">Tipo de Trámite:</label>
+                        {{ form.tipo }}
+                    </p>{{ form.tipo.errors }}
+
+                    <p><label for="id_estado">Estado:</label> {{ form.estado }}</p>{{ form.estado.errors }}
+
+                    <p><label for="id_observaciones">Observaciones:</label>
+                        {{ form.observaciones }}
+                    </p>{{ form.observaciones.errors }}
                     <br>
                     {% if tramite %}
-                    <label>REQUISITOS</label>
-                    <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
+                        <label>REQUISITOS</label>
+                        <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
 
-                    {% for opcion in requisitos %}
-                    <div class="checkbox" id="check_requisitos">
-                        <label>
-                            <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion.requisito }}" value="0" {% if  opcion.estado %} checked="checked" {% endif %}>
-                            {{ opcion.requisito }}
-                        </label>
-                    </div>
-                    {% endfor %}
+                        {% for opcion in requisitos %}
+                            <div class="checkbox" id="check_requisitos">
+                                <label>
+                                    <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion.requisito }}" value="0" {% if  opcion.estado %} checked="checked" {% endif %}>
+                                    {{ opcion.requisito }}
+                                </label>
+                            </div>
+                        {% endfor %}
                     {% endif %}
                     <br>
                     <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>

@@ -12,8 +12,8 @@
                     <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                             <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/clientes/listado/'" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">
-                                    <img src="{{ MEDIA_URL }}logo/tramites/CLIENTE_ICO.png" width="32" height="20"><strong>CLIENTES</strong>
+                                <a href="#" onclick="window.location='/tramites/listado/'" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                                    <i class="fa fa-list"></i> <strong>TODOS</strong>
                                 </a>
                             </li>
                             <li role="presentation" class="active">
@@ -22,7 +22,7 @@
                                 </a>
                             </li>
                             <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/clientes/caja/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
+                                <a href="#" onclick="window.location='/tramites/caja/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
                                     <img src="{{ MEDIA_URL }}logo/tramites/CAJA_PREVISION_ICO.png" width="50" height="20">
                                 </a>
                             </li>
@@ -88,8 +88,8 @@
                                             <td class=" ">20/10/2015</td>
                                             <td class=" ">EN CURSO</td>
                                             <td class=" last">
-                                                <a href="/tramites/anses/modi/{{ cliente.id }}">
-                                                    <i class="fa fa-archive"></i>
+                                                <a href="/tramites/modi/{{ cliente.id }}">
+                                                    <i class="fa fa-pencil"></i>
                                                 </a>
                                             </td>
                                         </tr>

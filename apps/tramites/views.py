@@ -100,6 +100,8 @@ class TramiteUpdate(UpdateView):
         requisitos = RequisitoPresentado.objects.filter(
             tramite=tramite)
 
+        print(requisitos)
+
         form = TramiteForm(instance=tramite)
 
         return render_to_response(
@@ -184,31 +186,20 @@ class TramiteClienteListView(ListView):
 
 
 class AnsesListView(ListView):
-    queryset = Tramite.objects.filter(tipo__entidad__nombre='ANSES')
+    queryset = Tramite.objects.filter(
+        tipo__entidad__nombre='ANSES',
+        estado=False
+    )
     context_object_name = 'cliente_anses'
     template_name = 'tramites/tramite_anses_list.html'
     paginate_by = 10
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(AnsesListView, self).get_context_data(*args, **kwargs)
-    #     context['tipo_tramite_anses'] = Tramite.objects.filter(entidad__id=1)
-    #     return context
-
-
-class AnsesCreate(CreateView):
-    model = Tramite
-    form_class = TramiteForm
-
-
-class AnsesUpdate(UpdateView):
-    model = Tramite
-    form_class = TramiteForm
-    template_name = 'tramites/tramite_anses_form.html'
-
 
 class CajaPrevisionListView(ListView):
-    # model = Cliente
-    queryset = Tramite.objects.filter(tipo__entidad__nombre='CAJA')
+    queryset = Tramite.objects.filter(
+        tipo__entidad__nombre='CAJA',
+        estado=False
+    )
     context_object_name = 'cliente_caja'
     template_name = 'tramites/tramite_caja_list.html'
     paginate_by = 10
