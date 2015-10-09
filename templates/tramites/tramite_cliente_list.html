@@ -1,0 +1,96 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+
+
+{% block content %}
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/'><strong>HOME</strong></a> --
+            <a href='/clientes/listado'><strong>LISTADO</strong></a> --
+            <a href='/clientes/modi/{{ cliente.id }}'><strong>CLIENTE</strong></a> --
+            <strong>HISTORIAL DE TRAMITES</strong>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                 <div class="x_title">
+                    <h2>HISTORIAL DE TRAMITES <small></small></h2>
+                    <div style="text-align: right">
+                        {% if cliente %}
+                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/{{ cliente.persona.id }}'">Iniciar Trámite</button>
+                        {% endif %}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>CASO</th>
+                                <th>FECHA TURNO</th>
+                                <th>ESTADO TRAMITE</th>
+                                <th class=" no-link last">
+                                    <span class="nobr">Acción</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cliente in tramite_cliente %}
+                            <tr class="odd pointer">
+                                <td class=" ">{{ cliente.tipo | upper }}</td>
+                                <td class=" ">20/10/2015</td>
+                                <td class=" ">EN CURSO</td>
+                                <td class=" last">
+                                    <a href="/tramites/modi/{{ cliente.id }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                                <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                    No se encontraron registros
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if is_paginated %}
+
+                    <center>
+                    <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
+                    </center>
+                    <center>
+                       <ul class="pagination">
+                           <li id="n_pag_inicio" ><a href="/tramites/anses/listado" title="Ir al inicio"> << </a></li>
+
+                            {% if page_obj.has_previous %}
+                                <li id="n_pag_{{page_obj.number}}">
+                                  <a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a>
+                                </li>
+                            {% endif %}
+
+                            <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                            {% if page_obj.has_next %}
+                                <li id="n_pag_{{page_obj.number}}">
+                                  <a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a>
+                                </li>
+                            {% endif %}
+
+                            <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
+                        </ul>
+                    </center>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+{% endblock %}
