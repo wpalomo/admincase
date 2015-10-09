@@ -23,25 +23,17 @@ class TramiteListView(ListView):
     model = Tramite
     paginate_by = 10
 
-    def get(self, request, *args, **kwargs):
-
-        tramites = Tramite.objects.filter(
-            estado=False
-        ).values('persona_id')
-
-        persona_id = set(
-            i['persona_id'] for i in tramites
-        )
-
-        clientes = Cliente.objects.filter(pk__in=persona_id)
-
-        return render_to_response(
-            'tramites/tramite_list.html',
-            {
-                'clientes_con_tramites': clientes
-            },
-            context_instance=RequestContext(request)
-        )
+    # def get(self, request, *args, **kwargs):
+    #
+    #     tramites = Tramite.objects.all
+    #
+    #     return render_to_response(
+    #         'tramites/tramite_list.html',
+    #         {
+    #             'clientes_con_tramites': clientes
+    #         },
+    #         context_instance=RequestContext(request)
+    #     )
 
 
 class TramiteCreate(CreateView):
@@ -185,6 +177,8 @@ class TramiteClienteListView(ListView):
         )
 
 
+# ANSES #
+
 class AnsesListView(ListView):
     queryset = Tramite.objects.filter(
         tipo__entidad__nombre='ANSES',
@@ -195,6 +189,148 @@ class AnsesListView(ListView):
     paginate_by = 10
 
 
+class AnsesCreate(CreateView):
+    model = Tramite
+    form_class = TramiteForm
+
+    def get(self, request, *args, **kwargs):
+
+        tipos_tramites_anses = TipoTramite.objects.filter(
+            entidad__nombre='ANSES')
+
+        form = TramiteForm()
+
+        return render_to_response(
+            'tramites/tramite_anses_form.html',
+            {
+                'form': form,
+                'tipos_tramites_anses': tipos_tramites_anses
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        form = TramiteForm(data=self.request.POST)
+
+        persona = Persona.objects.get(pk=self.request.POST['persona'])
+
+        if form.is_valid():
+
+            tramite = form.save()
+
+            tipo_tramite = TipoTramite.objects.get(
+                pk=int(self.request.POST['tipo'])
+            )
+
+            for item in tipo_tramite.requisitos.all():
+
+                requisito = Requisito.objects.get(descripcion=item)
+
+                RequisitoPresentado.objects.create(
+                    tramite=tramite,
+                    requisito=requisito
+                )
+
+            messages.add_message(
+                request, messages.SUCCESS, 'SE HA CREADO CON EXITO')
+
+            return HttpResponseRedirect('/tramites/anses/modi/' + str(tramite.id))
+
+        messages.add_message(
+            request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'tramites/tramite_anses_form.html',
+            {
+                'form': form,
+                'persona': persona,
+            },
+            context_instance=RequestContext(request)
+        )
+
+
+class AnsesUpdate(UpdateView):
+    model = Tramite
+    form_class = TramiteForm
+
+    def get(self, request, *args, **kwargs):
+
+        tramite = Tramite.objects.get(pk=kwargs['pk'])
+
+        tipos_tramites_anses = TipoTramite.objects.filter(
+            entidad__nombre='ANSES')
+
+        requisitos = RequisitoPresentado.objects.filter(
+            tramite=tramite)
+
+        form = TramiteForm(instance=tramite)
+
+        return render_to_response(
+            'tramites/tramite_anses_form.html',
+            {
+                'form': form,
+                'tramite': tramite,
+                'requisitos': requisitos,
+                'tipos_tramites_anses': tipos_tramites_anses
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        tramite = Tramite.objects.get(pk=kwargs['pk'])
+
+        requisitos = RequisitoPresentado.objects.filter(tramite=tramite)
+
+        form = TramiteForm(self.request.POST, instance=tramite)
+
+        if form.is_valid():
+            form.save()
+
+            requisitos_presentados = self.request.POST[
+                'requisitos_presentados'].split('|')
+
+            for item in requisitos_presentados:
+
+                requisito = item.split('#')
+
+                if int(requisito[1]) != 0:
+                    requisito_presentado = requisitos.get(
+                        requisito__descripcion=requisito[0])
+                    requisito_presentado.estado = True
+
+                else:
+                    requisito_presentado = requisitos.get(
+                        requisito__descripcion=requisito[0])
+                    requisito_presentado.estado = False
+
+                requisito_presentado.save()
+
+            messages.add_message(
+                request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
+
+            return HttpResponseRedirect(self.get_success_url())
+
+        messages.add_message(
+            request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'tramites/tramite_anses_form.html',
+            {
+                'form': form,
+                'tramite': tramite,
+                'requisitos': requisitos
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def get_success_url(self):
+        return self.request.get_full_path()
+
+
+# CAJA - PREVISION #
+
 class CajaPrevisionListView(ListView):
     queryset = Tramite.objects.filter(
         tipo__entidad__nombre='CAJA',
@@ -204,6 +340,147 @@ class CajaPrevisionListView(ListView):
     template_name = 'tramites/tramite_caja_list.html'
     paginate_by = 10
 
+
+class CajaPrevisionCreate(CreateView):
+    model = Tramite
+    form_class = TramiteForm
+
+    def get(self, request, *args, **kwargs):
+
+        tipos_tramites_caja = TipoTramite.objects.filter(entidad__nombre='CAJA')
+
+        form = TramiteForm()
+
+        return render_to_response(
+            'tramites/tramite_caja_form.html',
+            {
+                'form': form,
+                'tipos_tramites_caja': tipos_tramites_caja
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        form = TramiteForm(data=self.request.POST)
+
+        persona = Persona.objects.get(pk=self.request.POST['persona'])
+
+        if form.is_valid():
+
+            tramite = form.save()
+
+            tipo_tramite = TipoTramite.objects.get(
+                pk=int(self.request.POST['tipo'])
+            )
+
+            for item in tipo_tramite.requisitos.all():
+
+                requisito = Requisito.objects.get(descripcion=item)
+
+                RequisitoPresentado.objects.create(
+                    tramite=tramite,
+                    requisito=requisito
+                )
+
+            messages.add_message(
+                request, messages.SUCCESS, 'SE HA CREADO CON EXITO')
+
+            return HttpResponseRedirect(
+                '/tramites/caja/modi/' + str(tramite.id))
+
+        messages.add_message(
+            request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'tramites/tramite_caja_form.html',
+            {
+                'form': form,
+                'persona': persona,
+            },
+            context_instance=RequestContext(request)
+        )
+
+
+class CajaPrevisionUpdate(UpdateView):
+    model = Tramite
+    form_class = TramiteForm
+
+    def get(self, request, *args, **kwargs):
+
+        tramite = Tramite.objects.get(pk=kwargs['pk'])
+
+        tipos_tramites_caja = TipoTramite.objects.filter(entidad__nombre='CAJA')
+
+        requisitos = RequisitoPresentado.objects.filter(
+            tramite=tramite)
+
+        form = TramiteForm(instance=tramite)
+
+        return render_to_response(
+            'tramites/tramite_caja_form.html',
+            {
+                'form': form,
+                'tramite': tramite,
+                'requisitos': requisitos,
+                'tipos_tramites_caja': tipos_tramites_caja
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        tramite = Tramite.objects.get(pk=kwargs['pk'])
+
+        requisitos = RequisitoPresentado.objects.filter(tramite=tramite)
+
+        form = TramiteForm(self.request.POST, instance=tramite)
+
+        if form.is_valid():
+            form.save()
+
+            requisitos_presentados = self.request.POST[
+                'requisitos_presentados'].split('|')
+
+            for item in requisitos_presentados:
+
+                requisito = item.split('#')
+
+                if int(requisito[1]) != 0:
+                    requisito_presentado = requisitos.get(
+                        requisito__descripcion=requisito[0])
+                    requisito_presentado.estado = True
+
+                else:
+                    requisito_presentado = requisitos.get(
+                        requisito__descripcion=requisito[0])
+                    requisito_presentado.estado = False
+
+                requisito_presentado.save()
+
+            messages.add_message(
+                request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
+
+            return HttpResponseRedirect(self.get_success_url())
+
+        messages.add_message(
+            request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'tramites/tramite_caja_form.html',
+            {
+                'form': form,
+                'tramite': tramite,
+                'requisitos': requisitos
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def get_success_url(self):
+        return self.request.get_full_path()
+
+
+# FAMILIA #
 
 class FamiliaListView(ListView):
     model = Cliente

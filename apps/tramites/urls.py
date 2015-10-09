@@ -3,7 +3,8 @@ from django.conf.urls import url
 
 from .views import (TramiteListView, TramiteCreate, TramiteUpdate,
                     TramiteClienteListView, AnsesListView,
-                    CajaPrevisionListView)
+                    AnsesCreate, AnsesUpdate, CajaPrevisionListView,
+                    CajaPrevisionCreate, CajaPrevisionUpdate)
 
 
 urlpatterns = [
@@ -15,10 +16,15 @@ urlpatterns = [
     url(r'^alta/(?P<pk>[0-9]+)/$', TramiteCreate.as_view(), name='tramite_add'),
     url(r'^modi/(?P<pk>[0-9]+)/$', TramiteUpdate.as_view(),
         name='tramite_update'),
-    url(r'^anses/listado/$', AnsesListView.as_view(), name='anses_listado'),
-#     url(r'^anses/modi/(?P<pk>[0-9]+)/$', AnsesUpdate.as_view(), name='anses_modi'),
+    url(r'^anses/listado/$', AnsesListView.as_view(), name='anses_list'),
+    url(r'^anses/alta/$', AnsesCreate.as_view(), name='anses_add'),
+    url(r'^anses/modi/(?P<pk>[0-9]+)/$', AnsesUpdate.as_view(),
+        name='anses_update'),
     url(r'^caja/listado/$', CajaPrevisionListView.as_view(),
-        name='anses_listado'),
+        name='caja_list'),
+    url(r'^caja/alta/$', CajaPrevisionCreate.as_view(), name='caja_add'),
+    url(r'^caja/modi/(?P<pk>[0-9]+)/$', CajaPrevisionUpdate.as_view(),
+        name='caja_update'),
 #     url(r'^familia/listado/$', FamiliaListView.as_view(),
 #         name='familia_listado'),
 #     url(r'^civil_comercial/listado/$', CivilComercialListView.as_view(),

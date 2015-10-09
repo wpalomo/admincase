@@ -4,10 +4,17 @@
 
 
 {% block content %}
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/'><strong>HOME</strong></a> --
+            <strong>LISTADO</strong></a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
 
+    <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-
                 <div class="x_content">
                     <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -79,16 +86,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for cliente in cliente_anses %}
+                                        {% for tramite in cliente_anses %}
                                         <tr class="odd pointer">
-                                            <td class=" ">{{ cliente.persona | upper }}</td>
-                                            <td class=" ">{{ cliente.persona.tipo_documento }} - {{ cliente.persona.numero_documento }}</td>
-                                            <td class=" ">{{ cliente.persona.estado_civil | upper }}</td>
-                                            <td class=" ">{{ cliente.tipo | upper }}</td>
+                                            <td class=" ">{{ tramite.persona | upper }}</td>
+                                            <td class=" ">{{ tramite.persona.tipo_documento }} - {{ tramite.persona.numero_documento }}</td>
+                                            <td class=" ">{{ tramite.persona.estado_civil | upper }}</td>
+                                            <td class=" ">{{ tramite.tipo | upper }}</td>
                                             <td class=" ">20/10/2015</td>
                                             <td class=" ">EN CURSO</td>
                                             <td class=" last">
-                                                <a href="/tramites/modi/{{ cliente.id }}">
+                                                <a href="/tramites/anses/modi/{{ tramite.id }}">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
                                             </td>
@@ -135,15 +142,9 @@
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
-
-    <br />
-    <br />
-    <br />
+    </div>
 
 {% endblock %}

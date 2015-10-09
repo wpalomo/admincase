@@ -1,10 +1,14 @@
 
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.core import serializers
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import (ListView, CreateView, UpdateView, DeleteView,
+                                  TemplateView)
 
+from apps.complementos.locacion.models import (Pais, Provincia, Departamento,
+                                               Localidad)
 from apps.personas.models import Persona
 from apps.tramites.models import Tramite
 
@@ -24,6 +28,10 @@ class ClienteCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super(ClienteCreate, self).get_context_data(**kwargs)
         context['cliente_form'] = ClienteForm()
+        context['paises'] = Pais.objects.all()
+        context['provincias'] = Provincia.objects.all()
+        context['departamentos'] = Departamento.objects.all()
+        context['localidades'] = Localidad.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -71,7 +79,11 @@ class ClienteUpdate(UpdateView):
         context['persona_tramites'] = Tramite.objects.filter(
             persona__id=int(self.object.id))[:3]
 
-        print(context['persona_tramites'])
+        context['paises'] = Pais.objects.all()
+        context['provincias'] = Provincia.objects.all()
+        context['departamentos'] = Departamento.objects.all()
+        context['localidades'] = Localidad.objects.all()
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -86,6 +98,8 @@ class ClienteUpdate(UpdateView):
             persona = persona_form.save()
             cliente_form.instance.persona = persona
             cliente_form.save()
+
+
 
             messages.add_message(
                 request, messages.SUCCESS, 'CLIENTE MODIFICADO CON EXITO')
@@ -126,3 +140,22 @@ class ClienteCajaListView(ListView):
     context_object_name = 'cliente_caja'
     template_name = 'tramites/tramite_caja_list.html'
     paginate_by = 10
+
+
+class DomiciliosAnidadosAjax(TemplateView):
+
+    def post(self, request, *args, **kwargs):
+        id_pk = request.POST['id']
+        tipo = request.POST['tipo']
+
+        if tipo == '1':  # Provincias del pais seleccionado
+            datos_serialize = Provincia.objects.filter(pais__id=id_pk)
+        if tipo == '2':  # Departamentos del prov seleccionado
+            datos_serialize = Departamento.objects.filter(provincias__id=id_pk)
+        if tipo == '3':  # Localidades del depto seleccionado
+            datos_serialize = Localidad.objects.filter(departamentos__id=id_pk)
+
+
+        data = serializers.serialize('json', datos_serialize)
+
+        return HttpResponse(data, content_type='application/json')

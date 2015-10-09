@@ -148,19 +148,17 @@
                         <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <textarea class="form-control" rows="3" placeholder='Observaciones'></textarea>
+                        <textarea id="id_observaciones" name="observaciones" class="form-control" rows="3" placeholder='Observaciones'>{{ persona.observaciones }}</textarea>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <br>
                         <br>
-                        <button type="submit" class="btn btn-primary" onclick="window.location='/clientes/listado/'">Cancelar</button>
+                        <input type="button" class="btn btn-primary" onclick="window.location='/clientes/listado/'" value="Cancelar"/>
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </div>
             </div>
         </div>
-
-    </form>
 
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel">
@@ -220,14 +218,24 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">País</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                {{ form.estado_civil }}
+                                <select class="form-control" id="id_pais" name="pais">
+                                    <option value="" selected="selected">---------</option>
+                                    {% for pais in paises %}
+                                        <option value="{{ pais.id }}">{{ pais.nombre }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Provincia</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                {{ form.obra_social }}
+                                <select class="form-control" id="id_provincia" name="provincia">
+                                    <option value="" selected="selected">---------</option>
+                                    {% for provincia in provincias %}
+                                        <option value="{{ provincia.id }}">{{ provincia.nombre }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -235,21 +243,31 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Departamento</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                {{ form.estado_civil }}
+                                <select class="form-control" id="id_departamento" name="departamento">
+                                    <option value="" selected="selected">---------</option>
+                                    {% for departamento in departamentos %}
+                                        <option value="{{ departamento.id }}">{{ departamento.nombre }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Localidad</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                {{ form.obra_social }}
+                                <select class="form-control" id="id_localidad" name="localidad">
+                                    <option value="" selected="selected">---------</option>
+                                    {% for localidad in localidades %}
+                                        <option value="{{ localidad.id }}">{{ localidad.nombre }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Descripción</label>
+                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Descripción del Domicilio</label>
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <textarea class="form-control" rows="3" placeholder='Descripción'></textarea>
+                            <textarea class="form-control" rows="3" placeholder='Describa lugar exacto...'></textarea>
                         </div>
                     </div>
 
@@ -258,5 +276,81 @@
         </div>
 
     </div>
+
+    </form>
+
+    <script>
+        $("#id_pais").change(function(){
+
+            $('#id_provincia').html("");
+            $('#id_provincia').append("<option value='' selected='selected'>---------</option>");
+
+            $('#id_departamento').html("");
+            $('#id_departamento').append("<option value='' selected='selected'>---------</option>");
+
+            traerDomicilio($(this).val(), 1);
+
+        });
+
+        $("#id_provincia").change( function(){
+
+            $('#id_departamento').html("");
+            $('#id_departamento').append("<option value='' selected='selected'>---------</option>");
+
+            traerDomicilio($(this).val(), 2);
+
+        });
+
+        $("#id_departamento").change( function(){
+            $('#id_localidad').html("");
+            $('#id_localidad').append("<option value='' selected='selected'>---------</option>");
+
+            traerDomicilio($(this).val(), 3);
+        });
+
+        function traerDomicilio(id, tipo){
+            $.ajax({
+                type:"post",
+                url:"/clientes/domicilios_ajax/",
+                data: {
+                    'id': id,
+                    'tipo': tipo,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(data){
+                    if(tipo == 1){
+                        $('#id_provincia').html("");
+                        $('#id_departamento').html("");
+                        $('#id_provincia').append("<option value='' selected='selected'>---------</option>");
+                        $('#id_departamento').append("<option value='' selected='selected'>---------</option>");
+
+                        for(var i=0; i<data.length; i++){
+                            $('#id_provincia').append("<option value="+data[i].pk+">"+data[i].fields.nombre+"</option>");
+                        }
+                    }
+
+                    if(tipo == 2){
+                        $('#id_departamento').html("");
+                        $('#id_departamento').append("<option value='' selected='selected'>---------</option>");
+                        for(var i=0; i<data.length; i++){
+                            $('#id_departamento').append("<option value="+data[i].pk+">"+data[i].fields.nombre+"</option>");
+                        }
+                    }
+
+                    if(tipo == 3){
+                        $('#id_localidad').html("");
+                        $('#id_localidad').append("<option value='' selected='selected'>---------</option>");
+                        for(var i=0; i<data.length; i++){
+                            $('#id_localidad').append("<option value="+data[i].pk+">"+data[i].fields.nombre+"</option>");
+                        }
+                    }
+
+
+                }
+
+            });
+        }
+
+    </script>
 
 {% endblock %}

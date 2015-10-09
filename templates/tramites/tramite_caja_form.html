@@ -8,8 +8,8 @@
 <div class="title_right" style="background-color:#ccc">
     <div class="x_title">
 
-        <a href='/tramites/listado'><strong>LISTADO</strong></a> --
-        <strong>TRAMITE</strong>
+        <a href='/tramites/caja/listado'><strong>LISTADO</strong></a> --
+        <strong>TRAMITE CAJA DE PREVISION SOCIAL</strong>
 
     </div>
 </div>
@@ -33,7 +33,12 @@
                         {{ form.persona }}
                     </p>{{ form.persona.errors }}
                     <p><label for="id_tipo">Tipo de Trámite:</label>
-                        {{ form.tipo }}
+                        <select id="id_tipo" name="tipo" class="form-control">
+                            <option value="">---------</option>
+                            {% for tipo in tipos_tramites_caja %}
+                                <option value="{{ tipo.id }}" {% if tipo.id == tramite.tipo.id %} selected {% endif %}>{{ tipo }}</option>
+                            {% endfor %}
+                        </select>
                     </p>{{ form.tipo.errors }}
 
                     <p><label for="id_estado">Estado:</label> {{ form.estado }}</p>{{ form.estado.errors }}

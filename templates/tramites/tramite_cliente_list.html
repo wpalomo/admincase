@@ -39,13 +39,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cliente in tramite_cliente %}
+                            {% for tramite in tramite_cliente %}
                             <tr class="odd pointer">
-                                <td class=" ">{{ cliente.tipo | upper }}</td>
+                                <td class=" ">{{ tramite.tipo | upper }}</td>
                                 <td class=" ">20/10/2015</td>
                                 <td class=" ">EN CURSO</td>
                                 <td class=" last">
-                                    <a href="/tramites/modi/{{ cliente.id }}">
+                                    <a href="/tramites/modi/{{ tramite.id }}">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                 </td>
@@ -60,13 +60,12 @@
                         </tbody>
                     </table>
                     {% if is_paginated %}
-
                     <center>
                     <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
                     </center>
                     <center>
                        <ul class="pagination">
-                           <li id="n_pag_inicio" ><a href="/tramites/anses/listado" title="Ir al inicio"> << </a></li>
+                           <li id="n_pag_inicio" ><a href="/tramites/listado/{{ cliente.id }}" title="Ir al inicio"> << </a></li>
 
                             {% if page_obj.has_previous %}
                                 <li id="n_pag_{{page_obj.number}}">
