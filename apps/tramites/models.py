@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 
 from apps.complementos.organigrama.models import Entidad
@@ -5,7 +6,7 @@ from apps.personas.models import Persona
 
 
 class Requisito(models.Model):
-    descripcion = models.CharField(max_length=30, null=True, blank=True)
+    descripcion = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.descripcion
@@ -15,9 +16,9 @@ class Requisito(models.Model):
 
 
 class TipoTramite(models.Model):
-    descripcion = models.CharField(max_length=30)
-    entidad = models.ForeignKey(Entidad)
-    requisitos = models.ManyToManyField(Requisito)
+    descripcion = models.CharField(max_length=50)
+    entidad = models.ForeignKey(Entidad, null=True, blank=True)
+    requisitos = models.ManyToManyField(Requisito, blank=True)
 
     def __str__(self):
         return self.descripcion + ' - ' + str(self.entidad)
@@ -27,8 +28,11 @@ class TipoTramite(models.Model):
 
 
 class Tramite(models.Model):
-    persona = models.ForeignKey(Persona)
-    tipo = models.ForeignKey(TipoTramite)
+    persona = models.OneToOneField(Persona, unique=True)
+    tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
+    fecha_inicio = models.DateTimeField(default=datetime.now, null=True)
+    fecha_fin = models.DateTimeField(null=True, blank=True)
+    fecha_alarma = models.DateTimeField(null=True, blank=True)
     estado = models.BooleanField(default=False, blank=True)
     observaciones = models.TextField(max_length=None, null=True, blank=True)
 
@@ -39,10 +43,11 @@ class Tramite(models.Model):
         verbose_name_plural = "Tramites"
 
 
-class RequisitoPresentado(models.Model):
-    tramite = models.ForeignKey(Tramite, null=True, blank=True)
-    requisito = models.ForeignKey(Requisito, null=True, blank=True)
-    estado = models.BooleanField(default=False)
+class RequisitoRequerido(models.Model):
+    tramite = models.ForeignKey(Tramite, null=False, blank=True)
+    requisito = models.ForeignKey(Requisito, null=False, blank=True)
+    presentado = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.tramite) + '-' + str(self.requisito) + '-' + str(self.estado)
+        return str(self.tramite) + '-' + str(self.requisito) + '-' +\
+               str(self.presentado)

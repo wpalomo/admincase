@@ -18,7 +18,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                  <div class="x_title">
-                    <h2>HISTORIAL DE TRAMITES <small></small></h2>
+                    <h2>HISTORIAL DE TRAMITES - {{ cliente }}</h2>
                     <div style="text-align: right">
                         {% if cliente %}
                         <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/{{ cliente.persona.id }}'">Iniciar Trámite</button>
@@ -31,19 +31,21 @@
                         <thead>
                             <tr class="headings">
                                 <th>CASO</th>
-                                <th>FECHA TURNO</th>
+                                <th>ORIGEN</th>
+                                <th>FECHA INICIO</th>
                                 <th>ESTADO TRAMITE</th>
-                                <th class=" no-link last">
-                                    <span class="nobr">Acción</span>
-                                </th>
+                                <th>OBSERVACIONES</th>
+                                <th>ACCION</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for tramite in tramite_cliente %}
                             <tr class="odd pointer">
                                 <td class=" ">{{ tramite.tipo | upper }}</td>
-                                <td class=" ">20/10/2015</td>
-                                <td class=" ">EN CURSO</td>
+                                <td class=" ">{{ tramite.tipo.entidad | upper }}</td>
+                                <td class=" ">{{ tramite.fecha_inicio | date:"d/m/Y - H:i:s" }}</td>
+                                <td class=" ">{{ tramite.estado }}</td>
+                                <td class=" ">{{ tramite.observaciones }}</td>
                                 <td class=" last">
                                     <a href="/tramites/modi/{{ tramite.id }}">
                                         <i class="fa fa-pencil"></i>

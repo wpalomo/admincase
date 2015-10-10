@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import admin
 from apps.tramites.models import (Tramite, TipoTramite,
-                                  Requisito, RequisitoPresentado)
+                                  Requisito, RequisitoRequerido)
 
 
 class TramiteAdmin(admin.ModelAdmin):
@@ -10,6 +10,9 @@ class TramiteAdmin(admin.ModelAdmin):
         'id',
         'persona',
         'tipo',
+        'fecha_inicio',
+        'fecha_fin',
+        'fecha_alarma',
         'estado',
         'observaciones'
     ]
@@ -62,8 +65,8 @@ class RequisitoAdmin(admin.ModelAdmin):
     ordering = ['id']
 
 
-class RequisitoPresentadoAdmin(admin.ModelAdmin):
-    list_display=['id','tramite_tipo', 'requisito', 'estado']
+class RequisitoRequeridoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'tramite_tipo', 'requisito', 'presentado']
 
     ordering=['id']
 
@@ -74,4 +77,4 @@ class RequisitoPresentadoAdmin(admin.ModelAdmin):
 admin.site.register(Tramite, TramiteAdmin)
 admin.site.register(TipoTramite, TipoTramiteAdmin)
 admin.site.register(Requisito, RequisitoAdmin)
-admin.site.register(RequisitoPresentado, RequisitoPresentadoAdmin)
+admin.site.register(RequisitoRequerido, RequisitoRequeridoAdmin)

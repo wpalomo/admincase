@@ -36,9 +36,8 @@
                                 <th>DOCUMENTO</th>
                                 <th>CONTACTO</th>
                                 <th>FECHA ALTA </th>
-                                <th class=" no-link last">
-                                    <span class="nobr">Detalle</span>
-                                </th>
+                                <th>DATOS</th>
+                                <th>TRAMITES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,6 +50,11 @@
                                 <td class=" last">
                                     <a href="/clientes/modi/{{ cliente.persona.id }}">
                                         <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                                <td class=" last">
+                                    <a href="/tramites/listado/{{ cliente.persona.id }}">
+                                        <i class="fa fa-file"></i>
                                     </a>
                                 </td>
                             </tr>

@@ -3,7 +3,7 @@ from django.contrib import admin
 # from apps.agendas.models import MotivoBloqueo
 from apps.clientes.models import SituacionLaboral
 
-from .locacion.models import Pais, Provincia, Departamento, Localidad, Barrio
+from .locacion.models import Pais, Provincia, Departamento, Localidad
 from .organigrama.models import Profesion, Entidad
 from .persona.models import Sexo, TipoDocumento, EstadoCivil, NivelEducacion
 from .salud.models import ObraSocial, GrupoSanguineo
@@ -162,19 +162,6 @@ class LocalidadAdmin(admin.ModelAdmin):
     ordering = ['nombre']
 
 
-class BarrioAdmin(admin.ModelAdmin):
-    list_display = [
-        'id',
-        'nombre',
-    ]
-
-    search_fields = [
-        'nombre',
-    ]
-
-    ordering = ['nombre']
-
-
 class ProfesionAdmin(admin.ModelAdmin):
     list_display = [
         'nombre',
@@ -213,7 +200,6 @@ admin.site.register(Pais, PaisAdmin)
 admin.site.register(Provincia, ProvinciaAdmin)
 admin.site.register(Departamento, DepartamentoAdmin)
 admin.site.register(Localidad, LocalidadAdmin)
-admin.site.register(Barrio, BarrioAdmin)
 
 admin.site.register(Profesion, ProfesionAdmin)
 admin.site.register(Entidad, EntidadAdmin)

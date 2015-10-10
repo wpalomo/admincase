@@ -10,7 +10,7 @@ from .forms import TramiteForm
 
 from apps.clientes.models import Cliente
 from apps.personas.models import Persona
-from apps.tramites.models import (Tramite, RequisitoPresentado, TipoTramite,
+from apps.tramites.models import (Tramite, RequisitoRequerido, TipoTramite,
                                   Requisito)
 
 
@@ -58,7 +58,7 @@ class TramiteCreate(CreateView):
 
                 requisito = Requisito.objects.get(descripcion=item)
 
-                RequisitoPresentado.objects.create(
+                RequisitoRequerido.objects.create(
                     tramite=tramite,
                     requisito=requisito
                 )
@@ -89,7 +89,7 @@ class TramiteUpdate(UpdateView):
 
         tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        requisitos = RequisitoPresentado.objects.filter(
+        requisitos = RequisitoRequerido.objects.filter(
             tramite=tramite)
 
         print(requisitos)
@@ -110,7 +110,7 @@ class TramiteUpdate(UpdateView):
 
         tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        requisitos = RequisitoPresentado.objects.filter(tramite=tramite)
+        requisitos = RequisitoRequerido.objects.filter(tramite=tramite)
 
         form = TramiteForm(self.request.POST, instance=tramite)
 
@@ -125,16 +125,16 @@ class TramiteUpdate(UpdateView):
                 requisito = item.split('#')
 
                 if int(requisito[1]) != 0:
-                    requisito_presentado = requisitos.get(
+                    requisito_requerido = requisitos.get(
                         requisito__descripcion=requisito[0])
-                    requisito_presentado.estado = True
+                    requisito_requerido.presentado = True
 
                 else:
-                    requisito_presentado = requisitos.get(
+                    requisito_requerido = requisitos.get(
                         requisito__descripcion=requisito[0])
-                    requisito_presentado.estado = False
+                    requisito_requerido.presentado = False
 
-                requisito_presentado.save()
+                requisito_requerido.save()
 
             messages.add_message(
                 request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
@@ -227,7 +227,7 @@ class AnsesCreate(CreateView):
 
                 requisito = Requisito.objects.get(descripcion=item)
 
-                RequisitoPresentado.objects.create(
+                RequisitoRequerido.objects.create(
                     tramite=tramite,
                     requisito=requisito
                 )
@@ -261,7 +261,7 @@ class AnsesUpdate(UpdateView):
         tipos_tramites_anses = TipoTramite.objects.filter(
             entidad__nombre='ANSES')
 
-        requisitos = RequisitoPresentado.objects.filter(
+        requisitos = RequisitoRequerido.objects.filter(
             tramite=tramite)
 
         form = TramiteForm(instance=tramite)
@@ -281,7 +281,7 @@ class AnsesUpdate(UpdateView):
 
         tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        requisitos = RequisitoPresentado.objects.filter(tramite=tramite)
+        requisitos = RequisitoRequerido.objects.filter(tramite=tramite)
 
         form = TramiteForm(self.request.POST, instance=tramite)
 
@@ -296,16 +296,16 @@ class AnsesUpdate(UpdateView):
                 requisito = item.split('#')
 
                 if int(requisito[1]) != 0:
-                    requisito_presentado = requisitos.get(
+                    requisito_requerido = requisitos.get(
                         requisito__descripcion=requisito[0])
-                    requisito_presentado.estado = True
+                    requisito_requerido.presentado = True
 
                 else:
-                    requisito_presentado = requisitos.get(
+                    requisito_requerido = requisitos.get(
                         requisito__descripcion=requisito[0])
-                    requisito_presentado.estado = False
+                    requisito_requerido.estado = False
 
-                requisito_presentado.save()
+                requisito_requerido.save()
 
             messages.add_message(
                 request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
@@ -378,7 +378,7 @@ class CajaPrevisionCreate(CreateView):
 
                 requisito = Requisito.objects.get(descripcion=item)
 
-                RequisitoPresentado.objects.create(
+                RequisitoRequerido.objects.create(
                     tramite=tramite,
                     requisito=requisito
                 )
@@ -412,7 +412,7 @@ class CajaPrevisionUpdate(UpdateView):
 
         tipos_tramites_caja = TipoTramite.objects.filter(entidad__nombre='CAJA')
 
-        requisitos = RequisitoPresentado.objects.filter(
+        requisitos = RequisitoRequerido.objects.filter(
             tramite=tramite)
 
         form = TramiteForm(instance=tramite)
@@ -432,7 +432,7 @@ class CajaPrevisionUpdate(UpdateView):
 
         tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        requisitos = RequisitoPresentado.objects.filter(tramite=tramite)
+        requisitos = RequisitoRequerido.objects.filter(tramite=tramite)
 
         form = TramiteForm(self.request.POST, instance=tramite)
 
@@ -447,16 +447,16 @@ class CajaPrevisionUpdate(UpdateView):
                 requisito = item.split('#')
 
                 if int(requisito[1]) != 0:
-                    requisito_presentado = requisitos.get(
+                    requisito_requerido = requisitos.get(
                         requisito__descripcion=requisito[0])
-                    requisito_presentado.estado = True
+                    requisito_requerido.presentado = True
 
                 else:
-                    requisito_presentado = requisitos.get(
+                    requisito_requerido = requisitos.get(
                         requisito__descripcion=requisito[0])
-                    requisito_presentado.estado = False
+                    requisito_requerido.presentado = False
 
-                requisito_presentado.save()
+                requisito_requerido.save()
 
             messages.add_message(
                 request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
