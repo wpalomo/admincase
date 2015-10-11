@@ -15,11 +15,14 @@
 </div>
 
 <div class="clearfix"></div>
-
+<form id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
 <div class="row">
-
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
+            <div class="x_title">
+                <h2><strong>DETALLE DEL TRAMITE</strong></h2>
+                <div class="clearfix"></div>
+            </div>
             <div class="x_content">
                 {% for msg in messages %}
                     <strong>{{ msg }}</strong>
@@ -27,41 +30,92 @@
                 {% endfor %}
                 <br>
 
-                <form id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Cliente</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            {{ form.persona }}
+                        </div>{{ form.persona.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Tipo de Trámite</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <select id="id_tipo" name="tipo" class="form-control">
+                                <option value="">---------</option>
+                                {% for tipo in tipos_tramites %}
+                                    <option value="{{ tipo.id }}" {% if tipo.id == tramite.tipo.id %} selected {% endif %}>{{ tipo }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>{{ form.tipo.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Turno</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            {{ form.fecha_inicio }}
+                            <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+                        </div>{{ form.fecha_inicio.errors }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha Alarma</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            {{ form.fecha_alarma }}
+                            <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+                        </div>{{ form.fecha_alarma.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label for="id_estado">Estado:</label>
+                            {{ form.estado }}
+                        </div>{{ form.estado.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label for="id_observaciones"  class="col-md-12 col-sm-12 col-xs-12">Observaciones:</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            {{ form.observaciones }}
+                        </div>{{ form.observaciones.errors }}
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><strong>REQUISITOS NECESARIOS</strong></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
 
-                    <p><label for="id_persona">Persona:</label>
-                        {{ form.persona }}
-                    </p>{{ form.persona.errors }}
-                    <p><label for="id_tipo">Tipo de Trámite:</label>
-                        {{ form.tipo }}
-                    </p>{{ form.tipo.errors }}
-
-                    <p><label for="id_estado">Estado:</label> {{ form.estado }}</p>{{ form.estado.errors }}
-
-                    <p><label for="id_observaciones">Observaciones:</label>
-                        {{ form.observaciones }}
-                    </p>{{ form.observaciones.errors }}
-                    <br>
-                    {% if tramite %}
-                        <label>REQUISITOS</label>
-                        <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
-
-                        {% for opcion in requisitos %}
-                            <div class="checkbox" id="check_requisitos">
-                                <label>
-                                    <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion.requisito }}" value="0" {% if  opcion.estado %} checked="checked" {% endif %}>
-                                    {{ opcion.requisito }}
-                                </label>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                    <br>
-                    <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
-                </form>
+                {% for opcion in requisitos %}
+                    <div class="checkbox" id="check_requisitos">
+                        <label>
+                            <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion.requisito }}" value="0" {% if  opcion.presentado %} checked="checked" {% endif %}>
+                            {{ opcion.requisito }}
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
+</form>
 
 <script>
     var frm = document.getElementById('frm');

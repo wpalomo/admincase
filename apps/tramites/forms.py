@@ -36,6 +36,8 @@ class TramiteForm(forms.ModelForm):
     tipo = forms.ModelChoiceField(
         queryset=TipoTramite.objects.all(), required=True)
     fecha_inicio = forms.DateTimeField(required=True)
+    observaciones = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 3}), required=False)
 
     def __init__(self, *args, **kwargs):
         super(TramiteForm, self).__init__(*args, **kwargs)

@@ -28,7 +28,7 @@ class TipoTramite(models.Model):
 
 
 class Tramite(models.Model):
-    persona = models.OneToOneField(Persona, unique=True)
+    persona = models.OneToOneField(Persona)
     tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
     fecha_inicio = models.DateTimeField(default=datetime.now, null=True)
     fecha_fin = models.DateTimeField(null=True, blank=True)
