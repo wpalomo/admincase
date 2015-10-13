@@ -29,20 +29,25 @@
                     <br>
                 {% endfor %}
                 <br>
-
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Cliente</label>
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            {{ form.persona }}
-                        </div>{{ form.persona.errors }}
+                            <select class="select2_single form-control" tabindex="-1">
+                                <option value="">Seleccione un cliente</option>
+                                {% for cliente in personas %}
+                                    <option value="{{ cliente.persona.id }}">{{ cliente }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Tipo de Trámite</label>
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <select id="id_tipo" name="tipo" class="form-control">
+                            <select id="id_tipo" name="tipo" class="select2_single form-control">
                                 <option value="">---------</option>
                                 {% for tipo in tipos_tramites %}
                                     <option value="{{ tipo.id }}" {% if tipo.id == tramite.tipo.id %} selected {% endif %}>{{ tipo }}</option>
@@ -50,6 +55,11 @@
                             </select>
                         </div>{{ form.tipo.errors }}
                     </div>
+                </div>
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12">

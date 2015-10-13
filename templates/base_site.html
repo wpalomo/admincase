@@ -32,6 +32,11 @@
     <link href="{% static 'css/floatexamples.css' %}" rel="stylesheet" type="text/css" />
 
     <link href="{% static 'css/icheck/flat/green.css' %}" rel="stylesheet">
+    <script src="{% static 'bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}"></script>
+
+    <script src="{% static 'bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+
+    <script src="{% static 'bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js' %}"></script>
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/nprogress.js' %}"></script>
@@ -40,7 +45,7 @@
     <script src="{% static 'js/select/select2.full.js' %}"></script>
 
     <!-- datepicker -->
-    <script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script>
+    <!--script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script-->
     <!-- datepicker -->
 
     <script>
@@ -60,15 +65,20 @@
     <script>
         $(document).ready(function () {
             $(".select2_single").select2({
-                placeholder: "Seleccione un trámite",
+                placeholder: "Seleccione",
                 allowClear: true
             });
-            $(".select2_group").select2({});
-            $(".select2_multiple").select2({
-                maximumSelectionLength: 4,
-                placeholder: "With Max Selection limit 4",
-                allowClear: true
+
+            $(".form_datetime").datetimepicker({
+                format: 'dd/mm/yyyy'
             });
+
+            /*$('#single_cal4').daterangepicker({
+                language:'es',
+                singleDatePicker: true,
+                calender_style: "picker_4",
+                format: 'DD/MM/YYYY'
+            });*/
         });
     </script>
     <!-- /select2 -->
@@ -249,7 +259,6 @@
     <script src="{% static 'js/icheck/icheck.min.js' %}"></script>
     <!-- daterangepicker -->
     <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script>
 
 
 

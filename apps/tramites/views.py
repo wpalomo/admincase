@@ -41,20 +41,24 @@ class TramiteCreate(CreateView):
     form_class = TramiteForm
 
     def get(self, request, *args, **kwargs):
+
         path = self.request.get_full_path()
         tramite = path.split('/')
-        if tramite[3]:
+
+        if tramite[3] in ["anses", "caja", "familia"]:
             tipos_tramites = TipoTramite.objects.filter(
                 entidad__nombre=tramite[3].upper())
         else:
             tipos_tramites = TipoTramite.objects.all()
 
         form = TramiteForm()
+        personas = Cliente.objects.all()
 
         return render_to_response(
             'tramites/tramite_form.html',
             {
                 'form': form,
+                'personas': personas,
                 'tipos_tramites': tipos_tramites
             },
             context_instance=RequestContext(request)
