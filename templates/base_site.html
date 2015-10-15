@@ -12,7 +12,7 @@
 
     <title>:: ADMIN- CASE ::</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- FILES CSS -->
 
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -32,17 +32,19 @@
     <link href="{% static 'css/floatexamples.css' %}" rel="stylesheet" type="text/css" />
 
     <link href="{% static 'css/icheck/flat/green.css' %}" rel="stylesheet">
-    <script src="{% static 'bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}"></script>
 
-    <script src="{% static 'bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
-
-    <script src="{% static 'bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js' %}"></script>
-
+    <!-- FILES JS -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/nprogress.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
     <!-- select2 -->
     <script src="{% static 'js/select/select2.full.js' %}"></script>
+
+    <!-- FILES JS ALMANAQUE -->
+
+    <!-- ALMANAQUE -->
 
     <!-- datepicker -->
     <!--script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script-->
@@ -69,9 +71,14 @@
                 allowClear: true
             });
 
-            $(".form_datetime").datetimepicker({
+           /* $(".form_datetime").datetimepicker({
                 format: 'dd/mm/yyyy'
             });
+
+            $('.date #id_fecha_inicio').datepicker({
+                format: 'dd/mm/yyyy',
+                language:'es'
+            });*/
 
             /*$('#single_cal4').daterangepicker({
                 language:'es',
@@ -235,17 +242,12 @@
 
     </div>
 
-
-
-
     <div id="custom_notifications" class="custom-notifications dsp_none">
         <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
         </ul>
         <div class="clearfix"></div>
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
-
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <!-- gauge js -->
     <script type="text/javascript" src="{% static 'js/gauge/gauge.min.js' %}"></script>
