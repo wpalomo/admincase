@@ -33,6 +33,14 @@
 
     <link href="{% static 'css/icheck/flat/green.css' %}" rel="stylesheet">
 
+    <!-- FILES CSS ALMANAQUE -->
+    <link href="{% static 'css/bootstrap/bootstrap-datepicker.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+    <!-- ALMANAQUE -->
+
+
+
+
     <!-- FILES JS -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/nprogress.js' %}"></script>
@@ -42,9 +50,7 @@
     <!-- select2 -->
     <script src="{% static 'js/select/select2.full.js' %}"></script>
 
-    <!-- FILES JS ALMANAQUE -->
 
-    <!-- ALMANAQUE -->
 
     <!-- datepicker -->
     <!--script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script-->
@@ -71,14 +77,8 @@
                 allowClear: true
             });
 
-           /* $(".form_datetime").datetimepicker({
-                format: 'dd/mm/yyyy'
-            });
 
-            $('.date #id_fecha_inicio').datepicker({
-                format: 'dd/mm/yyyy',
-                language:'es'
-            });*/
+
 
             /*$('#single_cal4').daterangepicker({
                 language:'es',
@@ -259,8 +259,8 @@
     <script src="{% static 'js/nicescroll/jquery.nicescroll.min.js' %}"></script>
     <!-- icheck -->
     <script src="{% static 'js/icheck/icheck.min.js' %}"></script>
-    <!-- daterangepicker -->
-    <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
+    <!-- daterangepicker --
+    <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script-->
 
 
 
@@ -281,9 +281,20 @@
     <script type="text/javascript" src="{% static 'js/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/maps/jquery-jvectormap-us-aea-en.js' %}"></script>
 
+    <!-- FILES JS ALMANAQUE -->
+    <script src="{% static 'js/bootstrap/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/bootstrap/locales/bootstrap-datepicker.es.js' %}"></script>
+    <!-- ALMANAQUE -->
+
     <script src="{% static 'js/skycons/skycons.js' %}"></script>
     <script>
         NProgress.done();
+
+        $('#example1').datepicker({
+            format: "dd/mm/yyyy",
+            language: 'es'
+        });
+
     </script>
     <!-- /datepicker -->
 
