@@ -27,18 +27,12 @@
 
     <!-- Custom styling plus plugins -->
     <link href="{% static 'css/custom.css' %}" rel="stylesheet">
-    <!--link href="{% static 'css/maps/jquery-jvectormap-2.0.1.css' %}" rel="stylesheet" type="text/css"/-->
     <link href="{% static 'css/icheck/flat/green.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/floatexamples.css' %}" rel="stylesheet" type="text/css" />
-
-    <link href="{% static 'css/icheck/flat/green.css' %}" rel="stylesheet">
 
     <!-- FILES CSS ALMANAQUE -->
-    <link href="{% static 'css/bootstrap/bootstrap-datepicker.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/datepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/datepicker3.min.css' %}" rel="stylesheet">
     <!-- ALMANAQUE -->
-
-
 
 
     <!-- FILES JS -->
@@ -49,8 +43,6 @@
 
     <!-- select2 -->
     <script src="{% static 'js/select/select2.full.js' %}"></script>
-
-
 
     <!-- datepicker -->
     <!--script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script-->
@@ -76,16 +68,6 @@
                 placeholder: "Seleccione",
                 allowClear: true
             });
-
-
-
-
-            /*$('#single_cal4').daterangepicker({
-                language:'es',
-                singleDatePicker: true,
-                calender_style: "picker_4",
-                format: 'DD/MM/YYYY'
-            });*/
         });
     </script>
     <!-- /select2 -->
@@ -249,49 +231,25 @@
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
 
-    <!-- gauge js -->
-    <script type="text/javascript" src="{% static 'js/gauge/gauge.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/gauge/gauge_demo.js' %}"></script>
-    <!-- chart js -->
-    <script src="{% static 'js/chartjs/chart.min.js' %}"></script>
     <!-- bootstrap progress js -->
     <script src="{% static 'js/progressbar/bootstrap-progressbar.min.js' %}"></script>
     <script src="{% static 'js/nicescroll/jquery.nicescroll.min.js' %}"></script>
-    <!-- icheck -->
-    <script src="{% static 'js/icheck/icheck.min.js' %}"></script>
+
     <!-- daterangepicker --
     <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script-->
 
-
-
-    <!-- flot js -->
-    <!--[if lte IE 8]><script type="text/javascript" src="{% static 'js/excanvas.min.js' %}"></script><![endif]-->
-    <script type="text/javascript" src="{% static 'js/flot/jquery.flot.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/jquery.flot.pie.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/jquery.flot.orderBars.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/jquery.flot.time.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/date.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/jquery.flot.spline.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/jquery.flot.stack.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/curvedLines.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/flot/jquery.flot.resize.js' %}"></script>
-
-    <script type="text/javascript" src="{% static 'js/maps/jquery-jvectormap-2.0.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/maps/gdp-data.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/maps/jquery-jvectormap-us-aea-en.js' %}"></script>
-
     <!-- FILES JS ALMANAQUE -->
-    <script src="{% static 'js/bootstrap/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap-datepicker.min.js' %}"></script>
     <script src="{% static 'js/bootstrap/locales/bootstrap-datepicker.es.js' %}"></script>
     <!-- ALMANAQUE -->
 
-    <script src="{% static 'js/skycons/skycons.js' %}"></script>
     <script>
         NProgress.done();
 
-        $('#example1').datepicker({
-            format: "dd/mm/yyyy",
+        $('#dateRangePicker, #dateRangePicker2').datepicker({
+            format: 'dd/mm/yyyy',
+            startDate: '01/01/1900',
+            endDate: '30/12/2100',
             language: 'es'
         });
 

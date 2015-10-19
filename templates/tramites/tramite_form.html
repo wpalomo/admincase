@@ -33,7 +33,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Cliente</label>
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <select class="select2_single form-control" tabindex="-1">
+                            <select id="id_persona" name="persona" class="select2_single form-control" tabindex="-1">
                                 <option value="">Seleccione un cliente</option>
                                 {% for cliente in personas %}
                                     <option value="{{ cliente.persona.id }}">{{ cliente }}</option>
@@ -58,23 +58,21 @@
                 </div>
 
                 <div class="form-group">
-                    <input  type="text" placeholder="click to show datepicker"  id="example1">
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Turno</label>
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            {{ form.fecha_inicio }}
-                            <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
-                        </div>{{ form.fecha_inicio.errors }}
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha Alarma</label>
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            {{ form.fecha_alarma }}
-                            <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
-                        </div>{{ form.fecha_alarma.errors }}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Turno</label>
+                            <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
+                                {{ form.fecha_inicio }}
+                                <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
+                            </div>{{ form.fecha_inicio.errors }}
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha Alarma</label>
+                            <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker2">
+                                {{ form.fecha_alarma }}
+                                <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
+                            </div>{{ form.fecha_alarma.errors }}
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

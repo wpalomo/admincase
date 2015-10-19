@@ -32,9 +32,9 @@ class Tramite(models.Model):
     tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
     fecha_alta = models.DateTimeField(default=datetime.now, null=True,
                                       blank=True)
-    fecha_inicio = models.DateTimeField(null=True, blank=True)
-    fecha_alarma = models.DateTimeField(null=True, blank=True)
-    fecha_fin = models.DateTimeField(null=True, blank=True)
+    fecha_inicio = models.DateField(null=True, blank=True)
+    fecha_alarma = models.DateField(null=True, blank=True)
+    fecha_fin = models.DateField(null=True, blank=True)
     estado = models.BooleanField(default=False, blank=True)
     observaciones = models.TextField(max_length=None, null=True, blank=True)
 
