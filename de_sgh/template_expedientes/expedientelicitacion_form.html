@@ -1,0 +1,758 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+
+            <a href='/expedientes/modi/{{ expediente.id }}'>
+                <strong>EXPEDIENTE</strong>
+            </a> --
+
+            <strong>LICITACION</strong>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <form id="frm" action="" method="post">{% csrf_token %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="form-group">
+                        <label class="col-sm-12 col-xs-12">Etapa <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-12 col-xs-12">{{ form.etapa }}</div>{{ form.etapa.errors }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>COMPROMISO</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    {% for msg in messages %}
+
+                        <strong>{{msg}}</strong>
+                        <br><br>
+
+                    {% endfor %}
+                    <input type="hidden" id="id_expediente" name="expediente" value="{{expediente.id}}">
+
+                    <div id="divLicitacion">
+
+                            <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">N° de Licitación - Año <span class="required">*</span></label>
+                                <div class="col-md-5 col-sm-12 col-xs-12">
+                                    {{ form.numero }}
+                                </div>{{ form.numero.errors }}
+                                <div class="col-md-3 col-sm-12 col-xs-12">
+                                    {{ form.anio }}
+                                </div>{{ form.anio.errors }}
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-5 col-sm-12 col-xs-12">N° de Disposición <span class="required">*</span></label>
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    {{ form.numero_disposicion }}
+                                </div>{{ form.numero_disposicion.errors }}
+                            </div>
+                        </div>
+                        <br><br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">Resolución Aprobación <span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    {{ form.resolucion_aprobacion }}
+                                </div>{{ form.resolucion_aprobacion.errors }}
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-5 col-sm-12 col-xs-12">Fecha Resolución Aprobación <span class="required">*</span></label>
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    {{ form.fecha_resolucion_aprobacion }}
+                                </div>{{ form.fecha_resolucion_aprobacion.errors }}
+                            </div>
+                        </div>
+                        <br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">Resolución Adjudicación <span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    {{ form.resolucion_adjudicacion }}
+                                </div>{{ form.resolucion_adjudicacion.errors }}
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-5 col-sm-12 col-xs-12">Fecha Resolución Adjudicación <span class="required">*</span></label>
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    {{ form.fecha_resolucion_adjudicacion }}
+                                </div>{{ form.fecha_resolucion_adjudicacion.errors }}
+                            </div>
+                        </div>
+                        <br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label class="col-md-2 col-sm-12 col-xs-12">Fuente Financiamiento <span class="required">*</span></label>
+                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                    {{ form.fuente_financiamiento }}
+                                </div>{{ form.fuente_financiamiento.errors }}
+                            </div>
+                        </div><br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-2 col-sm-12 col-xs-12"><label>Proveedor <span class="required">*</span></label></div>
+                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                    {{ form.proveedor }}
+                                </div>{{ form.proveedor.errors }}
+                            </div>
+                        </div><br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">Monto <span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    {{ form.monto }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">Monto Total <span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    {{ form.monto_total }}
+                                </div>
+                            </div>
+                        </div><br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">Orden de Provisión <span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    {{ form.orden_provision }}
+                                </div>{{ form.orden_provision.errors }}
+                            </div>
+                        </div><br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                                <div class="col-md-11 col-sm-12 col-xs-12"></div>
+                                <div class="col-md-1 col-sm-12 col-xs-12">
+                                    <input type="button" class="btn btn-primary" id="btnAgregarCompromiso" value="Agregar"/>
+                                    <input type="hidden" id="id_items_proveedor" name="items_proveedor" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="tabla_compromiso_item" class="table table-striped responsive-utilities jambo_table">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th>Proveedor </th>
+                                            <th>Monto </th>
+                                            <th>Monto Total</th>
+                                            <th>Orden de Provisión</th>
+                                            <th>Acta de Recepción</th>
+                                            <th class=" no-link last"><span class="nobr">Acción</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for compromiso in expediente_licitacion_compromiso_list %}
+                                    <tr class="odd pointer">
+                                        <td>{{ compromiso.proveedor }}</td>
+                                        <td>$ {{ compromiso.monto }}</td>
+                                        <td>$ {{ compromiso.monto_total }}</td>
+                                        <td>{{ compromiso.orden_provision }}</td>
+                                        <td>{{ compromiso.acta_recepcion }}</td>
+                                        <td>--</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>ORDENADO</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="divOrdenado">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label class="col-md-2 col-sm-12 col-xs-12">Proveedor <span class="required">*</span></label>
+                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                    <select class="form-control" id="id_proveedor_ordenado" name="proveedor_ordenado">
+                                        <option value="" selected="selected">---------</option>
+                                        {% for compromiso in expediente_licitacion_compromiso_list  %}
+                                            <option id="ordenado_{{ compromiso.proveedor.id }}" value="{{ compromiso.proveedor.id }}"
+                                                    data-proveedor="{{ compromiso.proveedor }}"
+                                                    data-ordenprovision="{{ compromiso.orden_provision }}"
+                                                    data-actarecepcion="{{ compromiso.acta_recepcion }}"
+                                                    data-monto="{{ compromiso.monto }}">{{ compromiso.proveedor }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="hidden" id="id_ordenado_solictante_id" name="ordenado_solictante_id" value=""/>
+                                    <input type="hidden" id="id_ordenado_orden_provision" name="ordenado_orden_provision" value=""/>
+                                    <input type="hidden" id="id_ordenado_acta_recepcion" name="ordenado_acta_recepcion" value=""/>
+                                    <input type="hidden" id="id_ordenado_monto" name="ordenado_monto" value=""/>
+                                    <input type="hidden" id="id_ordenado_monto_total" name="ordenado_monto_total" value=""/>
+                                    <input type="hidden" id="id_ordenado_fecha_resolucion_pago" name="ordenado_fecha_resolucion_pago" value=""/>
+                                </div>
+                            </div>
+                        </div><br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">Resolución Pago <span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    {{ form.numero_resolucion_pago }}
+                                </div>{{ form.numero_resolucion_pago.errors }}
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label for="fullname" class="col-md-4 col-sm-12 col-xs-12">Fecha Resolución Pago <span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    {{ form.fecha_resolucion_pago }}
+                                </div>{{ form.fecha_resolucion_pago.errors }}
+                            </div>
+                        </div><br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label class="col-sm-2 col-xs-12">Solicitante Resolución Pago <span class="required">*</span></label>
+                                <div class="col-md-4 col-sm-12 col-xs-12">{{ form.solicitante_resolucion_pago }}</div>
+                                {{ form.solicitante_resolucion_pago.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12"><label>Observaciones:</label></div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">{{ form.observaciones }}</div>
+                                {{ form.observaciones.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                                <div class="col-md-11 col-sm-12 col-xs-12"></div>
+                                <div class="col-md-1 col-sm-12 col-xs-12">
+                                    <input type="button" class="btn btn-primary" id="btnAgregarOrdenado" value="Agregar"/>
+                                    <input type="hidden" id="id_items_ordenado" name="items_ordenado" value=""/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="tabla_ordenado_item" class="table table-striped responsive-utilities jambo_table">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th>Proveedor </th>
+                                            <th>Orden Provisión </th>
+                                            <th>Acta de Recepción</th>
+                                            <th>Resolución de Pago</th>
+                                            <th>Monto</th>
+                                            <th>Solicitante</th>
+                                            <th>Observaciones</th>
+                                            <th class=" no-link last"><span class="nobr">Acción</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ordenado in expediente_licitacion_ordenado_list %}
+                                    <tr class="odd pointer">
+                                        <td class=" ">{{ ordenado.proveedor }}</td>
+                                        <td class=" ">{{ ordenado.orden_provision }}</td>
+                                        <td class=" ">{{ ordenado.acta_recepcion }}</td>
+                                        <td class=" ">{{ ordenado.numero_resolucion_pago }}</td>
+                                        <td class=" ">{{ ordenado.monto }}</td>
+                                        <td class=" ">{{ ordenado.solicitante_resolucion_pago }}</td>
+                                        <td class=" ">{{ ordenado.observaciones }}</td>
+                                        <td class=" ">--</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <br>
+                <input type="button" id="btnGuardar" value="Guardar" class="btn btn-primary">
+            </div>
+        </div>
+    </div>
+    </form>
+
+<script>
+    var etapa_descripcion;
+    var items_proveedor = new Array();
+    var jsonItemsProveedor;
+    var myObj = {};
+    var id_proveedor, proveedor, monto, monto_total;
+    var orden_provision, acta_recepcion;
+    var resolucion_pago, solicitante, observaciones;
+
+    var add_item = true;
+
+    var cantidad_option_compromiso = $("#id_proveedor option").size();
+    var cantidad_option_ordenado = $("#id_proveedor_ordenado option").size();
+
+    $(document).ready(function(){
+
+        $("#btnGuardar").prop("disabled", true);
+        $("#btnAgregarCompromiso").prop("disabled", true);
+        $("#btnAgregarOrdenado").prop("disabled", true);
+
+        $("#id_orden_provision").prop("placeholder", "Si no ingresa valor, el sistema lo creará automáticamente.");
+        $("#id_numero_resolucion_pago").prop("placeholder", "Si no ingresa valor, el sistema lo creará automáticamente.");
+
+        $("#id_etapa").val({{ expediente.etapa.id }});
+
+        etapa_descripcion = $("#id_etapa option[value="+ $('#id_etapa').val() +"]").text();
+
+        $("#divLicitacion :input").prop("disabled", true);
+        $("#divOrdenado :input").prop("disabled", true);
+        $("#divOrdenado").hide();
+
+        if('{{ expediente.estado.valor }}' == "CERRADO"){
+            $("#frm :input").prop("disabled", true);
+            $("#divOrdenado").show();
+        }
+
+    });
+
+    $("#id_etapa").change(function() {
+
+        $("#btnGuardar").prop("disabled", true);
+        $("#btnAgregarCompromiso").prop("disabled", true);
+
+        etapa_descripcion = $("#id_etapa option[value="+ $('#id_etapa').val() +"]").text();
+
+        if(etapa_descripcion == "compromiso" && '{{ expediente.etapa.valor }}' != "COMPROMISO"){
+            $("#divLicitacion :input").prop("disabled", false);
+            $("#btnAgregarCompromiso").prop("disabled", false);
+        }
+
+        if(etapa_descripcion != "ordenado" && '{{ expediente.etapa.valor }}' == "COMPROMISO"){
+            $("#divOrdenado :input").prop("disabled", true);
+            $("#divOrdenado").hide();
+        }
+
+        if(etapa_descripcion == "ordenado" && '{{ expediente.etapa.valor }}' == "COMPROMISO"){
+
+            $("#divOrdenado :input").prop("disabled", false);
+            $("#divOrdenado").show();
+        }
+
+        if(etapa_descripcion == "ordenado" && '{{ expediente.etapa.valor }}' != "ORDENADO"){
+            $("#divOrdenado :input").prop("disabled", false);
+            $("#btnAgregarOrdenado").prop("disabled", false);
+        }
+
+        if(etapa_descripcion == "ordenado" && '{{ expediente.etapa.valor }}' != "COMPROMISO"){
+            alert("No puede saltar etapas ni volver a una anterior!");
+            $("#id_etapa").val({{ expediente.etapa.id }});
+            $("#id_etapa").focus();
+            $("#divOrdenado :input").prop("disabled", true);
+            $("#divOrdenado").hide();
+            return;
+        }
+
+    });
+
+    $("#id_orden_provision").blur(function() {
+
+        $("#btnAgregarCompromiso").prop("disabled", false);
+
+        if($("#id_orden_provision").val() != "") {
+
+            var orden_provision = $("#id_orden_provision").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/expedientes/licitacion/get_numero_ingreso_manual_es_valido/",
+                data: {
+                    tipo: "ORDEN_PROVISION",
+                    numero: orden_provision,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+
+                success: function (data) {
+
+                    if (!data) {
+                        alert("El numero de orden de provision ingresado es incorrecto!");
+
+                        $("#id_orden_provision").select();
+                        $("#id_orden_provision").focus();
+
+                        $("#btnAgregarCompromiso").prop("disabled", true);
+                        return;
+                    } else {
+                        $("#btnAgregarCompromiso").prop("disabled", false);
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+
+    $("#btnAgregarCompromiso").click(function() {
+
+        add_item = true;
+
+        if(etapa_descripcion == "compromiso"){
+            $("#btnGuardar").prop("disabled", false);
+        } else {
+            alert("La etapa para poder agregar debe ser 'Compromiso'!");
+            $("#btnAgregarCompromiso").prop("disabled", true);
+            $("#btnGuardar").prop("disabled", true);
+            $("#id_etapa").focus();
+            return;
+        }
+
+        if($("#id_proveedor").val() == "" || $("#id_monto").val() == "" ||
+                $("#id_monto_total").val() == ""){
+
+            alert("Por favor, asegúrese que los campos " +
+            "'Proveedor - Monto - Monto Total' estén cargados y " +
+            "los datos sean correctos!");
+
+            $("#id_proveedor").focus();
+
+            return;
+        }
+
+        id_proveedor = $("#id_proveedor").val();
+        proveedor = $("#id_proveedor option[value="+ $('#id_proveedor').val() +"]").text();
+
+        if($('#tabla_compromiso_item tbody tr').length != 0){
+
+            if((parseInt($('#tabla_compromiso_item tbody tr').length) + 1) < (parseInt(cantidad_option_compromiso)-1)){
+                $("#btnGuardar").prop("disabled", true);
+                return false;
+            }
+
+            $('#tabla_compromiso_item tbody tr').each(function(){
+
+                $(this).children("td").each(function (index){
+                    validar_item(this, index, "COMPROMISO", id_proveedor);
+                });
+            });
+        } else {
+            add_item = true;
+        }
+
+        if(add_item){
+            $("#tabla_compromiso_item").append(
+                "<tr><td id='"+ id_proveedor + "'>" + proveedor + "</td><td>" +
+                $("#id_monto").val() + "</td><td>" +
+                $("#id_monto_total").val() + "</td><td>" + $("#id_orden_provision").val() + "</td>" +
+                "<td>--</td><td onclick='quitarItem(this)'>Quitar</td></tr>");
+
+
+            $("#id_proveedor").val("");
+            $("#id_monto").val("");
+            $("#id_monto_total").val("");
+            $("#id_orden_provision").val("");
+        }
+
+    });
+
+    function quitarItem(fila){
+        fila.closest('tr').remove();
+
+        add_item = true;
+    }
+
+    $("#id_numero_resolucion_pago").blur(function() {
+
+        $("#btnAgregarOrdenado").prop("disabled", false);
+
+        if($("#id_numero_resolucion_pago").val() != "") {
+
+            var numero_resolucion_pago = $("#id_numero_resolucion_pago").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/expedientes/licitacion/get_numero_ingreso_manual_es_valido/",
+                data: {
+                    tipo: "RESOLUCION_PAGO",
+                    numero: numero_resolucion_pago,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+
+                    if (!data) {
+                        alert("El numero de resolución de pago ingresado es incorrecto!");
+
+                        $("#id_numero_resolucion_pago").select();
+                        $("#id_numero_resolucion_pago").focus();
+
+                        $("#btnAgregarOrdenado").prop("disabled", true);
+                        return;
+                    } else {
+                        $("#btnAgregarOrdenado").prop("disabled", false);
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+
+    $("#btnAgregarOrdenado").click(function() {
+
+        add_item = true;
+
+        if(etapa_descripcion == "ordenado"){
+            $("#btnGuardar").prop("disabled", false);
+        } else {
+            alert("La etapa para poder agregar debe ser 'Ordenado'!");
+            $("#btnAgregarOrdenado").prop("disabled", true);
+            $("#btnGuardar").prop("disabled", true);
+            $("#id_etapa").focus();
+            return;
+        }
+
+        if($("#id_proveedor_ordenado").val() == "" || $("#id_fecha_resolucion_pago").val() == "" ||
+                $("#id_solicitante_resolucion_pago").val() == ""){
+
+            alert("Por favor, asegúrese que los campos " +
+            "'Proveedor - Fecha de Resolución - Solicitante'" +
+            " estén cargados y los datos sean correctos!");
+
+            $("#id_proveedor_ordenado").focus();
+
+            return;
+        }
+
+        id_proveedor = $("#id_proveedor_ordenado").val();
+        proveedor = $("#id_proveedor_ordenado option[value="+ $('#id_proveedor_ordenado').val() +"]").text();
+        orden_provision = $("#id_ordenado_orden_provision").val();
+        acta_recepcion = $("#id_ordenado_acta_recepcion").val();
+        resolucion_pago = $("#id_numero_resolucion_pago").val();
+        monto = $("#id_ordenado_monto").val();
+        solicitante = $("#id_solicitante_resolucion_pago option[value="+ $('#id_solicitante_resolucion_pago').val() +"]").text();
+        observaciones = $("#id_observaciones").val();
+
+        $("#id_ordenado_solictante_id").val($('#id_solicitante_resolucion_pago').val());
+
+
+        if($('#tabla_ordenado_item tbody tr').length != 0){
+
+            if((parseInt($('#tabla_ordenado_item tbody tr').length) + 1) < (parseInt(cantidad_option_ordenado)-1)){
+                $("#btnGuardar").prop("disabled", true);
+                return false;
+            }
+
+            $('#tabla_ordenado_item tbody tr').each(function(){
+
+                $(this).children("td").each(function (index){
+                    validar_item(this, index, "ORDENADO", id_proveedor);
+                });
+            });
+        } else {
+            add_item = true;
+        }
+
+
+        if(add_item){
+            $("#tabla_ordenado_item").append(
+                "<tr><td id='"+ id_proveedor + "'>" + proveedor + "</td>" +
+                "<td>" + orden_provision + "</td>" +
+                "<td>" + acta_recepcion + "</td>" +
+                "<td>" + resolucion_pago + "</td>" +
+                "<td>" + monto + "</td>" +
+                "<td>" + solicitante + "</td>" +
+                "<td>" + observaciones + "</td>" +
+                "<td onclick='quitarItem(this)'>Quitar</td></tr>");
+
+
+            $("#id_proveedor_ordenado").val("");
+            $("#id_numero_resolucion_pago").val("");
+            $("#id_solicitante_resolucion_pago").val("");
+            $("#id_observaciones").val("");
+        }
+
+    });
+
+    $("#id_proveedor_ordenado").change(function() {
+
+        var id_option = $(this).val();
+
+        var option = document.getElementById("ordenado_"+id_option);
+
+        var acta_recepcion_ordenado = option.dataset.actarecepcion;
+        var orden_provision_ordenado = option.dataset.ordenprovision;
+        var monto_ordenado = option.dataset.monto;
+        var monto_total_ordenado = option.dataset.montototal;
+
+        $("#id_ordenado_acta_recepcion").val(acta_recepcion_ordenado);
+        $("#id_ordenado_orden_provision").val(orden_provision_ordenado);
+        $("#id_ordenado_monto").val(monto_ordenado);
+        $("#id_ordenado_monto_total").val(monto_total_ordenado);
+
+        $("#id_ordenado_fecha_resolucion_pago").val($("#id_fecha_resolucion_pago").val());
+
+    });
+
+    function validar_item(objeto, index, item, id_proveedor) {
+        if (item == "COMPROMISO") {
+            if (index == 0) {
+                if (id_proveedor == $(objeto).attr("id")) {
+                    alert("No puede ingresar 2 compromisos para un mismo proveedor!");
+                    $("#id_proveedor").val("");
+                    add_item = false;
+                }
+            }
+        }
+
+        if (item == "ORDENADO") {
+            if (index == 0) {
+                if (id_proveedor == $(objeto).attr("id")) {
+                    alert("No puede ingresar 2 órdenes para un mismo proveedor!");
+                    $("#id_proveedor_ordenado").val("");
+                    $("#id_numero_resolucion_pago").val("");
+                    $("#id_solicitante_resolucion_pago").val("");
+                    $("#id_observaciones").val("");
+                    add_item = false;
+                }
+            }
+        }
+    }
+
+    function add_array_item_proveedor(etapa){
+
+        if(etapa == "COMPROMISO"){
+
+            $('#tabla_compromiso_item tbody tr').each(function(){
+                $(this).children("td").each(function (index){
+
+                    switch (index) {
+                        case 0:
+                            proveedor = $(this).text();
+                            break;
+                        case 1:
+                            monto = $(this).text();
+                            break;
+                        case 2:
+                            monto_total = $(this).text();
+                            break;
+                        case 3:
+                            orden_provision = $(this).text();
+                            break;
+                    }
+                });
+
+                myObj = {
+                    proveedor: proveedor,
+                    monto: monto,
+                    monto_total: monto_total,
+                    orden_provision: orden_provision
+                };
+
+                items_proveedor.push(myObj);
+            });
+
+            jsonItemsProveedor = JSON.stringify(items_proveedor);
+
+            $("#id_items_proveedor").val(jsonItemsProveedor);
+
+        }
+
+        if(etapa == "ORDENADO"){
+
+            $('#tabla_ordenado_item tbody tr').each(function(){
+                $(this).children("td").each(function (index){
+
+                    switch (index) {
+                        case 0:
+                            proveedor = $(this).text();
+                            break;
+                        case 1:
+                            orden_provision = $(this).text();
+                            break;
+                        case 2:
+                            acta_recepcion = $(this).text();
+                            break;
+                        case 3:
+                            resolucion_pago = $(this).text();
+                            break;
+                        case 4:
+                            monto = $(this).text();
+                            break;
+                        case 5:
+                            solicitante = $("#id_ordenado_solictante_id").val();
+                            break;
+                        case 6:
+                            observaciones = $(this).text();
+                            break;
+                    }
+                });
+
+                myObj = {
+                    proveedor: proveedor,
+                    orden_provision: orden_provision,
+                    acta_recepcion: acta_recepcion,
+                    resolucion_pago: resolucion_pago,
+                    fecha_resolucion_pago: $("#id_ordenado_fecha_resolucion_pago").val(),
+                    monto: parseFloat(monto),
+                    monto_total: parseFloat($("#id_ordenado_monto_total").val()),
+                    solicitante: solicitante,
+                    observaciones: observaciones
+                };
+
+                items_proveedor.push(myObj);
+            });
+
+            jsonItemsProveedor = JSON.stringify(items_proveedor);
+
+            $("#id_items_ordenado").val(jsonItemsProveedor);
+
+        }
+    }
+
+    $("#btnGuardar").click(function() {
+        var etapa = $("#id_etapa option[value="+ $('#id_etapa').val() +"]").text().toUpperCase();
+
+        if(confirm("ATENCION: Está seguro de guardar la Licitación con la etapa" +
+                " '" + etapa + "'?, una vez confirmado no podrá realizar cambios!")){
+
+            add_array_item_proveedor(etapa);
+            $('#frm').submit();
+        }
+        return;
+    });
+
+</script>
+
+{% endblock %}
