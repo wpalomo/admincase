@@ -12,7 +12,8 @@ from .salud.models import ObraSocial, GrupoSanguineo
 class EntidadAdmin(admin.ModelAdmin):
     list_display = [
         'id',
-        'nombre'
+        'nombre',
+        'valor'
     ]
 
     search_fields = [

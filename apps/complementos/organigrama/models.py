@@ -35,6 +35,7 @@ def _generar_ruta_imagen(instance, filename):
 
 class Entidad(models.Model):
     nombre = models.CharField(max_length=50, unique=True, blank=False)
+    valor = models.CharField(max_length=50, unique=True, null=True, blank=False)
     imagen = models.ImageField(
         upload_to=_generar_ruta_imagen, blank=True, null=True)
 
