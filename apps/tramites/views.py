@@ -9,6 +9,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .forms import TramiteForm
 
 from apps.clientes.models import Cliente
+from apps.complementos.organigrama.models import Entidad
 from apps.personas.models import Persona
 from apps.tramites.models import (Tramite, RequisitoRequerido, TipoTramite,
                                   Requisito)
@@ -23,17 +24,17 @@ class TramiteListView(ListView):
     model = Tramite
     paginate_by = 10
 
-    # def get(self, request, *args, **kwargs):
-    #
-    #     tramites = Tramite.objects.all
-    #
-    #     return render_to_response(
-    #         'tramites/tramite_list.html',
-    #         {
-    #             'clientes_con_tramites': clientes
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
+    def get(self, request, *args, **kwargs):
+
+        tramites_entidades = Entidad.objects.all()
+
+        return render_to_response(
+            'tramites/tramite_list.html',
+            {
+                'tramites_entidades_list': tramites_entidades
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 class TramiteCreate(CreateView):
@@ -219,6 +220,16 @@ class TramiteClienteListView(ListView):
 # ANSES #
 
 class AnsesListView(ListView):
+    queryset = Tramite.objects.filter(
+        tipo__entidad__nombre='ANSES',
+        estado=False
+    )
+    context_object_name = 'cliente_anses'
+    template_name = 'tramites/tramite_anses_list.html'
+    paginate_by = 10
+
+
+class AnsesRequisitosListView(ListView):
     queryset = Tramite.objects.filter(
         tipo__entidad__nombre='ANSES',
         estado=False
