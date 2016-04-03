@@ -7,7 +7,8 @@
     <div class="title_right" style="background-color:#ccc">
         <div class="x_title">
             <a href='/'><strong>HOME</strong></a> --
-            <strong>LISTADO</strong></a>
+            <a href="/tramites/listado/"><strong>LISTA DE TRAMITES</strong></a> --
+            <strong>ANSES</strong></a>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -16,131 +17,85 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                            <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/tramites/listado/'" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">
-                                    <i class="fa fa-list"></i> <strong>TODOS</strong>
-                                </a>
-                            </li>
-                            <li role="presentation" class="active">
-                                <a href="#" onclick="window.location='/tramites/anses/listado/'" role="tab" id="profile-tab" data-toggle="tab"  aria-expanded="false">
-                                    <img src="{{ MEDIA_URL }}logo/tramites/ANSES_ICO.png" width="50" height="20">
-                                </a>
-                            </li>
-                            <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/tramites/caja/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
-                                    <img src="{{ MEDIA_URL }}logo/tramites/CAJA_PREVISION_ICO.png" width="50" height="20">
-                                </a>
-                            </li>
-                            <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/tramites/familia/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
-                                    <img src="{{ MEDIA_URL }}logo/tramites/FAMILIA_ICO.png" width="55" height="20">
-                                </a>
-                            </li>
-                            <li role="presentation" class="">
-                                <a href="#" onclick="window.location='/tramites/civil_comercial/listado/'" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
-                                    <img src="{{ MEDIA_URL }}logo/tramites/CIVIL_COMERCIAL_ICO.png" width="60" height="20">
-                                </a>
-                            </li>
-                        </ul>
-                        <div id="myTabContent" class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade" id="tab_content1" aria-labelledby="home-tab">
-
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content2" aria-labelledby="profile-tab">
-                                <div class="x_title">
-                                    <h2>CLIENTES CON TRAMITE ANSES</h2>
-                                    <div style="text-align: right">
-                                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/anses/'">Iniciar Tramite</button>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="form-group form-horizontal">
-                                    <div class="col-md-5 col-sm-5 col-xs-5">
-                                        <select class="select2_single form-control" tabindex="-1">
-                                            {% for tramite in tipo_tramite_anses %}
-                                            <option value="AK">{{ tramite }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="input-group form-horizontal col-md-5 col-sm-5 col-xs-5">
-                                        <input type="text" name="q" class="form-control" placeholder="Buscar por...">
-                                        <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Buscar!</button>
-                                        </span>
-                                    </div>
-                                </div><br>
-                                <table id="example" class="table table-striped responsive-utilities jambo_table">
-                                    <thead>
-                                        <tr class="headings">
-                                            <th>PERSONA </th>
-                                            <th>DOCUMENTO</th>
-                                            <th>ESTADO CIVIL</th>
-                                            <th>CASO</th>
-                                            <th>FECHA TURNO</th>
-                                            <th>ESTADO TRAMITE</th>
-                                            <th class=" no-link last">
-                                                <span class="nobr">Acción</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for tramite in cliente_anses %}
-                                        <tr class="odd pointer">
-                                            <td class=" ">{{ tramite.persona | upper }}</td>
-                                            <td class=" ">{{ tramite.persona.tipo_documento }} - {{ tramite.persona.numero_documento }}</td>
-                                            <td class=" ">{{ tramite.persona.estado_civil | upper }}</td>
-                                            <td class=" ">{{ tramite.tipo | upper }}</td>
-                                            <td class=" ">20/10/2015</td>
-                                            <td class=" ">EN CURSO</td>
-                                            <td class=" last">
-                                                <a href="/tramites/modi/anses/{{ tramite.id }}">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        {% empty %}
-                                            <div class="alert alert-danger" role="alert">
-                                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                              <span class="sr-only">Error:</span>
-                                                No se encontraron registros
-                                            </div>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                {% if is_paginated %}
-
-                                <center>
-                                <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
-                                </center>
-                                <center>
-                                   <ul class="pagination">
-                                       <li id="n_pag_inicio" ><a href="/tramites/anses/listado" title="Ir al inicio"> << </a></li>
-
-                                        {% if page_obj.has_previous %}
-                                            <li id="n_pag_{{page_obj.number}}">
-                                              <a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a>
-                                            </li>
-                                        {% endif %}
-
-                                        <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
-
-                                        {% if page_obj.has_next %}
-                                            <li id="n_pag_{{page_obj.number}}">
-                                              <a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a>
-                                            </li>
-                                        {% endif %}
-
-                                        <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
-                                    </ul>
-                                </center>
-                                {% endif %}
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk </p>
-                            </div>
+                    <div class="x_title">
+                        <h2>TRAMITES ANSES - REQUISITOS</h2>
+                        <div style="text-align: right">
+                            <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/anses/'">Crear Tramite Anses</button>
                         </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group form-horizontal">
+                        <div class="input-group form-horizontal col-md-5 col-sm-5 col-xs-5">
+                            <input type="text" name="q" class="form-control" placeholder="Buscar por nombre...">
+                            <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Buscar!</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group form-horizontal">
+                        <table id="example" class="table table-striped responsive-utilities jambo_table">
+                            <thead>
+                                <tr class="headings">
+                                    <th>TRAMITES</th>
+                                    <th class=" no-link last">
+                                        <span class="nobr">REQUISITOS</span>
+                                    </th>
+                                    <th class=" no-link last">
+                                        <span class="nobr">IMPRIMIR</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tramite_entidad in object_list %}
+                                <tr class="odd pointer">
+                                    <td class=" ">{{ tramite_entidad.descripcion }}</td>
+                                    <td class=" last">
+                                        <a href="#"><!-- /tramites/anses/requisitos/{{ tramite_entidad.id }}"-->
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
+                                    <td class=" last">
+                                        <a href="/tramites/anses/requisitos/{{ tramite_entidad.id }}">
+                                            <i class="fa fa-print"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                    <div class="alert alert-danger" role="alert">
+                                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                      <span class="sr-only">Error:</span>
+                                        No se encontraron tipos de tramites Anses
+                                    </div>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if is_paginated %}
+
+                        <center>
+                        <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
+                        </center>
+                        <center>
+                           <ul class="pagination">
+                               <li id="n_pag_inicio" ><a href="/tramites/anses/listado" title="Ir al inicio"> << </a></li>
+
+                                {% if page_obj.has_previous %}
+                                    <li id="n_pag_{{page_obj.number}}">
+                                      <a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a>
+                                    </li>
+                                {% endif %}
+
+                                <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                                {% if page_obj.has_next %}
+                                    <li id="n_pag_{{page_obj.number}}">
+                                      <a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a>
+                                    </li>
+                                {% endif %}
+
+                                <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
+                            </ul>
+                        </center>
+                        {% endif %}
                     </div>
                 </div>
             </div>

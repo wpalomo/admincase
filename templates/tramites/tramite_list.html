@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             {% for tramites_entidades in tramites_entidades_list %}
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="window.location='/tramites/{{ tramites_entidades.valor | lower }}/requisitos/'">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="window.location='/tramites/{{ tramites_entidades.valor | lower }}/listado/'">
                     <div class="tile-stats">
                         <div class="icon">
                             <!--i class="fa fa-user"></i-->
@@ -23,7 +23,7 @@
                         <div class="count">
                             <img class="img-responsive img-portfolio img-hover" width="175px" height="100px" src="{{ MEDIA_URL }}{{ tramites_entidades.imagen }}" alt="">
                         </div>
-                        <h3>Requisitos</h3>
+                        <h3>Tramites - Requisitos</h3>
                         <p>&nbsp;</p>
                     </div>
                 </div>
