@@ -1,0 +1,399 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+            <a href='/expedientes/modi/{{ expediente.id }}/'>
+                <strong>EXPEDIENTE</strong>
+            </a> --
+            <strong>COMODATO</strong>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="form-group">
+                        {{ form.etapa.errors }}
+                        * Etapa: {{ form.etapa }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="frm" action="" method="post">
+        <input id="id_expediente" name="expediente" type="hidden" value="{{ expediente.id }}" />
+        <input id="id_comodato" name="comodato" type="hidden" value="" />
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                 <div class="x_panel">
+                    <div class="x_title">
+                        <h2>COMODATO</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content" >
+                        {% for msg in messages %}
+                        <strong>{{msg}}</strong>
+                            <br><br>
+                        {% endfor %}
+
+                        <div id="divCompromisoOrdenado">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form.proveedor.errors }}
+                            * Proveedor: {{ form.proveedor }}
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.resolucion_contratacion.errors}}
+                            * Resolución de Contratación: {{ form.resolucion_contratacion}}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.fecha_resolucion_contratacion.errors}}
+                            * Fecha de Resolución: {{ form.fecha_resolucion_contratacion }}
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.importe.errors}}
+                            * Importe: $ {{ form.importe }}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.orden_provision.errors}}
+                            * Orden de Provisión: {{ form.orden_provision }}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.resolucion_pago.errors}}
+                            * Resolución de Pago: {{ form.resolucion_pago }}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.fecha_resolucion_pago.errors}}
+                            * Fecha Resolución de Pago: {{ form.fecha_resolucion_pago }}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.solicitante_resolucion_pago.errors}}
+                            * Solicitante Resolución Pago: {{ form.solicitante_resolucion_pago }}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.fuente_financiamiento.errors}}
+                            Fuente de Financiamiento: {{ form.fuente_financiamiento }}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{form.observaciones.errors}}
+                            Observaciones: {{ form.observaciones }}<br>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12"><br>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <center><input type="button" id="btnAgregar" onclick="agregar()" value="Agregar" class="btn btn-primary"></center>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </form>
+
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <table class="table" id="tabla_comodato" name="tabla_comodato">
+                    <thead>
+                        <tr>
+                            <th>Resolución Contratación</th>
+                            <th>Importe</th>
+                            <th>Orden Provisión</th>
+                            <th>Resolución Pago</th>
+                            <th>Fecha Resolución Pago</th>
+                            <th>Solicitante R. Pago</th>
+                            <th>Observación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <center><input type="button" onclick="guardar()" id="btnGuardar" class="btn btn-primary" value="Guardar"></center>
+
+
+<script>
+
+    $(document).ready(function()
+    {
+        {% if not form.errors %}
+            $("#id_etapa").val({{expediente.etapa_id}});
+            inicializar_controles();
+        {% endif %}
+    });
+
+
+    $("#id_etapa").change(function()
+    {
+        inicializar_controles();
+    });
+
+
+    function inicializar_controles()
+    {
+        var etapa = $("#id_etapa").val();
+
+        if ("{{expediente.estado.valor}}" == "CERRADO")
+        {
+            $("#id_etapa").prop("disabled", true);
+            $("#btnGuardar").prop("disabled", true);
+            $("#divCompromisoOrdenado :input").prop("disabled", true)
+            return;
+        }
+
+        if (etapa == 4)
+        {
+            $("#divCompromisoOrdenado :input").prop("disabled", false)
+            $("#btnGuardar").prop("disabled", false);
+            $("#btnAgregar").prop("disabled", false);
+        }
+            else
+        {
+            $("#btnGuardar").prop("disabled", true);
+            $("#btnAgregar").prop("disabled", true);
+            $("#divCompromisoOrdenado :input").prop("disabled", true)
+        }
+    }
+
+
+            $("#id_orden_provision").blur(function() {
+
+                $("#btnAgregarCompromiso").prop("disabled", false);
+
+                if($("#id_orden_provision").val() != "") {
+
+                    var orden_provision = $("#id_orden_provision").val();
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/expedientes/licitacion/get_numero_ingreso_manual_es_valido/",
+                        data: {
+                            tipo: "ORDEN_PROVISION",
+                            numero: orden_provision,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+
+                        success: function (data) {
+
+                            if (!data) {
+                                alert("El numero de orden de provision ingresado es incorrecto!");
+
+                                $("#id_orden_provision").select();
+                                $("#id_orden_provision").focus();
+
+                                $("#btnAgregarCompromiso").prop("disabled", true);
+                                return;
+                            } else {
+                                $("#btnAgregarCompromiso").prop("disabled", false);
+                            }
+
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            $("#id_resolucion_pago").blur(function() {
+
+                $("#btnAgregar").prop("disabled", false);
+                if($("#id_resolucion_pago").val() != "") {
+
+                        var numero_resolucion_pago = $("#id_resolucion_pago").val();
+                        $.ajax({
+                                type: "GET",
+                                url: "/expedientes/licitacion/get_numero_ingreso_manual_es_valido/",
+                                data: {
+                                    tipo: "RESOLUCION_PAGO",
+                                    numero: numero_resolucion_pago,
+                                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                                },
+
+                                success: function (data) {
+                                    if (!data) {
+                                        alert("El numero de resolución de pago ingresado es incorrecto!");
+                                        $("#id_resolucion_pago").select();
+                                        $("#id_resolucion_pago").focus();
+                                        $("#btnAgregar").prop("disabled", true);
+                                        return;
+                                    } else {
+                                        $("#btnAgregar").prop("disabled", false);
+                                    }
+                                },
+
+                                error: function (err) {
+                                    console.log(err);
+                                }
+                        });
+                    }
+            });
+
+
+    function agregar()
+    {
+            if($("#id_proveedor").val() == '')
+            {
+                alert('Por favor seleccione un Proveedor');
+                return 0;
+            }
+
+            if($("#id_resolucion_contratacion").val() == '')
+            {
+                alert('Por favor ingrese una Resolución de Contratación');
+                return 0;
+            }
+
+            if($("#id_fecha_resolucion_contratacion").val() == '')
+            {
+                alert('Por favor ingrese una Fecha de Resolución de Contratación');
+                return 0;
+            }
+
+            if($("#id_importe").val() == '')
+            {
+                alert('Por favor ingrese un Importe');
+                return 0;
+            }
+
+
+            if($("#id_fecha_resolucion_pago").val() == '')
+            {
+                alert('Por favor ingrese una Fecha de Resolución de Pago');
+                return 0;
+            }
+
+            if($("#id_solicitante_resolucion_pago option:selected").val() == '')
+            {
+                alert('Por favor seleccione un Solicitante Resolución Pago');
+                return 0;
+            }
+
+
+            row = '<tr>' +
+            '<td>' + $("#id_resolucion_contratacion").val() + '</td>' +
+            '<td>' + $("#id_importe").val() + '</td>' +
+            '<td>' + $("#id_orden_provision").val() + '</td>' +
+            '<td>' + $("#id_resolucion_pago").val() + '</td>' +
+            '<td>' + $("#id_fecha_resolucion_pago").val() + '</td>' +
+            '<td>' + $("#id_solicitante_resolucion_pago option:selected").text() + '</td>' +
+            '<td>' + $("#id_observaciones").val() + '</td>' +
+            '<td style="display:none;">' + $("#id_solicitante_resolucion_pago option:selected").val() + '</td>' +
+            '</tr>';
+            //alert(row);
+            $('#tabla_comodato> tbody:last').append(row);
+
+            $("#divCompromisoOrdenado :input").val('')
+            //$("#btnAgregar").val('Agregar')
+            //$(':input','#frm').val('')
+    }
+
+
+    function guardar()
+    {
+
+    if ($('#tabla_comodato >tbody >tr').length == 0){
+        alert ('Debe agregar al menos un item');
+        return 0;
+    }
+
+    if($("#id_fuente_financiamiento").val() == '')
+    {
+        alert('Por favor seleccione una Fuente de Financiamiento');
+        return 0;
+    }
+
+    if($("#id_proveedor").val() == '')
+    {
+        alert('Por favor seleccione un Proveedor');
+        return 0;
+    }
+
+    if($("#id_fecha_resolucion_contratacion").val() == '')
+    {
+        alert('Por favor ingrese una Fecha de Resolución de Contratación');
+        return 0;
+    }
+
+    var comodato = new Array();
+    var myObj = {};
+    var expediente, proveedor, fecha_resolucion_contratacion, fuente_financiamiento;
+    var resolucion_contratacion, importe;
+    var orden_provision, resolucion_pago, fecha_resolucion_pago;
+    var solicitante_resolucion_pago, observaciones;
+
+
+    $("#tabla_comodato tbody tr").each(function (index)
+        {
+            $(this).children("td").each(function (index2)
+            {
+                switch (index2)
+                {
+                    case 0: resolucion_contratacion  = $(this).text();
+                    break;
+                    case 1: importe  = $(this).text();
+                    break;
+                    case 2: orden_provision  = $(this).text();
+                    break;
+                    case 3: resolucion_pago  = $(this).text();
+                    break;
+                    case 4: fecha_resolucion_pago = $(this).text();
+                    break;
+                    case 7: solicitante_resolucion_pago  = $(this).text();
+                    break;
+                    case 6: observaciones = $(this).text();
+                    break;
+                }
+            })
+
+        //alert({{ expediente.id }});
+
+            expediente = $("#id_expediente").val();
+            proveedor = $("#id_proveedor").val();
+            fecha_resolucion_contratacion = $("#id_fecha_resolucion_contratacion").val();
+            fuente_financiamiento = $("#id_fuente_financiamiento").val();
+
+            myObj = {
+                expediente : expediente,
+                proveedor : proveedor,
+                resolucion_contratacion : resolucion_contratacion ,
+                fecha_resolucion_contratacion : fecha_resolucion_contratacion.split('/').reverse().join('-'),
+                importe : importe,
+                orden_provision : orden_provision,
+                resolucion_pago : resolucion_pago,
+                fecha_resolucion_pago : fecha_resolucion_pago.split('/').reverse().join('-'),
+                solicitante_resolucion_pago : solicitante_resolucion_pago,
+                fuente_financiamiento : fuente_financiamiento,
+                observaciones : observaciones,
+            };
+
+            comodato.push(myObj);
+            var jsonItemsProveedor = JSON.stringify(comodato);
+            $("#id_comodato").val(jsonItemsProveedor);
+            //alert(comodato);
+        })
+
+        $("#id_expediente").val('{{ expediente.id }}')
+
+        $('#frm').submit();
+    }
+
+
+
+</script>
+{% endblock %}

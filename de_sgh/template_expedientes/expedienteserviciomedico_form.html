@@ -1,0 +1,191 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+<div style="background-color:#ccc">
+    <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+
+    <a href='/expedientes/modi/{{expediente.id}}'>
+        <strong>EXPEDIENTE</strong>
+    </a> --
+
+    <strong>SERVICIO MEDICO</strong>
+
+    <br><br>
+</div>
+
+<br>
+
+{% for msg in messages %}
+
+    <strong>{{msg}}</strong>
+    <br><br>
+
+{% endfor %}
+
+
+
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    <div style="width:700px">
+
+        Etapa: {{ form.etapa }}<br>
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>COMPROMISO - ORDENADO</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            <div id="divCompromisoOrdenado">
+
+                <input type="hidden" id="id_expediente" name="expediente" value="{{expediente.id}}">
+
+
+                {% if form.profesional.errors %}
+                    {{form.profesional.errors}}
+                {% endif %}
+                Profesional: {{ form.profesional }} <br>
+
+                {% if form.resolucion_contratacion.errors %}
+                    {{form.resolucion_contratacion.errors}}
+                {% endif %}
+                Resolucion Contratacion: {{ form.resolucion_contratacion }} <br>
+
+                {% if form.fecha_resolucion_contratacion.errors %}
+                    {{form.fecha_resolucion_contratacion.errors}}
+                {% endif %}
+                Fecha resolucion contratacion: {{ form.fecha_resolucion_contratacion }} <br>
+
+                {% if form.orden_provision.errors %}
+                    {{form.orden_provision.errors}}
+                {% endif %}
+
+                {% if error_provision %}
+                    <ul class='errorlist'>
+                        <li><strong>{{error_provision}}</strong></li>
+                    </ul>
+                {% endif %}
+                Orden provision: {{ form.orden_provision }} <br>
+
+                {% if form.acta_recepcion.errors %}
+                    {{form.acta_recepcion.errors}}
+                {% endif %}
+                {% if error_acta %}
+                    <ul class='errorlist'>
+                        <li><strong>{{error_acta}}</strong></li>
+                    </ul>
+                {% endif %}
+                Acta recepcion: {{ form.acta_recepcion }} <br>
+
+                {% if form.numero_resolucion_pago.errors %}
+                    {{form.numero_resolucion_pago.errors}}
+                {% endif %}
+                {% if error_resolucion_pago %}
+                    <ul class='errorlist'>
+                        <li><strong>{{error_resolucion_pago}}</strong></li>
+                    </ul>
+                {% endif %}
+                Resolucion pago: {{ form.numero_resolucion_pago }} <br>
+
+                {% if form.fecha_resolucion_pago.errors %}
+                    {{form.fecha_resolucion_pago.errors}}
+                {% endif %}
+                Fecha Resolucion pago: {{ form.fecha_resolucion_pago }} <br>
+
+                {% if form.importe.errors %}
+                    {{form.importe.errors}}
+                {% endif %}
+                Importe: {{ form.importe }}<br>
+
+                {% if form.solicitante_resolucion_pago.errors %}
+                    {{form.solicitante_resolucion_pago.errors}}
+                {% endif %}
+                Solicitante resolucion pago: {{ form.solicitante_resolucion_pago }} <br>
+
+                {% if form.fuente_financiamiento.errors %}
+                    {{form.fuente_financiamiento.errors}}
+                {% endif %}
+                Fuente finaciamiento: {{ form.fuente_financiamiento }} <br>
+
+                Observaciones: {{ form.observaciones }} <br><br>
+
+            </div>
+            </div>
+        </div>
+
+
+        <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-primary">
+    </div>
+</form>
+
+<script>
+
+    $(document).ready(function()
+    {
+        {% if not form.errors %}
+            $("#id_etapa").val({{expediente.etapa_id}});
+            inicializar_controles();
+        {% endif %}
+    });
+
+    $("#id_etapa").change(function()
+    {
+        inicializar_controles();
+    });
+
+    function inicializar_controles()
+    {
+        var etapa = $("#id_etapa").val();
+
+        if ("{{expediente.estado.valor}}" == "CERRADO")
+        {
+            $("#id_etapa").prop("disabled", true);
+            $("#btnGuardar").prop("disabled", true);
+            $("#divCompromisoOrdenado").children().prop("disabled", true);
+
+            return;
+        }
+
+        if (etapa == 4)
+        {
+            $("#divCompromisoOrdenado").children().prop("disabled", false);
+            $("#btnGuardar").prop("disabled", false);
+            if ($("#id_orden_provision").val() == 0
+                && $("#id_acta_recepcion").val() == 0
+                && $("#id_numero_resolucion_pago").val() == 0)
+            {
+                get_valores_iniciales("COMPROMISO_ORDENADO");
+            }
+        }
+        else
+        {
+            $("#btnGuardar").prop("disabled", true);
+            $("#divCompromisoOrdenado").children().prop("disabled", true);
+        }
+    }
+
+    function get_valores_iniciales(etapa)
+    {
+        $.ajax({
+            url:"/expedientes/get_valores_iniciales/",
+            cache: false,
+            type: "GET",
+            data: {tipo_expediente: "SERVICIO_MEDICO", etapa: etapa},
+            success: function(request) {
+                console.log(request);
+
+                $("#id_orden_provision").val(request.orden_provision);
+                $("#id_acta_recepcion").val(request.acta_recepcion);
+                $("#id_numero_resolucion_pago").val(request.resolucion_pago);
+            }
+        });
+    }
+
+</script>
+
+
+{% endblock %}

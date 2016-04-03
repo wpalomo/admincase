@@ -20,6 +20,58 @@ class ClienteListView(ListView):
     model = Cliente
     paginate_by = 10
 
+    def get_queryset(self):
+
+        query = super(ClienteListView, self).get_queryset()
+
+        parametro1 = self.request.GET.get('parametro1')
+        parametro2 = self.request.GET.get('parametro2')
+
+        if self.request.GET.get('filtro') == 'NUMERO_EXPEDIENTE':
+
+            query = self.buscar_por_numero(parametro1, parametro2)
+
+        if self.request.GET.get('filtro') == 'NUMERO_RESOLUCION_PAGO':
+
+            query = self.buscar_por_numero_resolucion_pago(parametro1)
+
+        return query
+
+    def buscar_por_numero(self, numero, anio):
+
+        numero = numero.strip()
+        anio = anio.strip()
+
+        expedientes = Cliente.objects.filter(
+            numero=numero,
+            anio__icontains=anio
+        )
+
+        return expedientes
+
+    def buscar_por_numero_resolucion_pago(self, numero_resolucion_pago):
+
+        numero_resolucion_pago = numero_resolucion_pago.strip()
+
+        expediente_resolucion_list =\
+                Cliente.objects.filter(
+                    numero_resolucion_pago=numero_resolucion_pago)\
+                    .values('expediente_id')
+        expediente_servicio_medico_list =\
+            Cliente.objects.filter(
+                numero_resolucion_pago=numero_resolucion_pago)\
+                .values('expediente_id')
+
+        expediente_ids = set(
+            [expediente['expediente_id']
+             for expediente in expediente_resolucion_list] +
+            [expediente['expediente_id']
+             for expediente in expediente_servicio_medico_list]
+        )
+
+        expedientes = Cliente.objects.filter(pk__in=expediente_ids)
+        return expedientes
+
 
 class ClienteCreate(CreateView):
     model = Cliente

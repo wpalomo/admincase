@@ -1,0 +1,202 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+<div class="title_right" style="background-color:#ccc">
+    <div class="x_title">
+
+        <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+
+        <strong>EXPEDIENTE</strong> --
+
+        {% if expediente %}
+            {% if tiene_clase_creada %}
+                    <a href='/expedientes/{{ expediente.clase.valor|lower }}/modi/{{ expediente.id }}'>
+                        <strong>{{ expediente.clase.valor }}</strong>
+                    </a>
+            {% else %}
+                    <a href='/expedientes/{{ expediente.clase.valor|lower }}/alta/{{ expediente.id }}'>
+                        <strong>{{ expediente.clase.valor }}</strong>
+                    </a>
+            {% endif%}
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-6">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>EXPEDIENTE</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            {% for msg in messages %}
+
+                <strong>{{ msg }}</strong>
+                <br><br>
+
+            {% endfor %}
+
+            <br><br>
+
+            <form class="form-horizontal form-label-left" action="" method="post">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Fecha:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.fecha }}</div>{{ form.fecha.errors }}
+                </div>
+                <br>
+
+                {% if form.letra.errors or form.numero.errors or form.anio.errors %}
+                    <strong>EL EXPEDIENTE ES OBLIGATORIO</strong>
+                    <br>
+                {% endif %}
+
+
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Expediente (letra-numero-año):</label></div>
+                    <div class="col-md-2 col-sm-2 col-xs-2">{{ form.letra }}</div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">{{ form.numero }}</div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">{{ form.anio }}</div>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Instrumento Legal / Clase:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.clase }}</div>{{ form.clase.errors }}
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Estado:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.estado }}</div>{{ form.estado.errors }}
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Empleado Solicitante:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.empleado_solicitante }}</div>{{ form.empleado_solicitante.errors }}
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Descripcion:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.descripcion }}</div>{{ form.descripcion.errors }}
+                </div>
+
+                <br>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+    var estado_previo;
+
+    $(document).ready(function()
+    {
+        set_anio_expediente();
+
+        estado = $("#id_estado").val();
+
+        if ("{{expediente.etapa_id}}" == "")
+        {
+            $("#id_estado").prop("disabled", true);
+        }
+        else
+        {
+            $.ajax({
+                url:"/expedientes/get_estado_valor/",
+                cache: false,
+                type: "GET",
+                data: {estado_id: estado},
+                success: function(valor) {
+                    //console.log(valor);
+
+                    if (valor == "RESERVADO" || valor == "DISPONIBLE")
+                    {
+                        $("#id_estado").prop("disabled", false);
+                    }
+                    else
+                    {
+                        $("#id_estado").prop("disabled", true);
+                    }
+
+                    if (valor == "CERRADO")
+                    {
+                        $("#btnGuardar").prop("disabled", true);
+                    }
+                }
+            });
+        }
+
+        {% if tiene_clase_creada %}
+            $("#id_clase").prop("disabled", true);
+        {% endif %}
+    });
+
+    $("#id_estado").focus(function()
+    {
+        estado_previo = $("#id_estado").val();
+    });
+
+    $("#id_estado").change(function()
+    {
+        var estado_id = $("#id_estado").val();
+
+        $.ajax({
+            url:"/expedientes/get_estado_valor/",
+            cache: false,
+            type: "GET",
+            data: {estado_id: estado_id},
+            success: function(valor) {
+                //console.log(valor);
+
+                if (valor != "RESERVADO" && valor != "DISPONIBLE")
+                {
+                    alert("El estado solo puede ser cambiado manualmente a Reservado o Disponible");
+                    $("#id_estado").val(estado_previo);
+                    return;
+                }
+
+                estado_previo = estado_id;
+            }
+        });
+
+    });
+
+    $("#btnGuardar").click(function()
+    {
+        $("#id_clase").prop("disabled", false);
+        $("#id_estado").prop("disabled", false);
+    });
+
+    $("#id_fecha").change(function()
+    {
+        set_anio_expediente();
+    });
+
+    function set_anio_expediente()
+    {
+        var anio = $("#id_fecha").val().slice(-2);
+        $("#id_anio").val(anio);
+    }
+</script>
+
+{% endblock %}
