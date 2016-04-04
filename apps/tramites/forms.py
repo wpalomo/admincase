@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from datetime import datetime
 from django import forms
 
 from apps.complementos.organigrama.models import Entidad
@@ -28,25 +28,77 @@ from .models import Tramite, TipoTramite, Requisito
 #         fields = '__all__'
 #         exclude = []
 
-class TramiteForm(forms.ModelForm):
 
-    # persona = forms.ModelChoiceField(
-    #     queryset=Persona.objects.all(), required=True)
+# persona = models.OneToOneField(Persona)
+#     tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
+#     fecha_alta = models.DateTimeField(default=datetime.now, null=True,
+#                                       blank=True)
+#     fecha_inicio = models.DateField(null=True, blank=True)
+#     fecha_alarma = models.DateField(null=True, blank=True)
+#     fecha_fin = models.DateField(null=True, blank=True)
+#     estado = models.BooleanField(default=False, blank=True)
+#     observaciones = models.TextField(max_length=None, null=True, blank=True)
+
+class TramiteForm(forms.ModelForm):
 
     tipo = forms.ModelChoiceField(
         queryset=TipoTramite.objects.all(), required=True)
-    fecha_inicio = forms.DateTimeField(required=True)
+    fecha_alta = forms.DateTimeField(required=False)
+    fecha_inicio = forms.DateField(required=True)
+    fecha_alarma = forms.DateField(required=True)
+    estado = forms.BooleanField(initial=1)
     observaciones = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 3}), required=False)
 
     def __init__(self, *args, **kwargs):
         super(TramiteForm, self).__init__(*args, **kwargs)
+
+        self.set_initial_values()
+        self.set_css_controls()
+
+    def set_initial_values(self):
+        fecha = datetime.now()
+        fecha = fecha.strftime('%d/%m/%Y')
+        self.fields['fecha_alta'].initial = fecha
+
+    def set_css_controls(self):
         for name, field in list(self.fields.items()):
             if name == 'estado':
                 continue
+            if name == 'tipo':
+                field.widget.attrs.update({'class': 'form-control select2_single'})
+                continue
+
             field.widget.attrs.update({'class': 'form-control'})
+
+    def clean_fecha_inicio(self):
+        fecha = self.cleaned_data['fecha_inicio']
+
+        try:
+            datetime.strptime(str(fecha), '%Y-%m-%d')
+
+            if fecha < datetime.now().date():
+                raise forms.ValidationError('La fecha desde no puede '
+                                            'ser menor a la actual')
+        except ValueError:
+            raise ValueError("Fecha no valida")
+
+        return fecha
+
+    def clean_fecha_alarma(self):
+        fecha = self.cleaned_data['fecha_alarma']
+
+        try:
+            datetime.strptime(str(fecha), '%Y-%m-%d')
+
+            if fecha <= datetime.now().date():
+                raise forms.ValidationError('La fecha de alarma no puede '
+                                            'ser menor o igual a la actual')
+        except ValueError:
+            raise ValueError("Fecha no valida")
+
+        return fecha
 
     class Meta:
         model = Tramite
         fields = '__all__'
-        exclude = []

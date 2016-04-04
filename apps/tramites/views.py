@@ -38,186 +38,154 @@ class TramiteListView(ListView):
 
 
 class TramiteCreate(CreateView):
-    pass
-    # model = Tramite
-    # form_class = TramiteForm
-    #
-    # def get(self, request, *args, **kwargs):
-    #
-    #     path = self.request.get_full_path()
-    #     tramite = path.split('/')
-    #
-    #     if tramite[3] in ["anses", "caja", "familia"]:
-    #         tipos_tramites = TipoTramite.objects.filter(
-    #             entidad__nombre=tramite[3].upper())
-    #     else:
-    #         tipos_tramites = TipoTramite.objects.all()
-    #
-    #     form = TramiteForm()
-    #     personas = Cliente.objects.all()
-    #
-    #     return render_to_response(
-    #         'tramites/tramite_form.html',
-    #         {
-    #             'form': form,
-    #             'personas': personas,
-    #             'tipos_tramites': tipos_tramites
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
-    #
-    # def post(self, request, *args, **kwargs):
-    #
-    #     path = self.request.get_full_path()
-    #     tramite = path.split('/')
-    #     if tramite[3]:
-    #         tipos_tramites = TipoTramite.objects.filter(
-    #             entidad__nombre=tramite[3].upper())
-    #     else:
-    #         tipos_tramites = TipoTramite.objects.all()
-    #
-    #     form = TramiteForm(data=self.request.POST)
-    #
-    #     persona = Persona.objects.get(pk=self.request.POST['persona'])
-    #
-    #     if form.is_valid():
-    #
-    #         tramite = form.save()
-    #
-    #         tipo_tramite = TipoTramite.objects.get(
-    #             pk=int(self.request.POST['tipo'])
-    #         )
-    #
-    #         for item in tipo_tramite.requisitos.all():
-    #
-    #             requisito = Requisito.objects.get(descripcion=item)
-    #
-    #             RequisitoRequerido.objects.create(
-    #                 tramite=tramite,
-    #                 requisito=requisito
-    #             )
-    #
-    #         messages.add_message(
-    #             request, messages.SUCCESS, 'SE HA CREADO CON EXITO')
-    #
-    #         return HttpResponseRedirect('/tramites/modi/' + str(tramite.id))
-    #
-    #     messages.add_message(
-    #         request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
-    #
-    #     return render_to_response(
-    #         'tramites/tramite_form.html',
-    #         {
-    #             'form': form,
-    #             'persona': persona,
-    #             'tipos_tramites': tipos_tramites
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
+    model = Tramite
+    form_class = TramiteForm
+
+    def get(self, request, *args, **kwargs):
+        form = TramiteForm()
+        persona = Persona.objects.get(pk=kwargs['pk'])
+
+        print(persona)
+
+        return render_to_response(
+            'tramites/tramite_form.html',
+            {
+                'form': form,
+                'persona': persona
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        print(self.request.POST)
+
+        form = TramiteForm(data=self.request.POST)
+
+        persona = Persona.objects.get(pk=self.request.POST['persona'])
+
+        if form.is_valid():
+
+            tramite = form.save()
+
+            messages.add_message(
+                request, messages.SUCCESS, 'SE HA CREADO CON EXITO')
+
+            return HttpResponseRedirect('/tramites/modi/' + str(tramite.id))
+
+        messages.add_message(
+            request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'tramites/tramite_form.html',
+            {
+                'form': form,
+                'persona': persona
+                # 'tipos_tramites': tipos_tramites
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 class TramiteUpdate(UpdateView):
-    pass
-    # model = Tramite
-    # form_class = TramiteForm
-    #
-    # def get(self, request, *args, **kwargs):
-    #
-    #     tramite = Tramite.objects.get(pk=kwargs['pk'])
-    #
-    #     requisitos = RequisitoRequerido.objects.filter(
-    #         tramite=tramite)
-    #
-    #     tipos_tramites = TipoTramite.objects.filter(
-    #         entidad__nombre=tramite.tipo.entidad.nombre.upper())
-    #
-    #     form = TramiteForm(instance=tramite)
-    #
-    #     return render_to_response(
-    #         'tramites/tramite_form.html',
-    #         {
-    #             'form': form,
-    #             'tramite': tramite,
-    #             'requisitos': requisitos,
-    #             'tipos_tramites': tipos_tramites
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
-    #
-    # def post(self, request, *args, **kwargs):
-    #
-    #     tramite = Tramite.objects.get(pk=kwargs['pk'])
-    #
-    #     requisitos = RequisitoRequerido.objects.filter(tramite=tramite)
-    #
-    #     form = TramiteForm(self.request.POST, instance=tramite)
-    #
-    #     tipos_tramites = TipoTramite.objects.filter(
-    #         entidad__nombre=tramite.tipo.entidad.nombre.upper())
-    #
-    #     if form.is_valid():
-    #         form.save()
-    #
-    #         requisitos_presentados = self.request.POST[
-    #             'requisitos_presentados'].split('|')
-    #
-    #         for item in requisitos_presentados:
-    #
-    #             requisito = item.split('#')
-    #
-    #             if int(requisito[1]) != 0:
-    #                 requisito_requerido = requisitos.get(
-    #                     requisito__descripcion=requisito[0])
-    #                 requisito_requerido.presentado = True
-    #
-    #             else:
-    #                 requisito_requerido = requisitos.get(
-    #                     requisito__descripcion=requisito[0])
-    #                 requisito_requerido.presentado = False
-    #
-    #             requisito_requerido.save()
-    #
-    #         messages.add_message(
-    #             request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
-    #
-    #         return HttpResponseRedirect(self.get_success_url())
-    #
-    #     messages.add_message(
-    #         request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
-    #
-    #     return render_to_response(
-    #         'tramites/tramite_form.html',
-    #         {
-    #             'form': form,
-    #             'tramite': tramite,
-    #             'requisitos': requisitos,
-    #             'tipos_tramites': tipos_tramites
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
-    #
-    # def get_success_url(self):
-    #     return self.request.get_full_path()
+    model = Tramite
+    form_class = TramiteForm
+
+    def get(self, request, *args, **kwargs):
+
+        print(kwargs['pk'])
+
+        tramite = Tramite.objects.get(pk=kwargs['pk'])
+
+        # tipo_tramite = TipoTramite.objects.get(pk=tramite.tipo.id)
+        #
+        # requisitos = tipo_tramite.requisitos.all()
+
+        form = TramiteForm(instance=tramite)
+
+        return render_to_response(
+            'tramites/tramite_form.html',
+            {
+                'form': form,
+                'tramite': tramite
+                # 'requisitos': requisitos
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        tramite = Tramite.objects.get(pk=kwargs['pk'])
+
+        requisitos = RequisitoRequerido.objects.filter(tramite=tramite)
+
+        form = TramiteForm(self.request.POST, instance=tramite)
+
+        tipos_tramites = TipoTramite.objects.filter(
+            entidad__nombre=tramite.tipo.entidad.nombre.upper())
+
+        if form.is_valid():
+            form.save()
+
+            requisitos_presentados = self.request.POST[
+                'requisitos_presentados'].split('|')
+
+            for item in requisitos_presentados:
+
+                requisito = item.split('#')
+
+                if int(requisito[1]) != 0:
+                    requisito_requerido = requisitos.get(
+                        requisito__descripcion=requisito[0])
+                    requisito_requerido.presentado = True
+
+                else:
+                    requisito_requerido = requisitos.get(
+                        requisito__descripcion=requisito[0])
+                    requisito_requerido.presentado = False
+
+                requisito_requerido.save()
+
+            messages.add_message(
+                request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
+
+            return HttpResponseRedirect(self.get_success_url())
+
+        messages.add_message(
+            request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'tramites/tramite_form.html',
+            {
+                'form': form,
+                'tramite': tramite,
+                'requisitos': requisitos,
+                'tipos_tramites': tipos_tramites
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def get_success_url(self):
+        return self.request.get_full_path()
 
 
 class TramiteClienteListView(ListView):
-    pass
-    # model = Tramite
-    # paginate_by = 10
-    #
-    # def get(self, request, *args, **kwargs):
-    #
-    #     tramite_cliente = Tramite.objects.filter(persona__id=kwargs['pk'])
-    #     cliente = Cliente.objects.get(pk=kwargs['pk'])
-    #
-    #     return render_to_response(
-    #         'tramites/tramite_cliente_list.html',
-    #         {
-    #             'cliente': cliente,
-    #             'tramite_cliente': tramite_cliente
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
+    model = Tramite
+    paginate_by = 10
+
+    def get(self, request, *args, **kwargs):
+
+        tramite_cliente = Tramite.objects.filter(persona__id=kwargs['pk'])
+        cliente = Cliente.objects.get(pk=kwargs['pk'])
+
+        return render_to_response(
+            'tramites/tramite_cliente_list.html',
+            {
+                'cliente': cliente,
+                'tramite_cliente': tramite_cliente
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 # ANSES #

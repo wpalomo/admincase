@@ -12,7 +12,7 @@ class Requisito(models.Model):
         return self.descripcion
 
     class Meta:
-        verbose_name_plural = "Requisitos de Tramite"
+        verbose_name_plural = "Requisitos"
 
 
 class TipoTramite(models.Model):
@@ -28,7 +28,7 @@ class TipoTramite(models.Model):
 
 
 class Tramite(models.Model):
-    persona = models.OneToOneField(Persona)
+    persona = models.ForeignKey(Persona, null=True, blank=True)
     tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
     fecha_alta = models.DateTimeField(default=datetime.now, null=True,
                                       blank=True)
@@ -53,3 +53,6 @@ class RequisitoRequerido(models.Model):
     def __str__(self):
         return str(self.tramite) + '-' + str(self.requisito) + '-' +\
                str(self.presentado)
+
+    class Meta:
+        verbose_name_plural = "Requisitos del Tramite"

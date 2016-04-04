@@ -10,6 +10,7 @@ class TramiteAdmin(admin.ModelAdmin):
         'id',
         'persona',
         'tipo',
+        'fecha_alta',
         'fecha_inicio',
         'fecha_fin',
         'fecha_alarma',
