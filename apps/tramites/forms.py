@@ -29,22 +29,12 @@ from .models import Tramite, TipoTramite, Requisito
 #         exclude = []
 
 
-# persona = models.OneToOneField(Persona)
-#     tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
-#     fecha_alta = models.DateTimeField(default=datetime.now, null=True,
-#                                       blank=True)
-#     fecha_inicio = models.DateField(null=True, blank=True)
-#     fecha_alarma = models.DateField(null=True, blank=True)
-#     fecha_fin = models.DateField(null=True, blank=True)
-#     estado = models.BooleanField(default=False, blank=True)
-#     observaciones = models.TextField(max_length=None, null=True, blank=True)
-
 class TramiteForm(forms.ModelForm):
 
     tipo = forms.ModelChoiceField(
         queryset=TipoTramite.objects.all(), required=True)
     fecha_alta = forms.DateTimeField(required=False)
-    fecha_inicio = forms.DateField(required=True)
+    fecha_turno = forms.DateField(required=True)
     fecha_alarma = forms.DateField(required=True)
     estado = forms.BooleanField(initial=1)
     observaciones = forms.CharField(
@@ -71,8 +61,8 @@ class TramiteForm(forms.ModelForm):
 
             field.widget.attrs.update({'class': 'form-control'})
 
-    def clean_fecha_inicio(self):
-        fecha = self.cleaned_data['fecha_inicio']
+    def clean_fecha_turno(self):
+        fecha = self.cleaned_data['fecha_turno']
 
         try:
             datetime.strptime(str(fecha), '%Y-%m-%d')

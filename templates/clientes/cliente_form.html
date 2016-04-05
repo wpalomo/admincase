@@ -27,6 +27,18 @@
                         </ul>
                     {% endif %}
                     <br />
+                    <!--div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Apellido</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.foto }}
+                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        </div>
+                    </div-->
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Apellido</label>
@@ -134,22 +146,8 @@
                 </div>
             </div>
             <div class="x_panel">
-                <div class="x_title">
-                    <h2><strong>CONTACTOS</strong></h2>
-                    <div class="clearfix"></div>
-                </div>
+
                 <div class="x_content">
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número Celular">
-                        <span class="fa fa-mobile form-control-feedback right" aria-hidden="true"></span>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Número Fijo">
-                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <textarea id="id_observaciones" name="observaciones" class="form-control" rows="3" placeholder='Observaciones'>{{ persona.observaciones }}</textarea>
-                    </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <br>
                         <br>
@@ -208,71 +206,7 @@
                     </table>
                 </div>
             </div>
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>DOMICILIO <small></small></h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">País</label>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <select class="form-control" id="id_pais" name="pais">
-                                    <option value="" selected="selected">---------</option>
-                                    {% for pais in paises %}
-                                        <option value="{{ pais.id }}">{{ pais.nombre }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
 
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Provincia</label>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <select class="form-control" id="id_provincia" name="provincia">
-                                    <option value="" selected="selected">---------</option>
-                                    {% for provincia in provincias %}
-                                        <option value="{{ provincia.id }}">{{ provincia.nombre }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Departamento</label>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <select class="form-control" id="id_departamento" name="departamento">
-                                    <option value="" selected="selected">---------</option>
-                                    {% for departamento in departamentos %}
-                                        <option value="{{ departamento.id }}">{{ departamento.nombre }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Localidad</label>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <select class="form-control" id="id_localidad" name="localidad">
-                                    <option value="" selected="selected">---------</option>
-                                    {% for localidad in localidades %}
-                                        <option value="{{ localidad.id }}">{{ localidad.nombre }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Descripción del Domicilio</label>
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <textarea class="form-control" rows="3" placeholder='Describa lugar exacto...'></textarea>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
 
     </div>

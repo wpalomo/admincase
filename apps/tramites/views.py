@@ -43,33 +43,30 @@ class TramiteCreate(CreateView):
 
     def get(self, request, *args, **kwargs):
         form = TramiteForm()
-        persona = Persona.objects.get(pk=kwargs['pk'])
 
-        print(persona)
+        cliente = Cliente.objects.get(persona__id=kwargs['pk'])
 
         return render_to_response(
             'tramites/tramite_form.html',
             {
                 'form': form,
-                'persona': persona
+                'cliente': cliente
             },
             context_instance=RequestContext(request)
         )
 
     def post(self, request, *args, **kwargs):
 
-        print(self.request.POST)
-
         form = TramiteForm(data=self.request.POST)
 
-        persona = Persona.objects.get(pk=self.request.POST['persona'])
+        cliente = Cliente.objects.get(pk=int(self.request.POST['cliente']))
 
         if form.is_valid():
 
             tramite = form.save()
 
             messages.add_message(
-                request, messages.SUCCESS, 'SE HA CREADO CON EXITO')
+                request, messages.SUCCESS, 'EL TRAMITE SE HA CREADO CON EXITO')
 
             return HttpResponseRedirect('/tramites/modi/' + str(tramite.id))
 
@@ -80,7 +77,7 @@ class TramiteCreate(CreateView):
             'tramites/tramite_form.html',
             {
                 'form': form,
-                'persona': persona
+                'cliente': cliente
                 # 'tipos_tramites': tipos_tramites
             },
             context_instance=RequestContext(request)
@@ -93,21 +90,20 @@ class TramiteUpdate(UpdateView):
 
     def get(self, request, *args, **kwargs):
 
-        print(kwargs['pk'])
-
         tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        # tipo_tramite = TipoTramite.objects.get(pk=tramite.tipo.id)
-        #
-        # requisitos = tipo_tramite.requisitos.all()
+        requisitos = tramite.tipo.requisitos.all()
 
         form = TramiteForm(instance=tramite)
+
+        cliente = Cliente.objects.get(persona__id=tramite.cliente.persona.id)
 
         return render_to_response(
             'tramites/tramite_form.html',
             {
                 'form': form,
-                'tramite': tramite
+                # 'tramite': tramite,
+                'cliente': cliente
                 # 'requisitos': requisitos
             },
             context_instance=RequestContext(request)
@@ -117,37 +113,15 @@ class TramiteUpdate(UpdateView):
 
         tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        requisitos = RequisitoRequerido.objects.filter(tramite=tramite)
+        requisitos = tramite.tipo.requisitos.all()
 
         form = TramiteForm(self.request.POST, instance=tramite)
-
-        tipos_tramites = TipoTramite.objects.filter(
-            entidad__nombre=tramite.tipo.entidad.nombre.upper())
 
         if form.is_valid():
             form.save()
 
-            requisitos_presentados = self.request.POST[
-                'requisitos_presentados'].split('|')
-
-            for item in requisitos_presentados:
-
-                requisito = item.split('#')
-
-                if int(requisito[1]) != 0:
-                    requisito_requerido = requisitos.get(
-                        requisito__descripcion=requisito[0])
-                    requisito_requerido.presentado = True
-
-                else:
-                    requisito_requerido = requisitos.get(
-                        requisito__descripcion=requisito[0])
-                    requisito_requerido.presentado = False
-
-                requisito_requerido.save()
-
             messages.add_message(
-                request, messages.SUCCESS, 'SE HA ACTUALIZADO CON EXITO')
+                request, messages.SUCCESS, 'EL TRAMITE SE HA ACTUALIZADO CON EXITO')
 
             return HttpResponseRedirect(self.get_success_url())
 
@@ -159,8 +133,7 @@ class TramiteUpdate(UpdateView):
             {
                 'form': form,
                 'tramite': tramite,
-                'requisitos': requisitos,
-                'tipos_tramites': tipos_tramites
+                'requisitos': requisitos
             },
             context_instance=RequestContext(request)
         )
@@ -175,8 +148,11 @@ class TramiteClienteListView(ListView):
 
     def get(self, request, *args, **kwargs):
 
-        tramite_cliente = Tramite.objects.filter(persona__id=kwargs['pk'])
-        cliente = Cliente.objects.get(pk=kwargs['pk'])
+        persona = Persona.objects.get(pk=kwargs['pk'])
+
+        tramite_cliente = Tramite.objects.filter(cliente__id=persona.cliente.id)
+
+        cliente = Cliente.objects.get(pk=persona.cliente.id)
 
         return render_to_response(
             'tramites/tramite_cliente_list.html',

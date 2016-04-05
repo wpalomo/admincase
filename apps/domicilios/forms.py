@@ -1,45 +1,28 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from django.forms.utils import ErrorList
 
-from .models import Domicilio, TipoDomicilio
+from apps.complementos.locacion.models import Pais, Provincia
 
-from apps.complementos.locacion.models import (Pais, Provincia, Departamento,
-                                               Localidad)
+from .models import Domicilio
 
 
 class DomicilioForm(forms.ModelForm):
 
-    tipo = forms.ModelChoiceField(
-        queryset=TipoDomicilio.objects.all(),
-        required=False, widget=(forms.Select(attrs=({'class': 'form-control'})))
-    )
+    pais = forms.ModelChoiceField(queryset=Pais.objects.all(),
+                                  required=True)
+    provincia = forms.ModelChoiceField(queryset=Provincia.objects.all(),
+                                       required=True)
 
-    pais = forms.ModelChoiceField(
-        queryset=Pais.objects.all(),
-        required=True, widget=(forms.Select(attrs=({'class': 'form-control'})))
-    )
+    def __init__(self, *args, **kwargs):
+        super(DomicilioForm, self).__init__(*args, **kwargs)
+        for name, field in list(self.fields.items()):
+            field.widget.attrs.update({'class': 'form-control'})
 
-    provincia = forms.ModelChoiceField(
-        queryset=Provincia.objects.all(),
-        required=True, widget=(forms.Select(attrs=({'class': 'form-control'})))
-    )
+    def clean(self):
 
-    departamento = forms.ModelChoiceField(
-        queryset=Departamento.objects.all(),
-        required=False, widget=(forms.Select(attrs=({'class': 'form-control'})))
-    )
-
-    localidad = forms.ModelChoiceField(
-        queryset=Localidad.objects.all(),
-        required=False, widget=(forms.Select(attrs=({'class': 'form-control'})))
-    )
-
-    descripcion = forms.CharField(
-        required=False, widget=(
-            forms.TextInput(attrs=({'class': 'form-control'}))
-        )
-    )
+        return super(DomicilioForm, self).clean()
 
     class Meta:
         model = Domicilio

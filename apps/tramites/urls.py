@@ -1,9 +1,12 @@
 
 from django.conf.urls import url
+from apps.tramites import helpers
 
 from .views import (TramiteListView, TramiteCreate, TramiteUpdate,
                     TramiteClienteListView, AnsesTramitesListView,
                     CajaPrevisionListView, CajaPrevisionTramitesListView)
+
+from . import helpers
 
 
 urlpatterns = [
@@ -28,9 +31,10 @@ urlpatterns = [
     url(r'^alta/caja/$', TramiteCreate.as_view(), name='caja_add'),
     url(r'^modi/caja/(?P<pk>[0-9]+)/$', TramiteUpdate.as_view(),
         name='caja_update'),
-#     url(r'^familia/listado/$', FamiliaListView.as_view(),
-#         name='familia_listado'),
-#     url(r'^civil_comercial/listado/$', CivilComercialListView.as_view(),
-#         name='civil_comercial_listado'),
+
+    url(
+        r'^get_requisitos_tipo_tramite/$', helpers.get_requisitos_tipo_tramite,
+        name='get_requisitos_tipo_tramite'
+    ),
 ]
 

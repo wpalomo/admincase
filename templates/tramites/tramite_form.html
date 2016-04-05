@@ -29,7 +29,7 @@
                     <br>
                 {% endfor %}
                 <br>
-                <input id="id_persona" name="persona" type="hidden" value="{{ persona.id }}" />
+                <input id="id_cliente" name="cliente" type="hidden" value="{{ cliente.id }}" />
             {{ form.persona.errors }}
 
                 <div class="form-group">
@@ -46,9 +46,9 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Turno</label>
                             <!--div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker"-->
-                                {{ form.fecha_inicio }}
+                                {{ form.fecha_turno }}
                                 <!--span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span-->
-                            <!--/div-->{{ form.fecha_inicio.errors }}
+                            <!--/div-->{{ form.fecha_turno.errors }}
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha Alarma</label>
@@ -89,20 +89,17 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><strong>REQUISITOS NECESARIOS</strong></h2>
+                <h2><strong>REQUISITOS NECESARIOS PRESENTADOS</strong></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
-
-                {% for opcion in requisitos %}
-                    <div class="checkbox" id="check_requisitos">
-                        <label>
+                    <div  id="check_requisitos">
+                        <!--label>
                             <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion }}" value="0">
                             {{ opcion }}
-                        </label>
+                        </label-->
                     </div>
-                {% endfor %}
             </div>
         </div>
     </div>
@@ -113,9 +110,32 @@
     var frm = document.getElementById('frm');
     var requisito = "";
 
+    $("#id_tipo").change(function() {
+
+        //alert("aca");
+
+        $.ajax({
+            url:"/tramites/get_requisitos_tipo_tramite/",
+            cache: false,
+            type: "GET",
+            data: {id_tipo: $("#id_tipo").val()},
+            success: function(data) {
+
+                for (item in data) {
+                    alert(item);
+                    var check = "<label><input type='checkbox' class='flat' id='" + item + "' name='" + item + "' value='0'> " + data[item] + "</label><br>";
+                    alert(check);
+                    $("#check_requisitos").append(check);
+                }
+
+            }
+        });
+
+    });
+
     $('#btnGuardar').click(function(){
 
-        $('div#check_requisitos input[type=checkbox]').each(function() {
+        /*$('div#check_requisitos input[type=checkbox]').each(function() {
            if ($(this).is(":checked")) {
                requisito += $(this).attr('name') + '#1|';
            } else {
@@ -123,7 +143,7 @@
            }
         });
 
-        $('#id_requisitos_presentados').val(requisito.slice(0,-1));
+        $('#id_requisitos_presentados').val(requisito.slice(0,-1));*/
 
         frm.submit();
     });

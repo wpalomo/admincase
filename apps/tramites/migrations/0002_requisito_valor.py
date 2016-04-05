@@ -11,9 +11,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='tramite',
-            name='persona',
-            field=models.OneToOneField(to='personas.Persona'),
+        migrations.AddField(
+            model_name='requisito',
+            name='valor',
+            field=models.CharField(max_length=50, blank=True, null=True),
         ),
     ]

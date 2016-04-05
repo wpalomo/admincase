@@ -2,11 +2,12 @@ from datetime import datetime
 from django.db import models
 
 from apps.complementos.organigrama.models import Entidad
-from apps.personas.models import Persona
+from apps.clientes.models import Cliente
 
 
 class Requisito(models.Model):
     descripcion = models.CharField(max_length=50, null=True, blank=True)
+    valor = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.descripcion
@@ -28,11 +29,11 @@ class TipoTramite(models.Model):
 
 
 class Tramite(models.Model):
-    persona = models.ForeignKey(Persona, null=True, blank=True)
+    cliente = models.ForeignKey(Cliente, null=True, blank=True)
     tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
     fecha_alta = models.DateTimeField(default=datetime.now, null=True,
                                       blank=True)
-    fecha_inicio = models.DateField(null=True, blank=True)
+    fecha_turno = models.DateField(null=True, blank=True)
     fecha_alarma = models.DateField(null=True, blank=True)
     fecha_fin = models.DateField(null=True, blank=True)
     estado = models.BooleanField(default=False, blank=True)
@@ -51,8 +52,8 @@ class RequisitoRequerido(models.Model):
     presentado = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.tramite) + '-' + str(self.requisito) + '-' +\
-               str(self.presentado)
+        return str(self.tramite) + '-' + str(self.requisito) + '-' + \
+            str(self.presentado)
 
     class Meta:
-        verbose_name_plural = "Requisitos del Tramite"
+        verbose_name_plural = "Requisitos Requeridos del Tramite"

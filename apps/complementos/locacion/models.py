@@ -56,16 +56,16 @@ class Localidad(models.Model):
         verbose_name_plural = "Localidades"
 
 
-# class Barrio(models.Model):
-#
-#     nombre = models.CharField(max_length=50, null=True, blank=True)
-#     descripcion = models.CharField(max_length=500, null=True, blank=True)
-#     localidades = models.ForeignKey(Localidad, null=True, blank=True)
-#
-#     #audit_log = AuditLog()
-#
-#     def __str__(self):
-#         return self.nombre.title()
-#
-#     class Meta:
-#         verbose_name_plural = "Barrios"
+class Barrio(models.Model):
+
+    nombre = models.CharField(max_length=50, null=True, blank=True)
+    descripcion = models.CharField(max_length=500, null=True, blank=True)
+    localidades = models.ForeignKey(Localidad, null=True, blank=True)
+
+    #audit_log = AuditLog()
+
+    def __str__(self):
+        return self.nombre.title()
+
+    class Meta:
+        verbose_name_plural = "Barrios"

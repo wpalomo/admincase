@@ -8,19 +8,19 @@ class TramiteAdmin(admin.ModelAdmin):
 
     list_display = [
         'id',
-        'persona',
+        'cliente',
         'tipo',
         'fecha_alta',
-        'fecha_inicio',
-        'fecha_fin',
+        'fecha_turno',
         'fecha_alarma',
+        'fecha_fin',
         'estado',
         'observaciones'
     ]
 
     search_fields = [
         'id',
-        'persona',
+        'cliente',
         'tipo'
     ]
 
@@ -55,7 +55,8 @@ class RequisitoAdmin(admin.ModelAdmin):
 
     list_display = [
         'id',
-        'descripcion'
+        'descripcion',
+        'valor'
     ]
 
     search_fields = [

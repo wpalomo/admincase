@@ -7,6 +7,7 @@ class PersonaAdmin(admin.ModelAdmin):
 
     list_display = [
         'id',
+        'foto',
         'apellido',
         'nombre',
         'tipo_documento',
