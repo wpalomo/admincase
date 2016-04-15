@@ -11,7 +11,7 @@ from .forms import TramiteForm
 from apps.clientes.models import Cliente
 from apps.complementos.organigrama.models import Entidad
 from apps.personas.models import Persona
-from apps.tramites.models import (Tramite, RequisitoRequerido, TipoTramite,
+from apps.tramites.models import (Tramite, RequisitoTramite, TipoTramite,
                                   Requisito)
 
 
@@ -61,9 +61,31 @@ class TramiteCreate(CreateView):
 
         cliente = Cliente.objects.get(pk=int(self.request.POST['cliente']))
 
-        if form.is_valid():
+        requisitos_tramite = self.request.POST['requisitos_presentados']
 
+        if form.is_valid():
             tramite = form.save()
+
+            if requisitos_tramite:
+                parametros = requisitos_tramite.split("|")
+
+                for item in parametros:
+                    print(item)
+                    requisito_parametro = item.split("#")
+
+                    requisito = Requisito.objects.get(
+                        valor=requisito_parametro[0])
+                    # presentado = 0
+                    # if requisito_parametro[1] == 1:
+                    #     presentado = 1
+                    print(requisito_parametro[1])
+                    presentado = (False, True)[requisito_parametro[1] == '1']
+
+                    RequisitoTramite.objects.create(
+                        tramite=tramite,
+                        requisito=requisito,
+                        presentado=presentado
+                    )
 
             messages.add_message(
                 request, messages.SUCCESS, 'EL TRAMITE SE HA CREADO CON EXITO')

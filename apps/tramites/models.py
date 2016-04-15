@@ -5,6 +5,17 @@ from apps.complementos.organigrama.models import Entidad
 from apps.clientes.models import Cliente
 
 
+class TipoTramite(models.Model):
+    descripcion = models.CharField(max_length=50)
+    entidad = models.ForeignKey(Entidad, null=True, blank=True)
+
+    def __str__(self):
+        return self.descripcion + ' - ' + str(self.entidad)
+
+    class Meta:
+        verbose_name_plural = "Tipos de Tramite"
+
+
 class Requisito(models.Model):
     descripcion = models.CharField(max_length=50, null=True, blank=True)
     valor = models.CharField(max_length=50, null=True, blank=True)
@@ -16,16 +27,15 @@ class Requisito(models.Model):
         verbose_name_plural = "Requisitos"
 
 
-class TipoTramite(models.Model):
-    descripcion = models.CharField(max_length=50)
-    entidad = models.ForeignKey(Entidad, null=True, blank=True)
-    requisitos = models.ManyToManyField(Requisito, blank=True)
+class RequisitoTipoTramite(models.Model):
+    tipo_tramite = models.ForeignKey(TipoTramite, null=False, blank=True)
+    requisito = models.ForeignKey(Requisito, null=False, blank=True)
 
     def __str__(self):
-        return self.descripcion + ' - ' + str(self.entidad)
+        return str(self.tipo_tramite) + '-' + str(self.requisito)
 
     class Meta:
-        verbose_name_plural = "Tipos de Tramite"
+        verbose_name_plural = "Requisitos del Tipo de Tramite"
 
 
 class Tramite(models.Model):
@@ -46,7 +56,7 @@ class Tramite(models.Model):
         verbose_name_plural = "Tramites"
 
 
-class RequisitoRequerido(models.Model):
+class RequisitoTramite(models.Model):
     tramite = models.ForeignKey(Tramite, null=False, blank=True)
     requisito = models.ForeignKey(Requisito, null=False, blank=True)
     presentado = models.BooleanField(default=False)

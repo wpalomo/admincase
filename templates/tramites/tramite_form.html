@@ -89,17 +89,12 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><strong>REQUISITOS NECESARIOS PRESENTADOS</strong></h2>
+                <h2><strong>REQUISITOS NECESARIOS </strong></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
-                    <div  id="check_requisitos">
-                        <!--label>
-                            <input type="checkbox" class="flat" id="id_{{ opcion }}" name="{{ opcion }}" value="0">
-                            {{ opcion }}
-                        </label-->
-                    </div>
+                <div  id="check_requisitos"></div>
             </div>
         </div>
     </div>
@@ -112,8 +107,6 @@
 
     $("#id_tipo").change(function() {
 
-        //alert("aca");
-
         $.ajax({
             url:"/tramites/get_requisitos_tipo_tramite/",
             cache: false,
@@ -122,9 +115,9 @@
             success: function(data) {
 
                 for (item in data) {
-                    alert(item);
-                    var check = "<label><input type='checkbox' class='flat' id='" + item + "' name='" + item + "' value='0'> " + data[item] + "</label><br>";
-                    alert(check);
+                    var check = "<label><input type='checkbox' class='flat' id='" +
+                            data[item].id + "' name='" + data[item].valor +
+                            "' value='0'> " + data[item].descripcion + "</label><br>";
                     $("#check_requisitos").append(check);
                 }
 
@@ -135,15 +128,15 @@
 
     $('#btnGuardar').click(function(){
 
-        /*$('div#check_requisitos input[type=checkbox]').each(function() {
-           if ($(this).is(":checked")) {
-               requisito += $(this).attr('name') + '#1|';
-           } else {
-               requisito += $(this).attr('name') + '#0|';
-           }
+        $('div#check_requisitos input[type=checkbox]').each(function() {
+            if ($(this).is(":checked")) {
+                requisito += $(this).attr('name') + '#1|';
+            } else {
+                requisito += $(this).attr('name') + '#0|';
+            }
         });
 
-        $('#id_requisitos_presentados').val(requisito.slice(0,-1));*/
+        $('#id_requisitos_presentados').val(requisito.slice(0,-1));
 
         frm.submit();
     });

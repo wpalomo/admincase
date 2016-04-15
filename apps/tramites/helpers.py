@@ -4,22 +4,27 @@ import json
 
 from django.http import HttpResponse, JsonResponse
 
-from .models import TipoTramite
+from .models import TipoTramite, RequisitoTipoTramite
 
 
 def get_requisitos_tipo_tramite(request):
     tipo = request.GET.get('id_tipo')
 
-    requisitos_del_tramite = TipoTramite.objects.get(pk=int(tipo))
+    requisito_tipo_tramite = RequisitoTipoTramite.objects.filter(
+        tipo_tramite__id=int(tipo))
 
-    result = {}
+    requisitos = [
+        {
+            'id': tipo.requisito.id,
+            'descripcion': tipo.requisito.descripcion,
+            'valor': tipo.requisito.valor,
+        }
+        for tipo in requisito_tipo_tramite
+    ]
 
-    for check in requisitos_del_tramite.requisitos.all():
+    print(requisitos)
 
-        result[check.id] = check.descripcion
-
-    # return JsonResponse(result)
-    return HttpResponse(json.dumps(result), content_type='application/json')
+    return HttpResponse(json.dumps(requisitos), content_type='application/json')
 
 # def get_numero_autoincremental(tipo):
 #     numero_autoincremental = NumeroAutoincremental.objects.get(tipo=tipo)

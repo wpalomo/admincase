@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import admin
 from apps.tramites.models import (Tramite, TipoTramite,
-                                  Requisito, RequisitoRequerido)
+                                  Requisito, RequisitoTipoTramite,
+                                  RequisitoTramite)
 
 
 class TramiteAdmin(admin.ModelAdmin):
@@ -32,8 +33,7 @@ class TipoTramiteAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'descripcion',
-        'entidad',
-        'requisitos_del_tramite'
+        'entidad'
     ]
 
     search_fields = [
@@ -43,12 +43,6 @@ class TipoTramiteAdmin(admin.ModelAdmin):
     ]
 
     ordering = ['entidad']
-
-    def requisitos_del_tramite(self, tipotramite):
-        lista_requisitos = []
-        for req in tipotramite.requisitos.all():
-            lista_requisitos.append(req.descripcion)
-        return lista_requisitos
 
 
 class RequisitoAdmin(admin.ModelAdmin):
@@ -67,16 +61,20 @@ class RequisitoAdmin(admin.ModelAdmin):
     ordering = ['id']
 
 
-class RequisitoRequeridoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'tramite_tipo', 'requisito', 'presentado']
+class RequisitoTipoTramiteAdmin(admin.ModelAdmin):
+    list_display = ['id', 'tipo_tramite', 'requisito']
 
-    ordering=['id']
+    ordering = ['tipo_tramite']
 
-    def tramite_tipo(self, requisitospresentados):
-        return requisitospresentados.tramite
+
+class RequisitoTramiteAdmin(admin.ModelAdmin):
+    list_display = ['id', 'tramite', 'requisito', 'presentado']
+
+    ordering = ['id']
 
 
 admin.site.register(Tramite, TramiteAdmin)
 admin.site.register(TipoTramite, TipoTramiteAdmin)
 admin.site.register(Requisito, RequisitoAdmin)
-admin.site.register(RequisitoRequerido, RequisitoRequeridoAdmin)
+admin.site.register(RequisitoTipoTramite, RequisitoTipoTramiteAdmin)
+admin.site.register(RequisitoTramite, RequisitoTramiteAdmin)

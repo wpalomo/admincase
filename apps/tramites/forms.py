@@ -68,7 +68,7 @@ class TramiteForm(forms.ModelForm):
             datetime.strptime(str(fecha), '%Y-%m-%d')
 
             if fecha < datetime.now().date():
-                raise forms.ValidationError('La fecha desde no puede '
+                raise forms.ValidationError('La fecha del turno no puede '
                                             'ser menor a la actual')
         except ValueError:
             raise ValueError("Fecha no valida")
