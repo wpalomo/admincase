@@ -1,0 +1,88 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+<div style="width:1000px">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>DIA</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                <thead>
+                    <tr class="headings">
+                        <th>Dia </th>
+                        <th>Fecha Desde</th>
+                        <th>Fecha Hasta</th>
+                        <th>Duracion </th>
+                        <th>Practica </th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>{{ configuracion.dia.nombre }}</td>
+                    <td>{{ configuracion.fecha_desde | date:"d/m/Y" }}</td>
+                    <td>{{ configuracion.fecha_hasta | date:"d/m/Y" }}</td>
+                    <td>{{ configuracion.duracion_minutos }} minutos</td>
+                    <td>{{ configuracion.practica.nombre | default:"-" }}</td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+{% for msg in messages %}
+
+<strong>{{ msg }}</strong>
+<br><br>
+
+{% endfor %}
+
+
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    <input id="id_agenda" name="agenda" type="hidden" value="{{ configuracion.agenda.id }}" />
+    <input id="id_dia_configuracion" name="dia_configuracion" type="hidden" value="{{ configuracion.id }}" />
+
+    <div style="width:1000px">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>BLOQUEO DE AGENDA POR DIA</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                {% if form.fecha_desde.errors %}
+                    {{form.fecha_desde.errors}}
+                {% endif %}
+                Fecha desde: {{ form.fecha_desde }} <br><br>
+
+                {% if form.fecha_hasta.errors %}
+                    {{form.fecha_hasta.errors}}
+                {% endif %}
+                Fecha hasta: {{ form.fecha_hasta }} <br><br>
+
+                {% if form.motivo_bloqueo.errors %}
+                    {{form.motivo_bloqueo.errors}}
+                {% endif %}
+                Motivo Bloqueo: {{ form.motivo_bloqueo }} <br><br>
+
+                Observaciones: {{ form.observacion }} <br><br>
+
+                <input type="submit" value="Bloquear" id="btnGuardar" class="btn btn-primary">
+
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}

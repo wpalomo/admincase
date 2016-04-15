@@ -1,0 +1,291 @@
+from django.contrib import admin
+from .locacion.models import Pais, Provincia, Departamento, Localidad, Barrio
+from .persona.models import Sexo, TipoDocumento, EstadoCivil, NivelEducacion, ObraSocial, SituacionLaboral
+from .organigrama.models import Area, Profesion, Especialidad
+from .paciente.models import GrupoSanguineo, TipoPaciente, ClasePaciente
+from .farmacia.models import *
+
+
+
+
+
+
+class SexoAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class TipoDocumentoAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['id']
+
+
+class EstadoCivilAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class NivelEducacionAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class ObraSocialAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class SituacionLaboralAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class AreaAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class ProfesionAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class GrupoSanguineoAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class TipoPacienteAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class ClasePacienteAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class EspecialidadAdmin(admin.ModelAdmin):
+    list_display = [
+        'nombre',
+    ]
+
+    search_fields = [
+        'nombre',
+    ]
+
+    ordering = ['nombre']
+
+    
+##ADMIN COMPLEMENTOS FARMACIA
+class UnidadMedidaAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+
+
+class ViaAdministracionAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+    
+
+class CatalogoFarmaciaAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+    
+    
+class LineaTerapeuticaAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+    
+   
+class PrincipioActivoAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+    ]
+
+    search_fields = [
+        'nombre',
+    ]
+
+    ordering = ['nombre']
+    
+    
+class FormaFarmaceuticaAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'nombre',
+        'abreviatura'
+    ]
+
+    search_fields = [
+        'nombre',
+        'abreviatura'
+    ]
+
+    ordering = ['nombre']
+##FIN ADMIN COMPLEMENTO FARMACIA
+
+admin.site.register(Sexo, SexoAdmin)
+admin.site.register(TipoDocumento, TipoDocumentoAdmin)
+admin.site.register(EstadoCivil, EstadoCivilAdmin)
+admin.site.register(NivelEducacion, NivelEducacionAdmin)
+admin.site.register(ObraSocial, ObraSocialAdmin)
+admin.site.register(SituacionLaboral, SituacionLaboralAdmin)
+admin.site.register(Area, AreaAdmin)
+admin.site.register(Profesion, ProfesionAdmin)
+admin.site.register(GrupoSanguineo, GrupoSanguineoAdmin)
+admin.site.register(TipoPaciente, TipoPacienteAdmin)
+admin.site.register(ClasePaciente, ClasePacienteAdmin)
+admin.site.register(Especialidad, EspecialidadAdmin)
+
+##REGISTRO COMPLEMENTO ADMIN FARMACIA
+admin.site.register(UnidadMedida, UnidadMedidaAdmin)
+admin.site.register(ViaAdministracion, ViaAdministracionAdmin)
+admin.site.register(CatalogoFarmacia, CatalogoFarmaciaAdmin)
+admin.site.register(LineaTerapeutica, LineaTerapeuticaAdmin)
+admin.site.register(PrincipioActivo, PrincipioActivoAdmin)
+admin.site.register(FormaFarmaceutica, FormaFarmaceuticaAdmin)

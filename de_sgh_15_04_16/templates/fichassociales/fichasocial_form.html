@@ -1,0 +1,611 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+{% block content %}
+    <!-- select2 -->
+    <link href="{% static 'css/select/select2.min.css' %}" rel="stylesheet">
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/{{ request.session.modulo }}/listado'><strong>Listado</strong></a> --
+            <a href='/{{ request.session.modulo }}/modi/{{ request.session.id }}'><strong>Datos Personales</strong></a> --
+            <a href='/domicilios/alta/{{ request.session.id }}'><strong>Domicilio</strong></a> --
+            <a href='/contactos/alta/{{ request.session.id }}'><strong>Contacto</strong></a> --
+            <a href='/obrassociales/alta/{{ request.session.id }}'><strong>Obra Social</strong></a> --
+            <a href='/familiares/busqueda/{{ request.session.id }}'><strong>Familia</strong></a> --
+            <a href='/notas/alta/{{ request.session.id }}'><strong>Notas</strong></a> --
+            <strong>Ficha Social</strong>
+        </div>
+    </div>
+    <!-- mensaje -->
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Info:</span>
+                {{ message }}
+            </div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <!-- mensaje -->
+    <style>
+      .select2-choices {
+          min-height: 150px;
+          max-height: 150px;
+          overflow-y: auto;
+       }
+    </style>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="x_panel">
+            <div class="x_title">
+                <div>
+                    </div>
+                    <h2>Ficha del Paciente  : {{ persona.nombre }} {{ persona.apellido }}</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+            <br/>
+            <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                   <div class="x_content">
+                        <div class="form-group">
+                            {% for obra_social in persona_obra_social %}
+                                    <button type="button" class="btn btn-success disabled">{{ obra_social }}</button>
+                                {% empty %}
+                                    <button type="button" class="btn btn-danger disabled"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true">El Paciente no posee Obra Social Registrada</span></button>
+                            {% endfor %}
+                        </div>
+                   </div>
+               </div>
+
+
+                <!-- Content -->
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Ficha Social</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group">
+                                <!-- Control -->
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">N° de Ficha(*) <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.numero_ficha }}
+                                    {% if form.numero_ficha.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.numero_ficha.label }}</span>
+                                            {{ form.numero_ficha.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Última Verficación <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.ultima_verificacion }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name"> <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <button type="submit" name="verificar" class="btn btn-info">Verificar Ficha</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="x_panel tile fixed_height_220">
+                        <div class="x_title">
+                            <h2>Características Sociales</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group">
+                                <!-- Control -->
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Estado Civil <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ persona_form.estado_civil }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Etnia <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ persona_form.etnia }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Nivel de Educación <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ persona_form.nivel_educacion }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" >Ocupación <span class="required"></span>
+                                </label>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <input id="id_codigo_ocupacion" onkeypress="buscar_ocupacion(event)" type="number" value="0" class="form-control" >
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    {{ persona_form.profesion }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">CUIL<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ paciente_form.cuil }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">CUIT<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ paciente_form.cuit }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Situación Laboral <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.situacion_laboral }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">AFIP(*) <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.tipo_iva }}
+                                    {% if form.tipo_iva.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.tipo_iva.label }}</span>
+                                            {{ form.tipo_iva.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Ingreso Mensual <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.ingreso_mensual }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="x_panel tile fixed_height_220">
+                        <div class="x_title">
+                            <h2>Empresa</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group">
+                            <!-- Control -->
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Nombre <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.lugar_trabajo}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" >País <span class="required"></span>
+                                </label>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <input id="id_codigo_pais" onkeypress="buscar_pais(event)" type="number" value="0" class="form-control" >
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    {{ form.pais }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Provincia<span class="required"></span>
+                                </label>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <input id="id_codigo_provincia" onkeypress="buscar_provincia(event)" type="number" value="0" class="form-control" >
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    {{ form.provincia }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Departamento<span class="required"></span>
+                                </label>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <input id="id_codigo_departamento" onkeypress="buscar_departamento(event)" type="number" value="0" class="form-control" >
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    {{ form.departamento }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Localidad<span class="required"></span>
+                                </label>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <input id="id_codigo_localidad"  onkeypress="buscar_localidad(event)"  type="number" value="0" class="form-control" >
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    {{ form.localidad }}
+                                </div>
+                            </div>
+                            <hr style="width: 100%; color: #c7e0fc; height: 0px; background-color:#c7e0fc;" />
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6">Barrio<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.barrio }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Descripción Domicilio<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.descripcion_domicilio }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Código Postal<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.codigo_postal }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <div class="form-group">
+                    <a href="/{{ request.session.modulo }}/modi/{{ request.session.id }}" type="button" class="btn btn-primary">Cancelar</a>
+                    <button type="button" onclick="guardar_formulario()" name="guardar" class="btn btn-success">Guardar</button>
+                </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel tile fixed_height_220">
+                        <div class="x_title">
+                        <h2>ASPECTO HABITACIONAL</h2>
+                        <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group">
+                                <!-- Control -->
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Situación de la Propiedad <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.situacion_propiedad }}
+                                    {% if form.situacion_propiedad.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.situacion_propiedad.label }}</span>
+                                            {{ form.situacion_propiedad.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- Control -->
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Tipo de Vivienda <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.tipo_vivienda }}
+                                    {% if form.tipo_vivienda.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.tipo_vivienda.label }}</span>
+                                            {{ form.tipo_vivienda.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Terreno Propio<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.terreno_propio }}
+                                    {% if form.terreno_propio.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.terreno_propio.label }}</span>
+                                            {{ form.terreno_propio.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Tipo de Construcción<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.tipo_construccion }}
+                                    {% if form.tipo_construccion.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.tipo_construccion.label }}</span>
+                                            {{ form.tipo_construccion.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Servicio de Agua<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.servicio_agua }}
+                                    {% if form.servicio_agua.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.servicio_agua.label }}</span>
+                                            {{ form.servicio_agua.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Servicio de Luz Eléctrica<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.servicio_luz_electrica }}
+                                    {% if form.servicio_luz_electrica.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.servicio_luz_electrica.label }}</span>
+                                            {{ form.servicio_luz_electrica.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Otros Servicios<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.otro_servicio }}
+                                    {% if form.otro_servicio.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.otro_servicio.label }}</span>
+                                            {{ form.otro_servicio.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Tipo de Baño<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.tipo_banio }}
+                                    {% if form.tipo_banio.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.tipo_banio.label }}</span>
+                                            {{ form.tipo_banio.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Tipo de Techo<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.tipo_techo }}
+                                    {% if form.tipo_techo.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.tipo_techo.label }}</span>
+                                            {{ form.tipo_techo.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Tipo de Pared<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.tipo_pared }}
+                                    {% if form.tipo_pared.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.tipo_pared.label }}</span>
+                                            {{ form.tipo_pared.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Tipo de Piso<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.tipo_piso }}
+                                    {% if form.tipo_piso.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.tipo_piso.label }}</span>
+                                        {{ form.tipo_piso.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Cantidad de Dormitorios<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.cantidad_dormitorio }}
+                                    {% if form.cantidad_dormitorio.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.cantidad_dormitorio.label }}</span>
+                                            {{ form.cantidad_dormitorio.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Cantidad de Ambientes<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.cantidad_ambiente }}
+                                    {% if form.cantidad_ambiente.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.cantidad_ambiente.label }}</span>
+                                            {{ form.cantidad_ambiente.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" for="first-name">Cantidad de Camas<span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.cantidad_cama }}
+                                    {% if form.cantidad_cama.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.cantidad_cama.label }}</span>
+                                            {{ form.cantidad_cama.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="x_panel tile fixed_height_220">
+                        <div class="x_title">
+                            <h2>Programas Sociales</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group">
+                                <!-- Control -->
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    {{ form.programa_social }}
+                                    {% if form.programa_social.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.programa_social }}</span>
+                                            {{ form.programa_social }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="x_panel tile fixed_height_220">
+                        <div class="x_title">
+                            <h2>Observación Socio-Económico</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group">
+                                <!-- Control -->
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    {{ form.observacion_socio_economica }}
+                                    {% if form.observacion_socio_economica.errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> {{ form.observacion_socio_economica.label }}</span>
+                                            {{ form.observacion_socio_economica.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Content -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- input mask -->
+    <script src="{% static 'js/input_mask/jquery.inputmask.js' %}"></script>
+    <!-- form validation -->
+    <script src="{% static 'js/validator/validator.js' %}"></script>
+    <!-- Select 2 -->
+    <script src="{% static 'js/select/select2.full.js' %}"></script>
+    <script>
+
+        var select_pais = document.getElementById("id_pais");
+        var pais = select_pais.options[select_pais.selectedIndex].value;
+        if (pais != ''){
+            $('#id_codigo_pais').val(pais);
+        }else{
+            $('#id_codigo_pais').val('0');
+        }
+
+        var select_provincia = document.getElementById("id_provincia");
+        var provincia = select_provincia.options[select_provincia.selectedIndex].value;
+        if (provincia != '') {
+            $('#id_codigo_provincia').val(provincia);
+        }else{
+            $('#id_codigo_provincia').val('0');
+        }
+
+        var select_localidad = document.getElementById("id_localidad");
+        var localidad = select_localidad.options[select_localidad.selectedIndex].value;
+        if (localidad != '') {
+            $('#id_codigo_localidad').val(localidad);
+        }else{
+            $('#id_codigo_localidad').val('0');
+        }
+
+        var select_departamento = document.getElementById("id_departamento");
+        var departamento = select_departamento.options[select_departamento.selectedIndex].value;
+        if (departamento != '') {
+            $('#id_codigo_departamento').val(departamento);
+        }else{
+            $('#id_codigo_departamento').val('0');
+        }
+
+        var select_profesion = document.getElementById("id_profesion");
+        var profesion = select_profesion.options[select_profesion.selectedIndex].value;
+        if (profesion != '') {
+            $('#id_codigo_ocupacion').val(profesion);
+        }else{
+            $('#id_codigo_ocupacion').val('0');
+        }
+
+        document.getElementById("id_ultima_verificacion").readOnly = true;
+        if ( document.getElementById("id_numero_ficha").value != ''){
+            document.getElementById("id_numero_ficha").readOnly = true;
+        }
+
+        buscar_pais = function(event){
+            if (event.keyCode==13){
+                event.preventDefault();
+                $('#id_pais').select2("val", $('#id_codigo_pais').val());
+            }
+        };
+        buscar_provincia = function(event){
+            if (event.keyCode==13){
+                event.preventDefault();
+                $('#id_provincia').select2("val", $('#id_codigo_provincia').val());
+            }
+        };
+        buscar_localidad = function(event){
+            if (event.keyCode==13){
+                event.preventDefault();
+                $('#id_localidad').select2("val", $('#id_codigo_localidad').val());
+            }
+        };
+        buscar_departamento = function(event){
+            if (event.keyCode==13){
+                event.preventDefault();
+                $('#id_departamento').select2("val", $('#id_codigo_departamento').val());
+            }
+        };
+        buscar_ocupacion = function(event){
+            if (event.keyCode==13){
+                event.preventDefault();
+                $('#id_profesion').select2("val", $('#id_codigo_ocupacion').val());
+            }
+        };
+
+        /* Select 2 para colocarle buscadores a los select */
+        $('#id_programa_social').select2({});
+        $('#id_departamento').select2({});
+        $('#id_profesion').select2({});
+        $('#id_provincia').select2({});
+        $('#id_localidad').select2({});
+        $('#id_barrio').select2({});
+        $('#id_pais').select2({});
+
+        guardar_formulario = function() {
+            if (document.getElementById("id_numero_ficha").readOnly != true) {
+                if (document.getElementById("id_numero_ficha").value != '') {
+                    if (confirm('Se ha ingresado el N° de Ficha Social, una vez Guardado este campo no se podrá editar ¿Desea continuar?')) {
+                        $('#demo-form2').submit();
+                    }
+                }
+            }else{
+                $('#demo-form2').submit();
+            }
+        }
+    </script>
+{% endblock %}

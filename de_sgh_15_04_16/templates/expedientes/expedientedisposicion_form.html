@@ -1,0 +1,277 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+            <a href='/expedientes/modi/{{ expediente.id }}/'><strong>EXPEDIENTE</strong></a> --
+            <strong>DISPOSICIÓN</strong>
+        </div>
+    </div>
+
+
+<form id="frm" class="form-horizontal form-label-left" action="" method="post">
+    {% csrf_token %}
+     <div style="width:700px"> Etapa: {{ form.etapa }}</div><br>
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>DISPOSICIÓN</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    {% for msg in messages %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-success" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only"></span>
+                               {{ msg }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                         <div class="col-md-12 col-sm-12 col-xs-12">
+                            <input id="id_expediente" name="expediente" type="hidden" value="{{ expediente.id }}" />
+                         </div>
+
+                        <div id="campos">
+                           <div class="col-md-12 col-sm-12 col-xs-12">
+                                    {% if form.contratacion_directa.errors %}
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="alert alert-danger" role="alert">
+                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                <span class="sr-only">Error:</span>
+                                                {{ form.contratacion_directa.label }}
+                                                {{ form.contratacion_directa.errors }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                <label class="control-label">Contratación Directa <span class="required">*</span>
+                                </label>{{ form.contratacion_directa }}
+                           </div>
+
+                           <div class="col-md-12 col-sm-12 col-xs-12">
+                                   {% if form.proveedor.errors %}
+                                       <div class="col-md-12 col-sm-12 col-xs-12">
+                                           <div class="alert alert-danger" role="alert">
+                                               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                               <span class="sr-only">Error:</span>
+                                               {{ form.proveedor.label }}
+                                               {{ form.proveedor.errors }}
+                                           </div>
+                                       </div>
+                                   {% endif %}
+                               <label class="control-label">Proveedor <span class="required">*</span></label>
+                               <input class="form-control" type="text" id="buscar_proveedor" value="{{ expediente.expedientedisposicion.proveedor }}"/>
+                               <input type="hidden" name="proveedor" id="id_proveedor" value="{{ expediente.expedientedisposicion.proveedor.id }}"/>
+                           </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                   {% if form.importe.errors %}
+                                       <div class="col-md-12 col-sm-12 col-xs-12">
+                                           <div class="alert alert-danger" role="alert">
+                                               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                               <span class="sr-only">Error:</span>
+                                               {{ form.importe.label }}
+                                               {{ form.importe.errors }}
+                                           </div>
+                                       </div>
+                                   {% endif %}
+                                <label class="control-label">Importe <span class="required">*</span>
+                                </label>{{ form.importe }}
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                   {% if form.numero_disposicion.errors %}
+                                       <div class="col-md-12 col-sm-12 col-xs-12">
+                                           <div class="alert alert-danger" role="alert">
+                                               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                               <span class="sr-only">Error:</span>
+                                               {{ form.numero_disposicion.label }}
+                                               {{ form.numero_disposicion.errors }}
+                                           </div>
+                                       </div>
+                                   {% endif %}
+                                <label class="control-label">N° Disposición <span class="required">*</span>
+                                </label>{{ form.numero_disposicion }}
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                   {% if form.fecha_disposicion.errors %}
+                                       <div class="col-md-12 col-sm-12 col-xs-12">
+                                           <div class="alert alert-danger" role="alert">
+                                               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                               <span class="sr-only">Error:</span>
+                                               {{ form.fecha_disposicion.label }}
+                                               {{ form.fecha_disposicion.errors }}
+                                           </div>
+                                       </div>
+                                   {% endif %}
+                                <label class="control-label">Fecha de Disposición <span class="required">*</span>
+                                </label>{{ form.fecha_disposicion }}
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                   {% if form.fuente_financiamiento.errors %}
+                                       <div class="col-md-12 col-sm-12 col-xs-12">
+                                           <div class="alert alert-danger" role="alert">
+                                               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                               <span class="sr-only">Error:</span>
+                                               {{ form.fuente_financiamiento.label }}
+                                               {{ form.fuente_financiamiento.errors }}
+                                           </div>
+                                       </div>
+                                   {% endif %}
+                                <label class="control-label">Fuente de Financiamiento <span class="required">*</span>
+                                </label> {{ form.fuente_financiamiento }}
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                   {% if form.observacioness.errors %}
+                                       <div class="col-md-12 col-sm-12 col-xs-12">
+                                           <div class="alert alert-danger" role="alert">
+                                               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                               <span class="sr-only">Error:</span>
+                                               {{ form.observaciones.label }}
+                                               {{ form.observaciones.errors }}
+                                           </div>
+                                       </div>
+                                   {% endif %}
+                                <label class="control-label">Observación </span>
+                                </label>{{ form.observaciones }}
+                            </div>
+                            <br>
+                            <input type="button" id="btnGuardar" class="btn btn-primary" value="Guardar"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="{% static 'css/autocomplete/autocomplete.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/autocomplete/jquery.autocomplete.js' %}"></script>
+
+<script>
+
+
+    $('#buscar_proveedor').autocomplete({
+        serviceUrl: '/empleados/get_proveedor_autocomplete',
+        //lookup: countriesArray,
+        lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+            var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+            return re.test(suggestion.value);
+        },
+
+        onSelect: function(suggestion) {
+            $('#id_proveedor').val(suggestion.data);
+        },
+
+        onInvalidateSelection: function() {
+            $('#buscar_proveedor').html('You selected: none');
+        }
+    });
+
+    $('.errorlist').css('color', '#a94442');
+    $('.errorlist').css('list-style-type', 'none');
+
+    $(document).ready(function(){
+
+        $("#campos").children().prop('disabled', true);
+
+        //alert('{{expediente.etapa.id}}');
+        //$("#id_etapa option[value="+ {{expediente.etapa.id}} +"]").prop('selected', true);
+        $("#id_etapa").val({{expediente.etapa.id}});
+
+
+
+        var etapa = $("#id_etapa option[value="+ $('#id_etapa').val() +"]").text();
+        if(etapa.toUpperCase() == "COMPROMISO Y ORDENADO"){
+            $("#campos").children().prop('disabled', false);
+        }
+
+        {% if not form.errors %}
+            $("#id_etapa").val({{expediente.etapa.id}});
+
+            if(etapa.toUpperCase() == "COMPROMISO Y ORDENADO"){
+                $("#campos").children().prop('disabled', true);
+            }
+        {% endif %}
+
+        if('{{ expediente.estado.valor }}' == "CERRADO"){
+            $("#frm").children().prop('disabled', true);
+        }
+
+        //RESUELTO MOMENTANEAMENTE PARA FORMATO CON CERO
+        //REFACTORIZAR
+        $("#id_contratacion_directa").val(("000" + $("#id_contratacion_directa").val()).slice (-4));
+        $("#id_numero_disposicion").val(("000" + $("#id_numero_disposicion").val()).slice (-4));
+
+
+    });
+
+    $("#id_etapa").change(function(){
+
+        var etapa = $("#id_etapa option[value="+ $('#id_etapa').val() +"]").text();
+        if(etapa.toUpperCase() == "COMPROMISO Y ORDENADO"){
+            $("#campos").children().prop('disabled', false);
+        }
+
+        if(etapa.toUpperCase() == "PREVENTIVO"){
+            $("#campos").children().prop('disabled', true);
+        }
+    });
+
+    $("#btnGuardar").click(function(){
+
+        if(!isNaN($("#buscar_proveedor").val())){
+            alert("Por favor seleccione un proveedor!");
+            $("#buscar_proveedor").focus();
+            return;
+        }
+
+        var etapa = $("#id_etapa option[value="+ $('#id_etapa').val() +"]").text();
+        if(etapa.toUpperCase() == "COMPROMISO Y ORDENADO"){
+            if(confirm("ATENCION: Está seguro de guardar la Disposición con la etapa" +
+                    " 'Compromiso y Ordenado'?, una vez confirmado no podrá realizar cambios!")){
+
+                $('#frm').submit();
+            }
+
+            return;
+        }
+    });
+
+    $("#id_importe").blur(function()
+    {
+        var importe = parseFloat($("#id_importe").val());
+
+        $.ajax({
+            type: "post",
+            url:"/expedientes/disposicion/get_tipo_transaccion_disposicion/",
+            data: {
+                'importe': importe,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data){
+                if(data['msg'] !=''){
+                    alert(data['msg']);
+                    $("#id_importe").focus();
+                    $("#id_importe").select();
+                    return;
+                }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}

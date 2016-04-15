@@ -1,0 +1,154 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+<div style="background-color:#ccc">
+    <a href='/agendas/listado'><strong>LISTADO</strong></a> --
+
+    <a href='/agendas/modi/{{ agenda.id }}'><strong>AGENDA</strong></a> --
+
+    <a href='/agendas/configuracion_por_dias/{{ agenda.id }}'>
+        <strong>CONFIGURACION POR DIAS</strong>
+    </a> --
+
+    <a href="/agendas/bloqueo/{{ agenda.id }}">
+        <strong>BLOQUEOS</strong>
+    </a> --
+
+    <a href="/agendas/extender/{{ agenda.id }}">
+        <strong>EXTENDER</strong>
+    </a>
+    <br><br>
+</div>
+
+<br>
+
+
+{% for msg in messages %}
+
+    <strong>{{ msg }}</strong>
+    <br><br>
+
+{% endfor %}
+
+{% if form.non_field_errors %}
+
+    <strong>{{form.non_field_errors}}</strong>
+
+    <br>
+
+{% endif %}
+
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    <div style="width:900px">
+
+        <div class="x_panel">
+            <div class="x_content">
+
+                <strong>FECHAS PARA DIAS: {{ agenda_dia_configuracion.dia.nombre }}</strong>
+                <br><br><br>
+
+                <input type="hidden" id="id_agenda" name="agenda" value="{{agenda.id}}">
+                <input type="hidden" id="id_dia_configuracion" name="dia_configuracion" value="{{agenda_dia_configuracion.id}}">
+
+                {% if form.fecha.errors %}
+                    {{form.fecha.errors}}
+                {% endif %}
+                Fecha: {{ form.fecha }} <br>
+
+                {% if form.hora_desde.errors %}
+                    {{form.hora_desde.errors}}
+                {% endif %}
+                Hora Desde: {{ form.hora_desde }} <br>
+
+                {% if form.hora_hasta.errors %}
+                    {{form.hora_hasta.errors}}
+                {% endif %}
+                Hora Hasta: {{ form.hora_hasta }} <br>
+
+                {% if form.duracion_minutos.errors %}
+                    {{form.duracion_minutos.errors}}
+                {% endif %}
+                Duracion turno: {{ form.duracion_minutos }} <br>
+
+                Practica: {{ form.practica }} <br>
+
+            </div>
+
+        </div>
+
+        <br>
+        <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-primary">
+    </div>
+
+    <br>
+
+    <div style="width:1200px">
+
+        <div class="x_panel">
+            <div class="x_content">
+
+                <table id="example" class="table table-striped responsive-utilities jambo_table">
+                    <thead>
+                        <tr class="headings">
+                            <th>Fecha </th>
+                            <th>Hora Desde</th>
+                            <th>Hora Hasta</th>
+                            <th>Duracion</th>
+                            <th>Practica</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+
+                    {% for configuracion_fecha in agenda_fechas_configuracion %}
+
+                        <tr>
+                            <td class=" ">{{ configuracion_fecha.fecha | date:"d/m/Y" }}</td>
+                            <td class=" ">{{ configuracion_fecha.hora_desde }}</td>
+                            <td class=" ">{{ configuracion_fecha.hora_hasta }}</td>
+                            <td class=" ">{{ configuracion_fecha.duracion_minutos }} minutos</td>
+                            <td class=" ">{{ configuracion_fecha.practica.nombre | default:"-" }}</td>
+                            <th>
+                                <a href="/agendas/configuracion_por_fechas/modi/{{configuracion_fecha.id}}">
+                                    Editar
+                                </a>
+                            </th>
+                        </tr>
+
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+<script>
+
+    $(document).ready(function()
+    {
+        $("#id_hora_desde").attr("placeholder", "hh:mm");
+        $("#id_hora_hasta").attr("placeholder", "hh:mm");
+
+        $("#id_fecha").attr("disabled", true);
+
+        {% if fecha_configuracion %}
+            $("#btnGuardar").attr("disabled", false);
+        {% else %}
+            $("#btnGuardar").attr("disabled", true);
+        {% endif %}
+    });
+
+     $("#btnGuardar").click(function()
+     {
+        $("#id_fecha").prop("disabled", false);
+     });
+
+</script>
+
+{% endblock %}

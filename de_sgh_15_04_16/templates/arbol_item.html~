@@ -1,0 +1,49 @@
+{% extends 'base_site.html' %}
+{% load staticfiles %}
+
+{% block css %}
+
+{% endblock%}
+
+
+{% block arbolitem %}
+
+    <ul class="nav side-menu">
+        <li><a><i class="fa fa-institution"></i> Instituciones <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="display: none">
+                <li><a href="/inicio">Configurar Institución</a></li>
+            </ul>
+        </li>
+        <li><a><i class="fa fa-user"></i> Empleados <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="display: none">
+                <li><a href="/empleados/alta/">Nuevo Empleado</a></li>
+                <li><a href="/empleados/listado/">Lista de Empleados</a></li>
+            </ul>
+        </li>
+        <li><a><i class="fa fa-users"></i> Pacientes <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="display: none">
+                <li><a href="/pacientes/alta/">Nuevo Paciente</a></li>
+                <li><a href="/pacientes/listado/">Lista de Pacientes</a></li>
+            </ul>
+        </li>
+<<<<<<< HEAD
+        <li><a><i class="fa fa-briefcase"></i> Administracion <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="display: none">
+                <li><a href="/administracion/expediente/alta/">Nuevo Expediente</a></li>
+            </ul>
+        </li>
+    
+                
+======
+        <li><a><i class="fa fa-calendar-o"></i> Agendas <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="display: none">
+                <li><a href="/agendas/alta/">Nueva Agenda</a></li>
+            </ul>
+        </li>
+    </ul>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -55,9 +55,9 @@ class TramiteForm(forms.ModelForm):
         for name, field in list(self.fields.items()):
             if name == 'estado':
                 continue
-            if name == 'tipo':
-                field.widget.attrs.update({'class': 'form-control select2_single'})
-                continue
+            # if name == 'tipo':
+            #     field.widget.attrs.update({'class': 'form-control select2_single'})
+            #     continue
 
             field.widget.attrs.update({'class': 'form-control'})
 

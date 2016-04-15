@@ -1,0 +1,96 @@
+{% extends 'base_site.html' %}
+{% load staticfiles %}
+
+{% block css %}
+
+{% endblock%}
+
+
+{% block arbolitem %}
+
+    <ul class="nav side-menu">
+        {% if perms.instituciones %}
+        <li>
+            <a><i class="fa fa-institution"></i> Instituciones <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_instituciones" class="nav child_menu" style="display: none">
+                {% if perms.instituciones.add_institucion %}
+                <li><a href="/instituciones/alta/">Nueva Institución</a></li>
+                {% endif %}
+                {% if perms.instituciones.change_institucion %}
+                <li><a href="/instituciones/listado/">Lista de Instituciones</a></li>
+                {% endif %}
+            </ul>
+        </li>
+        {% endif %}
+
+        {% if perms.empleados%}
+        <li>
+            <a><i class="fa fa-user"></i> Empleados <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_empleados" class="nav child_menu" style="display: none">
+                <li><a href="/empleados/alta/">Nuevo Empleado</a></li>
+                <li><a href="/empleados/listado/">Lista de Empleados</a></li>
+            </ul>
+        </li>
+        {% endif %}
+        {% if perms.pacientes %}
+        <li>
+            <a><i class="fa fa-users"></i> Pacientes <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_pacientes" class="nav child_menu" style="display: none">
+                <li><a href="/pacientes/alta/">Nuevo Paciente</a></li>
+                <li><a href="/pacientes/listado/">Lista de Pacientes</a></li>
+            </ul>
+        </li>
+        {% endif %}
+        {% if perms.expedientes %}
+        <li>
+            <a><i class="fa fa-briefcase"></i> Administración <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_expedientes" class="nav child_menu" style="display: none">
+                {% if perms.expedientes.add_expediente %}
+                <li><a href="/expedientes/alta/">Nuevo Expediente</a></li>
+                {% endif %}
+                {% if perms.expedientes.change_expediente %}
+                <li><a href="/expedientes/listado/">Lista de Expedientes</a></li>
+                {% endif %}
+            </ul>
+        </li>
+        {% endif %}
+        {% if perms.agendas %}
+        <li>
+            <a><i class="fa fa-briefcase"></i> Agendas <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_agendas" class="nav child_menu" style="display: none">
+                <li><a href="/agendas/alta/">Nueva Agenda</a></li>
+                <li><a href="/agendas/listado/">Lista de Agendas</a></li>
+            </ul>
+        </li>
+        {% endif %}
+        {% if perms.farmacias %}
+        <li>
+            <a><i class="fa fa-medkit"></i> Farmacia <span class="fa fa-chevron-down"></span></a>
+            <ul>
+                <li>
+                    <a><i class="fa fa-list"></i> Catálogo <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/medicamentos/listado/"><i class="fa fa-flask"></i>Medicamentos</a></li>
+                        <li><a href="/descrtables/listado/"><i class="fa fa-trash"></i>Descartables</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        {% endif %}
+        {% if perms.seguridad %}
+        <li>
+            <a><i class="fa fa-key"></i> Seguridad <span class="fa fa-chevron-down"></span></a>
+            <ul id="ul_agendas" class="nav child_menu" style="display: none">
+                <li><a href="/seguridad/perfil/alta/">Nuevo Perfil</a></li>
+                <li><a href="/seguridad/perfil/listado/">Lista de Perfiles</a></li>
+            </ul>
+        </li>
+        {% endif %}
+
+    </ul>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock%}

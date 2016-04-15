@@ -1,0 +1,77 @@
+{% extends 'arbol_item.html' %}
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/{{ request.session.modulo }}/listado'><strong>Listado</strong></a> --
+            <strong>Datos Personales</strong> --
+            <a href='/domicilios/alta/{{ request.session.id }}'><strong>Domicilio</strong></a> --
+            <a href='/contactos/alta/{{ request.session.id }}'><strong>Contacto</strong></a> --
+            <a href='/obrassociales/alta/{{ request.session.id }}'><strong>Obra Social</strong></a> --
+            <a href='/familiares/busqueda/{{ request.session.id }}'><strong>Familia</strong></a> --
+            <a href='/notas/alta/{{ request.session.id }}'><strong>Notas</strong></a>
+            {% if request.session.modulo != 'empleados'  %}
+                -- <a href='/fichassociales/alta/{{ request.session.id }}'><strong>Ficha Social</strong></a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row">
+
+        <form method="post"> {% csrf_token %}
+        <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInDown">
+            <div style="border:1px solid gainsboro; background-color: whitesmoke; padding-left: 48%">
+               <a href='/{{ request.session.modulo }}/asignacionformal/alta/{{ object.empleado.id }}'><strong>Asignacion Formal</strong></a> --
+               <strong>Asignacion Actual</strong> --
+               <strong>Profesional</strong>
+           </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Empleado - {{ object.empleado }}</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-sm-12">
+                        <h2 class="brief"><i> Está seguro de eliminar la asignación formal?</i></h2>
+                        <ul class="list-unstyled">
+                            {% if object.destino %}
+                            <li> <label>Destino</label> : {{ object.destino }} </li>
+                            {% endif %}
+                            {% if object.cargo %}
+                            <li> <label>Cargo</label> : {{ object.cargo }} </li>
+                            {% endif %}
+                            {% if object.direccion %}
+                            <li> <label>Direccion</label> : {{ object.direccion }} </li>
+                            {% endif %}
+                            {% if object.departamento %}
+                            <li> <label>Departamento</label> : {{ object.departamento }} </li>
+                            {% endif %}
+                            {% if object.division %}
+                            <li> <label>Division</label> : {{ object.division }} </li>
+                            {% endif %}
+                            {% if object.seccion %}
+                            <li> <label>Seccion</label> : {{ object.seccion }} </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-5">
+                        <div class="col-xs-3 col-sm-3 emphasis">
+                            <!--a class="btn btn-success btn-xl" href="/{{ request.session.modulo }}/modi/{{ object.empleado.id }}" type="button" ><i class="fa fa-arrow-left"></i> {{ request.session.modulo }}</a-->
+                            <a class="btn btn-success btn-xl" href="/empleados/asignacionformal/alta/{{ object.empleado.id }}" type="button"> <i class="fa fa-arrow-left"></i> Cancelar</a>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 emphasis">
+                            <button class="btn btn-danger btn-xl" type="submit" ><i class="fa fa-trash"></i> Eliminar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+{% endblock %}

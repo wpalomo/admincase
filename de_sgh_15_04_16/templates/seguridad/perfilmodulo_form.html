@@ -1,0 +1,117 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+<div class="title_right" style="background-color:#ccc">
+
+    <div class="x_title">
+        <a href='/seguridad/perfil/listado'><strong>LISTADO</strong></a>
+    </div>
+
+</div>
+
+{% for msg in messages %}
+
+    <strong>{{ msg }}</strong>
+    <br><br>
+
+{% endfor %}
+
+{% if form.non_field_errors %}
+
+    <strong>{{form.non_field_errors}}</strong>
+
+    <br>
+
+{% endif %}
+
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    <div style="width:600px">
+
+        <div class="x_panel">
+
+            <div class="x_title">
+                <h2>PERFIL: {{perfil.nombre}}</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <div id="div_perfil">
+                  {{ form.perfil }}
+                </div>
+
+                Modulo: {{ form.modulo }} <br><br>
+
+            </div>
+
+        </div>
+
+        <br>
+        <input type="submit" value="Asignar Módulo" id="btnGuardar" class="btn btn-primary">
+    </div>
+
+    <br>
+
+    <div style="width:600px">
+
+        <div class="x_panel">
+            <div class="x_content">
+
+                <table id="example" class="table table-striped responsive-utilities jambo_table">
+                    <thead>
+                        <tr class="headings">
+                            <th>Módulo </th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    {% for asignacion in modulo_perfil %}
+
+                        <tr>
+                            <td class=" ">{{ asignacion.modulo.descripcion }}</td>
+                            <th>
+                                <a href="/seguridad/perfil/modulos/borrar/{{ asignacion.id }}">
+                                    Borrar
+                                </a>
+                            </th>
+                        </tr>
+
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+<script>
+
+    $(document).ready(function()
+    {
+        // MALA SOLUCION
+        // REFACTORING
+        // SE REMUEVEN DEL SELECT LOS MODULOS QUE YA ESTAN ASIGNADOS
+        // YA DESDE EL FORM EBERIA TRAER ASI
+        $("#id_modulo option").each(function()
+        {
+            {% for asignacion in modulo_perfil %}
+                if ( {{asignacion.modulo.id}} == $(this).val() )
+                {
+                    $(this).remove();
+                }
+            {% endfor %}
+        });
+
+        $("#id_perfil").val({{ perfil.id }});
+        $("#div_perfil").hide();
+    });
+
+</script>
+
+{% endblock %}

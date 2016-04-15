@@ -1,0 +1,330 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+    {% block content %}
+    <style>
+        .alert {
+            width:70%;
+            height: 30%;
+        }
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+            }
+    </style>
+    <!-- select2 -->
+    <link href="{% static 'css/select/select2.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/select/select2.full.js' %}"></script>
+    <!-- select2 -->
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/medicamentos/listado'><strong>LISTADO</strong></a> --
+            <a href='/medicamentos/modi/{{ medicamento.id }}'><strong>MEDICAMENTO</strong></a> --
+            <strong>LABORATORIO</strong>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <form id="frm" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+        {% if messages %}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Datos Comerciales | Proveedores</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_title">
+                        <strong><p>DENOMINACIÓN {{ medicamento.denominacion | upper }}</p></strong>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- Se muestra los errores como tabla por no errar en diseño -->
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error: </span>
+                                {{ field.label }} : {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <!---------------------------------------------------------->
+                    <div class="x_content">
+                        <div id="divLaboratorio">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Nombre Comercial <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form.nombre_comercial }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Laboratorio <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form.laboratorio }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Numero Certificado <span class="required"></span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form.numero_certificado }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Número GTIN <span class="required"></span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form.numero_gtin }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Forma Farmacéutica <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form.forma_farmaceutica }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Envase Primario </label>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.envase_primario }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                        {{ form.cantidad_envase_primario }}
+                                    </div>
+                                    <div class="col-md-5 col-sm-12 col-xs-12">
+                                        {{ form.unidad_medida_envase_primario }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Envase Secundario </label>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.envase_secundario }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                        {{ form.cantidad_envase_secundario }}
+                                    </div>
+                                    <div class="col-md-5 col-sm-12 col-xs-12">
+                                        {{ form.unidad_medida_envase_secundario }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Agrupado </label>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.agrupado_cantidad }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.agrupado_unidad }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Pack (Unidad Despacho) <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.pack_cantidad }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.pack_unidad_despacho }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Pallet (Unidad Logística) </label>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.pallet_cantidad }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        {{ form.pallet_unidad_logistica }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12"><br>
+                                    <div class="col-md-11 col-sm-12 col-xs-12"></div>
+                                    <div class="col-md-1 col-sm-12 col-xs-12">
+                                        <input type="hidden" id="id_items_composicion" name="items_composicion" value=""/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Imagen del Medicamento </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {% if form.instance.imagen_medicamento %}
+                                            Actualmente: <a href="/media/{{ form.instance.imagen_medicamento }}">{{ form.instance.imagen_medicamento }}</a> <input id="imagen_medicamento-clear_id" name="imagen_medicamento-clear" type="checkbox" /> <label for="imagen_medicamento-clear_id">Limpiar</label><br />Modificar: <input class="form-control" id="id_imagen_medicamento" name="imagen_medicamento" type="file" />
+                                        {% else %}
+                                            {{ form.imagen_medicamento }}
+                                        {% endif %}
+                                        {% if form.errors.imagen_medicamento %}
+                                            <strong>
+                                                {{ form.errors.imagen_medicamento }}
+                                            </strong>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label for="fullname" class="col-md-5 col-sm-5 col-xs-12">Prospecto del Medicamento </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {% if form.instance.prospecto_medicamento %}
+                                            Actualmente: <a href="/media/{{ form.instance.prospecto_medicamento }}">{{ form.instance.prospecto_medicamento }}</a> <input id="prospecto_medicamento-clear_id" name="prospecto_medicamento-clear" type="checkbox" /> <label for="prospecto_medicamento-clear_id">Limpiar</label><br />Modificar: <input class="form-control" id="id_prospecto_medicamento" name="prospecto_medicamento" type="file" />
+                                        {% else %}
+                                            {{ form.prospecto_medicamento }}
+                                        {% endif %}
+                                        {% if form.errors.prospecto_medicamento %}
+                                            <strong>
+                                                {{ form.errors.prospecto_medicamento }}
+                                            </strong>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br>
+                            <br><br>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="example" class="table table-striped responsive-utilities jambo_table">
+                                    <thead>
+                                        <tr class="headings">
+                                        <th>Imagen</th>
+                                        <th>Nombre Comercial </th>
+                                        <th>Laboratorio</th>
+                                        <th>Envase Secundario</th>
+                                        <th>Prospecto </th>
+                                        <th class=" no-link last">
+                                        <span class="nobr">Editar</span>
+                                        </th>
+                                        <th class=" no-link last">
+                                        <span class="nobr">Eliminar</span>
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                    {% for laboratorio in laboratorios_list %}
+                                        <tr class="odd pointer">
+                                            {% if laboratorio.imagen_medicamento %}
+                                                <td class=" "> <img src="/media/{{ laboratorio.imagen_medicamento }}" class="img-circle" width="42px" height="42px"></td>
+                                            {% else %}
+                                                <td class=" "> <img src="/media/logo/medicamento.png" class="img-circle" width="42px" height="42px"></td>
+                                            {% endif %}
+                                                <td class=" ">{{ laboratorio.nombre_comercial }}</td>
+                                                <td class=" ">{{ laboratorio.laboratorio }}</td>
+                                                <td class=" ">1 {{ laboratorio.envase_secundario }} ({{ laboratorio.cantidad_envase_secundario }} {{ laboratorio.unidad_medida_envase_secundario }})</td>
+                                                <td class=" ">
+                                                <img src="/media/logo/pdf.png" class="img-circle" width="42px" height="42px">
+                                            {% if laboratorio.prospecto_medicamento %}
+                                                <a href="/media/{{ laboratorio.prospecto_medicamento }}" class="fa fa-download"></a>
+                                            {% endif %}
+                                            </td>
+                                            <td class=" last">
+                                                <a href="/medicamentos/laboratorios/modi/{{ laboratorio.id }}">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/medicamentos/laboratorios/delete/{{ laboratorio.id }}">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            No se encontraron registros
+                                        </div>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+            <br>
+            <input type="submit" value="Guardar" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+    <script>
+        //Se agrega el select 2 para hacer un autocompletar el combo
+        $('#id_laboratorio').select2({});
+        $('#id_forma_farmaceutica').select2({});
+    </script>
+    {% endblock %}

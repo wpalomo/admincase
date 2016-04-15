@@ -112,21 +112,19 @@ class TramiteUpdate(UpdateView):
 
     def get(self, request, *args, **kwargs):
 
-        tramite = Tramite.objects.get(pk=kwargs['pk'])
 
-        requisitos = tramite.tipo.requisitos.all()
+        print(kwargs)
+
+        tramite = Tramite.objects.get(pk=kwargs['pk'])
+        cliente = Cliente.objects.get(pk=tramite.cliente.id)
 
         form = TramiteForm(instance=tramite)
-
-        cliente = Cliente.objects.get(persona__id=tramite.cliente.persona.id)
 
         return render_to_response(
             'tramites/tramite_form.html',
             {
                 'form': form,
-                # 'tramite': tramite,
                 'cliente': cliente
-                # 'requisitos': requisitos
             },
             context_instance=RequestContext(request)
         )
