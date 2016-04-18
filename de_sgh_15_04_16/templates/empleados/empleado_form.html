@@ -1,0 +1,336 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/{{ request.session.modulo }}/listado'><strong>Listado</strong></a> --
+            <strong>Datos Personales</strong> --
+            <a href='/domicilios/alta/{{ request.session.id }}'><strong>Domicilio</strong></a> --
+            <a href='/contactos/alta/{{ request.session.id }}'><strong>Contacto</strong></a> --
+            <a href='/obrassociales/alta/{{ request.session.id }}'><strong>Obra Social</strong></a> --
+            <a href='/familiares/busqueda/{{ request.session.id }}'><strong>Familia</strong></a> --
+            <a href='/notas/alta/{{ request.session.id }}'><strong>Notas</strong></a>
+            {% if request.session.modulo != 'empleados'  %}
+                -- <a href='/fichassociales/alta/{{ request.session.id }}'><strong>Ficha Social</strong></a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="clearfix"></div>
+    <div class="row">
+       <div class="col-md-12 col-sm-12 col-xs-12">
+           <div style="border:1px solid gainsboro; background-color: whitesmoke; padding-left: 68%">
+               {% if empleado_form.instancia %}
+                   <a href='/{{ request.session.modulo }}/asignacionformal/alta/{{ empleado_form.instancia.id }}'><strong>Asignación Formal</strong></a> --
+                   <strong>Asignación Actual</strong> --
+                   <strong>Profesional</strong>
+               {% else %}
+                   <strong>Asignación Formal</strong> --
+                   <strong>Asignación Actual</strong> --
+                   <strong>Profesional</strong>
+               {% endif %}
+           </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Empleado</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form enctype="multipart/form-data" id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Apellido<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.apellido }}
+                                 {% if form.errors.apellido %}
+                                     <strong>
+                                           {{ form.errors.apellido }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Nombre<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.nombre }}
+                                 {% if form.errors.nombre %}
+                                     <strong>
+                                           {{ form.errors.nombre }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                         <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Tipo de Documento<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.tipo_documento }}
+                                 {% if form.errors.tipo_documento %}
+                                     <strong>
+                                           {{ form.errors.tipo_documento }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Documento<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.numero_documento }}
+                                 {% if form.errors.numero_documento %}
+                                     <strong>
+                                           {{ form.errors.numero_documento }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Sexo<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.sexo }}
+                                 {% if form.errors.sexo %}
+                                     <strong>
+                                           {{ form.errors.sexo }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Fecha de Nacimiento<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.fecha_nacimiento }}
+                                 {% if form.errors.fecha_nacimiento %}
+                                     <strong>
+                                           {{ form.errors.fecha_nacimiento }}
+                                     </strong>
+                                 {% endif %}
+
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Estado Civil<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.estado_civil }}
+                                 {% if form.errors.estado_civil %}
+                                     <strong>
+                                           {{ form.errors.estado_civil }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Obra Social<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.obra_social }}
+                                 {% if form.errors.obra_social %}
+                                     <strong>
+                                           {{ form.errors.obra_social }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Foto<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                {% if form.instance.foto %}
+                                     Actualmente: <a href="/media/foto_personal/normal/{{ form.instance.foto }}">{{ form.instance.foto }}</a> <input id="foto-clear_id" name="foto-clear" type="checkbox" /> <label for="foto-clear_id">Limpiar</label><br />Modificar: <input class="form-control" id="id_foto" name="foto" type="file" />
+                                {% else %}
+                                    {{ form.foto }}
+                                {% endif %}
+                                {% if form.errors.foto %}
+                                     <strong>
+                                           {{ form.errors.foto }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Nivel de Educación<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.nivel_educacion }}
+                                 {% if form.errors.nivel_educacion %}
+                                     <strong>
+                                           {{ form.errors.nivel_educacion }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Profesión<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.profesion }}
+                                 {% if form.errors.profesion %}
+                                     <strong>
+                                           {{ form.errors.profesion }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Cuil<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ empleado_form.cuil }}
+                                 {% if empleado_form.errors.cuil %}
+                                     <strong>
+                                           {{ empleado_form.errors.cuil }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Cuit<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ empleado_form.cuit }}
+                                 {% if empleado_form.errors.cuit %}
+                                     <strong>
+                                           {{ empleado_form.errors.cuit }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Fecha de Ingreso<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ empleado_form.fecha_ingreso }}
+                                 {% if empleado_form.errors.fecha_ingreso %}
+                                     <strong>
+                                           {{ empleado_form.errors.fecha_ingreso }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Fecha de Egreso<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ empleado_form.fecha_egreso }}
+                                 {% if empleado_form.errors.fecha_egreso %}
+                                     <strong>
+                                           {{ empleado_form.errors.fecha_egreso }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                         <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Situación Laboral<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ empleado_form.situacion_laboral }}
+                                 {% if empleado_form.errors.situacion_laboral %}
+                                     <strong>
+                                           {{ empleado_form.errors.situacion_laboral }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                         <!-- Controles --->
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"> Observación<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                 {{ form.observaciones }}
+                                 {% if form.errors.observaciones %}
+                                     <strong>
+                                           {{ form.errors.observaciones }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Controles --->
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <a href="/empleados/listado" type="button" class="btn btn-primary">Cancelar</a>
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<style>
+</style>
+    <script>
+        /*----- Select2 Bootstrap ----*/
+            //$('#id_tipo_documento').select2();
+            //$('#id_obra_social').select2();
+            //$('#id_nivel_educacion').select2();
+            //$('#id_profesion').select2();
+            //$('#id_situacion_laboral').select2();
+        /*----- Select2 Bootstrap ----*/
+    </script>
+{% endblock %}

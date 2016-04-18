@@ -1,0 +1,45 @@
+{% extends 'arbol_item.html' %}
+{% block content %}
+
+<form method="post"> {% csrf_token %}
+
+      <div class="col-md-8 col-sm-8 col-xs-12 animated fadeInDown">
+            <div class="well profile_view">
+                <div class="col-sm-12">
+                    <h4 class="brief"><i> Confirma la eliminación del siguiente registro : {{ object }}</i></h4>
+                    <div class="left col-xs-7">
+                        <ul class="list-unstyled">
+                            {% if object.provincia %}
+                                <li> Provincia : {{ object.provincia }} </li>
+                            {% endif %}
+                            {% if object.localidad %}
+                                <li> Localidad : {{ object.localidad }} </li>
+                            {% endif %}
+                            {% if object.departamento %}
+                                <li> Departamento : {{ object.departamento }} </li>
+                            {% endif %}
+                            {% if object.barrio %}
+                                <li> Barrio : {{ object.barrio }} </li>
+                            {% endif %}
+                            <li> Descripcion : {{ object.descripcion }} </li>
+                        </ul>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-xs-12 bottom text-center">
+                    <div class="col-xs-12 col-sm-6 emphasis">
+                         <!--a class="btn btn-success btn-xl" href="/{{ request.session.modulo }}/modi/{{ request.session.id }}" type="button" ><i class="fa fa-arrow-left"></i> {{ request.session.modulo }}</a-->
+                         <a class="btn btn-success btn-xl" href="/domicilios/alta/{{request.session.id}}" type="button"> <i class="fa fa-arrow-left"></i>Cancelar</a>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 emphasis">
+                        <button class="btn btn-danger btn-xl" type="submit" ><i class="fa fa-trash">
+                            </i>    Eliminar </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</form>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+{% load expediente_tags %}
+{% block content %}
+    <div style="background-color:#ccc">
+        <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+        <a href='/expedientes/modi/{{expediente.id}}'><strong>EXPEDIENTE</strong></a> --
+        <strong>RESOLUCIONES VARIAS</strong>
+        <br><br>
+    </div>
+    <br>
+
+    {% for msg in messages %}
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+               {{ msg }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <form action="" method="post">{% csrf_token %}
+        <div style="width:800px">
+            Etapa: {{ form.etapa }}<br>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>COMPROMISO Y ORDENADO</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="divCompromisoOrdenado">
+                    <input type="hidden" id="id_expediente" name="expediente" value="{{expediente.id}}">
+                        {% if form.resolucion_pago.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.resolucion_pago.label }}
+                                    {{ form.resolucion_pago.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if form.resolucion_pago.value %}
+                            N° Resolución de Pago: <input class="form-control" value="{{ form.resolucion_pago.value | agregar_ceros:4 }}" name="resolucion_pago" id="id_resolucion_pago"> <br>
+                        {% else %}
+                            N° Resolución de Pago: {{ form.resolucion_pago }} <br>
+                        {% endif %}
+
+                        {% if form.fecha_resolucion_pago.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.fecha_resolucion_pago.label }}
+                                    {{ form.fecha_resolucion_pago.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        Fecha de Resolución de Pago: {{ form.fecha_resolucion_pago }} <br>
+                        Observaciones: {{ form.observaciones }} <br><br>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-primary">
+        </div>
+    </form>
+<script>
+
+    $(document).ready(function()
+    {
+        {% if not form.errors %}
+            $("#id_etapa").val({{expediente.etapa_id}});
+        {% endif %}
+
+        $("#id_resolucion_pago").prop("placeholder", "Si no ingresa valor, el sistema lo creará automáticamente.");
+
+        inicializar_controles();
+
+    });
+
+    function inicializar_controles()
+    {
+        if ("{{expediente.estado.valor}}" == "CERRADO")
+        {
+            $("#id_etapa").prop("disabled", true);
+            $("#btnGuardar").prop("disabled", true);
+            $("#divCompromisoOrdenado").children().prop("disabled", true);
+            return;
+        }
+
+        var etapa_id = $("#id_etapa").val();
+
+        if (etapa_id == 0)
+        {
+            $("#btnGuardar").prop("disabled", true);
+            $("#divCompromisoOrdenado").children().prop("disabled", true);
+            return;
+        }
+
+        $.ajax({
+            url:"/expedientes/get_etapa/",
+            cache: false,
+            type: "GET",
+            data: {etapa_id: etapa_id},
+            success: function(etapa) {
+                console.log(etapa);
+
+                if (etapa.valor == "PREVENTIVO")
+                {
+                    $("#btnGuardar").prop("disabled", true);
+                    $("#divCompromisoOrdenado").children().prop("disabled", true);
+                }
+            }
+
+        });
+    }
+
+    $("#id_etapa").change(function() {
+
+        var etapa_id = $("#id_etapa").val();
+
+        $.ajax({
+            url:"/expedientes/get_etapa/",
+            cache: false,
+            type: "GET",
+            data: {etapa_id: etapa_id},
+            success: function(request) {
+                //console.log(request);
+
+                if (request.valor != "COMPROMISO_ORDENADO")
+                {
+                    $("#btnGuardar").prop("disabled", true);
+                    $("#divCompromisoOrdenado").children().prop("disabled", true);
+                }
+                else
+                {
+                    $("#btnGuardar").prop("disabled", false);
+                    $("#divCompromisoOrdenado").children().prop("disabled", false);
+                }
+
+            }
+        });
+
+    });
+
+</script>
+
+{% endblock %}

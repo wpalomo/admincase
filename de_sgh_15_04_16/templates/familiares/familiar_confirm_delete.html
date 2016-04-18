@@ -1,0 +1,32 @@
+{% extends 'arbol_item.html' %}
+{% block content %}
+
+<form method="post"> {% csrf_token %}
+
+      <div class="col-md-8 col-sm-8 col-xs-12 animated fadeInDown">
+            <div class="well profile_view">
+                <div class="col-sm-12">
+                    <h4 class="brief"><i> Confirma la eliminación del siguiente registro : {{ object }}</i></h4>
+                    <div class="left col-xs-7">
+                        <ul class="list-unstyled">
+                        </ul>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-xs-12 bottom text-center">
+                    <div class="col-xs-12 col-sm-6 emphasis">
+                         <!--a class="btn btn-success btn-xl" href="/{{ request.session.modulo }}/modi/{{ request.session.id }}" type="button" ><i class="fa fa-arrow-left"></i> {{ request.session.modulo }}</a-->
+                         <a class="btn btn-success btn-xl" href="/familiares/busqueda/{{request.session.id}}" type="button"> <i class="fa fa-arrow-left"></i>Cancelar</a>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 emphasis">
+                        <button class="btn btn-danger btn-xl" type="submit" ><i class="fa fa-trash">
+                            </i>    Eliminar </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</form>
+{% endblock %}

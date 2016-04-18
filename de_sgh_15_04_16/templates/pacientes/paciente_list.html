@@ -1,0 +1,155 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Lista de Pacientes</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <label for="heard">Filtrar:</label>
+                <div class="row">
+                    <form method="get" id="frm">
+                        <div class="col-md-3 col-sm-12 col-xs-12 form-group">
+                            <select name="combo_busqueda" onchange="agregar_busqueda()" id="id_selector" class="form-control">
+                                <option value="SELECCIONE">Seleccione..</option>
+                                <option value="TODOS">TODOS</option>
+                                <option value="APELLIDO">Apellido</option>
+                                <option value="NOMBRE">Nombre</option>
+                                <option value="NUMERO_DOCUMENTO">Nro Documento</option>
+                                <option value="NUMERO_HISTORIA_CLINICA">Nro Historia Clinica</option>
+                                <option value="CODIGO_PACIENTE">Codigo Paciente</option>
+                                <option value="NOMBRE_APELLIDO">Nombre y Apellido</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-12 col-xs-12" id="div_parametro1">
+                            <input type="text" name="parametro1" id="id_parametro1" class="form-control" placeholder="Buscar por...">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-12 col-xs-12" id="div_parametro2">
+                            <input type="text" name="parametro2" id="id_parametro2" class="form-control" placeholder="Buscar por...">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-12 col-xs-12">
+                            <input class="btn btn-success col-md-3 col-sm-12 col-xs-12" type="button" id="btnBuscar" value="Buscar">
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="x_title"></div>
+
+                    <div style="text-align: right">
+                        <button class="btn btn-primary" onclick="window.location='/pacientes/alta/'">Nuevo Paciente</button>
+                    </div><br>
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Sexo </th>
+                                <th>Paciente </th>
+                                <th>N° Documento</th>
+                                <th>Edad</th>
+                                <th>Tipo </th>
+                                <th>Grupo Sanguíneo </th>
+                                <th class=" no-link last"><span class="nobr">Acción</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for paciente in paciente_list %}
+                        <tr class="odd pointer">
+                            <td class=" ">{{ paciente.persona.sexo }}</td>
+                            <td class=" ">{{ paciente.persona }}</td>
+                            <td class=" ">{{ paciente.persona.numero_documento }}</td>
+                            <td class=" ">{{ paciente.persona.get_edad }}</td>
+                            <td class=" ">{{ paciente.tipo }}</td>
+                            <td class=" ">{{ paciente.grupo_sanguineo|default:"" }}</td>
+                            <td class=" last"><a href="/pacientes/modi/{{ paciente.persona.id }}" >Editar</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                                <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                    No se encontraron registros
+                                </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if is_paginated %}
+
+                    <center>
+                    <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
+                    </center>
+                    <center>
+                       <ul class="pagination">
+                           <li id="n_pag_inicio" ><a href="/pacientes/listado/" title="Ir al inicio"> << </a></li>
+
+                            {% if page_obj.has_previous %}
+                                <li id="n_pag_{{page_obj.number}}"><a id="volver()" href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a></li>
+                            {% endif %}
+
+                            <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                            {% if page_obj.has_next %}
+                                <li id="n_pag_{{page_obj.number}}"><a id="avanzar()" href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a></li>
+                            {% endif %}
+
+                            <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
+                        </ul>
+                    </center>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     $(document).ready(function(){
+
+        $("#div_parametro2").css("display", "none");
+        $("#id_parametro1").attr("placeholder", "Seleccione un filtro");
+
+    });
+    var agregar_busqueda = function(){
+        if ($('#id_selector').val()=='NOMBRE_APELLIDO'){
+            $('#id_parametro1').attr("placeholder", "Ingrese el Nombre");
+            $('#id_parametro2').attr("placeholder", "Ingrese el Apellido");
+            $('#div_parametro2').css("display", "block");
+        }else{
+            $("#div_parametro2").css("display", "none");
+            $("#id_parametro1").attr("placeholder", "Seleccione un filtro");
+        }
+    };
+    $("#btnBuscar").click(function(){
+
+        if($("#id_selector").val() == "SELECCIONE"){
+            alert("Por favor seleccione una filtro para la búsqueda!");
+            return;
+        }
+
+        if($("#id_selector").val() != "TODOS" && $("#input_buscar").val() == "") {
+            alert("Por favor instroduzca un parametro para la búsqueda!");
+            $("#input_buscar").focus();
+            return;
+        }
+
+        $("#frm").submit();
+    });
+</script>
+
+{% endblock %}
+
+
+

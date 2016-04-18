@@ -1,0 +1,124 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+    <!--style>
+        .animated{
+            cursor: pointer;
+        }
+    </style-->
+
+    <!-- content -->
+
+    <div class="row top_tiles">
+        <div class="alert alert-success alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+            </button>
+            <!--<strong>Tiene {{ request.session.mail }} mensajes sin leer en su bandeja de entrada</strong>-->
+            <!--para ingresar haga click <a href="http://webmail.hacfsa.org.ar">aqui<a>.-->
+        </div>
+
+        <!--<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+            <!--<div class="tile-stats">-->
+                <!--<div class="icon"><i class="fa fa-plus-square"></i>-->
+                <!--</div>-->
+                <!--<div class="count">INT</div>-->
+
+                <!--<h3>INTERNACION</h3>-->
+                <!--<p>&nbsp;</p>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="location='/agendas/listado/'">-->
+            <!--<div class="tile-stats">-->
+                <!--<div class="icon"><i class="fa fa-calendar"></i>-->
+                <!--</div>-->
+                <!--<div class="count">AGE</div>-->
+
+                <!--<h3>AGENDAS</h3>-->
+                <!--<p>&nbsp;</p>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+            <!--<div class="tile-stats">-->
+                <!--<div class="icon"><i class="fa fa-tags"></i>-->
+                <!--</div>-->
+                <!--<div class="count">TUR</div>-->
+
+                <!--<h3>TURNOS</h3>-->
+                <!--<p>&nbsp;</p>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        {% if perms.expedientes.change_expediente %}
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="location='/expedientes/listado/'">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-files-o"></i>
+                </div>
+                <div class="count">EXP</div>
+
+                <h3>ADMINISTRACION</h3>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+        {% endif %}
+        <!--<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="location='/pacientes/listado/'">-->
+            <!--<div class="tile-stats">-->
+                <!--<div class="icon"><i class="fa fa fa-users"></i>-->
+                <!--</div>-->
+                <!--<div class="count">PAC</div>-->
+
+                <!--<h3>PACIENTES</h3>-->
+                <!--<p>&nbsp;</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        {% if perms.empleados.change_empleado %}
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="location='/empleados/listado/'">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa fa-user"></i>
+                </div>
+                <div class="count">EMP</div>
+                <h3>EMPLEADOS</h3>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+        {% endif %}
+        <!--div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="location='/medicamentos/listado/'">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-medkit"></i>
+                </div>
+                <div class="count">FAR</div>
+
+                <h3>FARMACIA</h3>
+                <p>&nbsp;</p>
+            </div>
+        </div-->
+
+        <!--<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+            <!--<div class="tile-stats">-->
+                <!--<div class="icon"><i class="fa fa-clipboard"></i>-->
+                <!--</div>-->
+                <!--<div class="count">INF</div>-->
+
+                <!--<h3>INFORMES</h3>-->
+                <!--<p>&nbsp;</p>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+            <!--<div class="tile-stats">-->
+                <!--<div class="icon"><i class="fa fa-bar-chart"></i>-->
+                <!--</div>-->
+                <!--<div class="count">EST</div>-->
+
+                <!--<h3>ESTADISTICAS</h3>-->
+                <!--<p>&nbsp;</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    <!-- end content -->
+
+{% endblock %}
+
+

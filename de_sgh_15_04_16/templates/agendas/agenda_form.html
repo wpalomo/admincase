@@ -1,0 +1,142 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+<div style="background-color:#ccc">
+    <a href='/agendas/listado'><strong>LISTADO</strong></a> --
+
+    <strong>AGENDA</strong> --
+
+
+    {% if agenda %}
+
+        <a href="/agendas/configuracion_por_dias/{{ agenda.id }}">
+            <strong>CONFIGURACION POR DIAS</strong>
+        </a> --
+
+        <a href="/agendas/bloqueo/{{ agenda.id }}">
+            <strong>BLOQUEOS</strong>
+        </a> --
+
+        <a href="/agendas/extender/{{ agenda.id }}">
+            <strong>EXTENDER</strong>
+        </a>
+
+    {% endif %}
+
+    <br><br>
+</div>
+
+<br>
+
+{% for msg in messages %}
+
+    <strong>{{ msg }}</strong>
+    <br><br>
+
+{% endfor %}
+
+{% if form.non_field_errors %}
+
+    <strong>{{form.non_field_errors}}</strong>
+
+    <br>
+
+{% endif %}
+
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    <div style="width:600px">
+
+        <div class="x_panel">
+            <div class="x_content">
+
+                {{form.as_p}}
+
+            </div>
+
+        </div>
+
+        <br>
+        <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-primary">
+    </div>
+</form>
+
+
+<script>
+
+    var set_especialidad = true;
+
+    $(document).ready(function()
+    {
+        {% if agenda %}
+            $("#id_fecha_desde").prop("disabled", true);
+        {% endif %}
+
+        {% if not_update %}
+            $("#btnGuardar").prop("disabled", true);
+        {% endif %}
+
+
+        if ($("#id_profesional").val() == "")
+        {
+            $("#id_especialidad").html("");
+        }
+        else
+        {
+            {% if not form.errors or form.non_field_errors %}
+                cargar_especialidad();
+            {% endif %}
+        }
+    });
+
+     $("#btnGuardar").click(function()
+     {
+        $("#id_fecha_desde").prop("disabled", false);
+     });
+
+    $("#id_profesional").change(function() {
+        set_especialidad = false;
+        cargar_especialidad();
+    });
+
+    function cargar_especialidad()
+    {
+        var profesional_id = $("#id_profesional").val();
+
+        $.ajax({
+            url:"/agendas/get_especialidad_por_profesional/",
+            cache: false,
+            type: "GET",
+            data: {profesional_id: profesional_id},
+            success: function(request) {
+                console.log(request);
+
+                $('#id_especialidad').html("");
+
+                $.each(request, function (key, especialidad) {
+                    $('#id_especialidad').append($('<option>', {
+                        value: especialidad.id,
+                        text : especialidad.nombre
+                    }));
+                });
+
+                if (set_especialidad)
+                {
+                    {% if form.especialidad.value %}
+                        $("#id_especialidad").val({{form.especialidad.value}});
+                    {% endif %}
+                }
+
+                set_especialidad = true;
+
+            }
+        });
+
+    }
+
+</script>
+
+{% endblock %}

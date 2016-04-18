@@ -1,0 +1,540 @@
+{% extends 'arbol_item.html' %}
+{% load empleado_tags %}
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/{{ request.session.modulo }}/listado'><strong>Listado</strong></a> --
+            <strong>Datos Personales</strong> --
+            <a href='/domicilios/alta/{{ request.session.id }}'><strong>Domicilio</strong></a> --
+            <a href='/contactos/alta/{{ request.session.id }}'><strong>Contacto</strong></a> --
+            <a href='/obrassociales/alta/{{ request.session.id }}'><strong>Obra Social</strong></a> --
+            <a href='/familiares/busqueda/{{ request.session.id }}'><strong>Familia</strong></a> --
+            <a href='/notas/alta/{{ request.session.id }}'><strong>Notas</strong></a>
+            {% if request.session.modulo != 'empleados'  %}
+                -- <a href='/fichassociales/alta/{{ request.session.id }}'><strong>Ficha Social</strong></a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div style="border:1px solid gainsboro; background-color: whitesmoke; padding-left: 70%">
+                <a href='/{{ request.session.modulo }}/modi/{{ request.session.id }}'><strong>Volver</strong></a> --
+                <strong>Asignación Formal</strong></a> --
+                <strong>Asignación Actual</strong> --
+                <strong>Profesional</strong>
+            </div>
+        </div>
+        <form enctype="multipart/form-data" id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>EMPLEADO - {{ empleado }}</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <input id="id_empleado" name="empleado" type="hidden" value="{{ empleado.id }}" />
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Destino<span class="required">*</span></label>
+                         {{ form.destino }}
+                         {% if form.errors.destino %}
+                             <strong>{{ form.errors.destino }}</strong>
+                         {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Cargo<span class="required"></span></label>
+                        {% if form.instance.id != 'None' %}
+                            {{ form.cargo }}
+                        {% else %}
+                        <select class="form-control" id="id_cargo" name="cargo"></select>
+                        {% endif %}
+                         {% if form.errors.cargo %}
+                             <strong>{{ form.errors.cargo }}</strong>
+                         {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Dirección<span class="required"></span></label>
+                        {% if form.instance.id != 'None' %}
+                            {{ form.direccion }}
+                        {% else %}
+                        <select class="form-control" id="id_direccion" name="direccion"></select>
+                        {% endif %}
+                        {% if form.errors.direccion %}
+                            <strong>{{ form.errors.direccion }}</strong>
+                        {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Departamento<span class="required"></span></label>
+                        {% if form.instance.id != 'None' %}
+                            {{ form.departamento }}
+                        {% else %}
+                        <select class="form-control" id="id_departamento" name="departamento"></select>
+                        {% endif %}
+                        {% if form.errors.departamento %}
+                            <strong>{{ form.errors.departamento }}</strong>
+                        {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> División<span class="required"></span></label>
+                        {{ form.division }}
+                        {% if form.errors.division %}
+                            <strong>{{ form.errors.division }}</strong>
+                        {% endif %}
+                    </div>
+                    <br><br>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 style="visibility: hidden">DATOS DE ASIGNACION FORMAL</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Servicio<span class="required"></span></label>
+                        {{ form.servicio }}
+                        {% if form.errors.servicio %}
+                            <strong>{{ form.errors.servicio }}</strong>
+                        {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Sección<span class="required"></span></label>
+                        {{ form.seccion }}
+                        {% if form.errors.seccion %}
+                            <strong>{{ form.errors.seccion }}</strong>
+                        {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Fecha Desde<span class="required"></span></label>
+                         {{ form.fecha_desde }}
+                         {% if form.errors.fecha_desde %}
+                             <strong>{{ form.errors.fecha_desde }}</strong>
+                         {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                    <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Fecha Hasta<span class="required"></span></label>
+                         {{ form.fecha_hasta }}
+                         {% if form.errors.fecha_hasta %}
+                             <strong>{{ form.errors.fecha_hasta }}</strong>
+                         {% endif %}
+                    </div>
+                    <!-- Controles --->
+
+                     <!-- Controles --->
+                    <div class="form-group">
+                        <label class="control-label"> Observación<span class="required"></span></label>
+                         {{ form.observaciones }}
+                         {% if form.errors.observaciones %}
+                             <strong>{{ form.errors.observaciones }}</strong>
+                         {% endif %}
+                    </div>
+                    <!-- Controles --->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="form-group" style="padding-left: 70%">
+                        <a href="/{{ request.session.modulo }}/modi/{{ request.session.id }}" type="button" class="btn btn-primary">Cancelar</a>
+                        <!--button type="submit" class="btn btn-success">Guardar</button-->
+                        <input type="button" id="btnGuardar" value="Guardar" class="btn btn-success">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Historial de Asignaciones Formales</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Destino</th>
+                                <th>Cargo</th>
+                                <th>Departamento</th>
+                                <th>División</th>
+                                <th>Servicio</th>
+                                <th>Sección</th>
+                                <th>Fecha Desde </th>
+                                <th>Fecha Hasta</th>
+                                <th>Estado</th>
+                                <th class=" no-link last">
+                                    <span class="nobr">Editar</span>
+                                </th>
+                                <th class=" no-link last">
+                                    <span class="nobr">Eliminar</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for asignacion_formal in asignaciones_formales_list %}
+                                <tr class="odd pointer">
+                                    <td class=" ">{{ asignacion_formal.destino }}</td>
+                                    <td class=" ">{{ asignacion_formal.cargo }}</td>
+                                    <td class=" ">{{ asignacion_formal.departamento }}</td>
+                                    <td class=" ">{{ asignacion_formal.division }}</td>
+                                    <td class=" ">{{ asignacion_formal.servicio }}</td>
+                                    <td class=" ">{{ asignacion_formal.seccion }}</td>
+                                    <td class=" ">{{ asignacion_formal.fecha_desde | date:'d/m/Y' }}</td>
+                                    <td class=" ">{{ asignacion_formal.fecha_hasta | date:'d/m/Y'}}</td>
+                                    <td class=" ">{{ asignacion_formal | get_estado_asignacion }}</td>
+                                    <td>
+                                        <a href="/empleados/asignacionformal/modi/{{asignacion_formal.id}}">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/empleados/asignacionformal/delete/{{asignacion_formal.id}}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                        {% empty %}
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                No se encontraron registros
+                            </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<style>
+</style>
+    <script>
+
+        $(document).ready(function(){
+
+            $('.errorlist').css('color', '#a94442');
+
+            var arreglo_combos = [
+                '{{ form.destino.value }}',
+                '{{ form.cargo.value }}',
+                '{{ form.direccion.value }}'
+                /*'{{ form.departamento.value }}',
+                '{{ form.division.value }}',
+                '{{ form.servicio.value }}',
+                '{{ form.seccion.value }}',*/
+            ];
+
+            for(var i=0; i< arreglo_combos.length; i++){
+                if(arreglo_combos[i] == 'None'){
+                    if(i == 0){$( "#id_destino" ).trigger("change");}
+                    if(i == 1){$( "#id_destino" ).trigger("change");}
+                    if(i == 2){$( "#id_direccion" ).trigger("change");}
+                    /*if(i == 3){$( "#id_departamento" ).trigger( "change" );}
+                    if(i == 4){$( "#id_division" ).trigger( "change" );}
+                    if(i == 5){$( "#id_servicio" ).trigger( "change" );}
+                    //if(i == 6){limpiar_combos("seccion");}*/
+                }
+
+            }
+
+
+        });
+
+        function limpiar_combos(campo){
+
+            if(campo == "destino"){
+                //$("#id_cargo, #id_direccion, #id_departamento, #id_division, #id_servicio, #id_seccion").find('option').remove();
+                $("#id_cargo, #id_direccion, #id_departamento").find('option').remove();
+                $("#id_cargo, #id_direccion, #id_departamento").append('<option value="">---------</option>');
+            }
+
+            if(campo == "direccion"){
+                //$("#id_departamento, #id_division, #id_servicio, #id_seccion").find('option').remove();
+                $("#id_departamento").find('option').remove();
+                $("#id_departamento").append('<option value="">---------</option>');
+            }
+
+            /*if(campo == "departamento"){
+                $("#id_division, #id_servicio, #id_seccion").find('option').remove();
+            }
+
+            if(campo == "division"){
+                $("#id_servicio, #id_seccion").find('option').remove();
+            }
+
+            if(campo == "servicio"){
+                $("#id_seccion").find('option').remove();
+            }*/
+
+        }
+
+        $("#id_destino").change( function() {
+
+            if($(this).val() != ""){
+
+                $.ajax({
+                    type: "GET",
+                    url: "/empleados/get_datos_para_select_asignacion_formal/",
+                    data: {
+                        id: $("#id_destino").val(),
+                        tabla : 'institucion'
+                    },
+                    success: function (data) {
+
+                        $("#id_cargo").find('option').remove();
+                        $("#id_direccion").find('option').remove();
+
+                        for(var i=0; i<data['cargos'].length; i++){
+                            $("#id_cargo").append('<option value="' + data['cargos'][i].id + '">' + data['cargos'][i].value + '</option>');
+                        }
+
+                        for(var i=0; i<data['direcciones'].length; i++){
+                            $("#id_direccion").append('<option value="' + data['direcciones'][i].id + '">' + data['direcciones'][i].value + '</option>');
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                limpiar_combos("destino");
+            }
+
+
+
+        });
+
+        $("#id_direccion").change( function() {
+
+            if($(this).val() != "") {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/empleados/get_datos_para_select_asignacion_formal/",
+                    data: {
+                        id: $("#id_direccion").val(),
+                        tabla: 'departamento'
+                    },
+                    success: function (data) {
+
+                        //CARGAR EL SELECT DE DEPARTAMENTOS
+
+                        $("#id_departamento").find('option').remove();
+
+                        for(var i=0; i<data['query'].length; i++){
+                            $("#id_departamento").append('<option value="' + data['query'][i].id + '">' + data['query'][i].value + '</option>');
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                // LIMPIO LOS COMBOS DEPENDIENTES
+                limpiar_combos("direccion");
+            }
+
+        });
+
+        /*$("#id_departamento").change( function() {
+
+            if($(this).val() != "") {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/empleados/get_datos_para_select_asignacion_formal/",
+                    data: {
+                        id: $("#id_departamento").val(),
+                        tabla: 'division'
+                    },
+                    success: function (data) {
+
+                        //CARGAR EL SELECT DE DIVISIONES
+                        $("#id_division").find('option').remove();
+
+                        for (var i = 0; i < data['query'].length; i++) {
+                            $("#id_division").append('<option value="' + data['query'][i].id + '">' + data['query'][i].value + '</option>');
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                // LIMPIO LOS COMBOS DEPENDIENTES
+                limpiar_combos("departamento");
+            }
+
+        });*/
+
+        /*$("#id_division").change( function() {
+
+            if($(this).val() != "") {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/empleados/get_datos_para_select_asignacion_formal/",
+                    data: {
+                        id: $("#id_division").val(),
+                        tabla: 'servicio'
+                    },
+                    success: function (data) {
+
+                        //CARGAR EL SELECT DE SERVICIO
+
+                        $("#id_servicio").find('option').remove();
+
+                        for (var i = 0; i < data['query'].length; i++) {
+                            $("#id_servicio ").append('<option value="' + data['query'][i].id + '">' + data['query'][i].value + '</option>');
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                // LIMPIO LOS COMBOS DEPENDIENTES
+                limpiar_combos("division");
+            }
+
+        });*/
+
+        /*$("#id_servicio").change( function() {
+
+            if($(this).val() != "") {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/empleados/get_datos_para_select_asignacion_formal/",
+                    data: {
+                        id: $("#id_servicio").val(),
+                        tabla: 'seccion'
+                    },
+                    success: function (data) {
+
+                        //CARGAR EL SELECT DE SECCIONES
+                        $("#id_seccion").find('option').remove();
+
+                        for (var i = 0; i < data['query'].length; i++) {
+                            $("#id_seccion ").append('<option value="' + data['query'][i].id + '">' + data['query'][i].value + '</option>');
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+
+            } else {
+                // LIMPIO LOS COMBOS DEPENDIENTES
+                limpiar_combos("servicio");
+            }
+
+        });*/
+
+        $("#btnGuardar").click( function() {
+            var data;
+
+            if('{{ form.instance.id }}' != 'None') {
+                data = {
+                    empleado: '{{ empleado.id }}',
+                    asignacion: '{{ form.instance.id }}',
+                    fecha_desde: $("#id_fecha_desde").val()
+                }
+
+            } else {
+                data = {
+                    empleado: '{{ empleado.id }}',
+                    asignacion: '',
+                    fecha_desde: $("#id_fecha_desde").val()
+                }
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/empleados/get_validar_fechas_historial_asigancion_formal/",
+                data: data,
+                success: function (data) {
+
+                    //alert(data['msj']);
+
+                    if(data['msj'] == 99){
+                        alert('Error: existe un error con el formato de la fecha desde!');
+                        $("#id_fecha_desde").select();
+                        $("#id_fecha_desde").focus();
+                        return;
+                    }
+
+                    if (data['msj'] == 1) {
+
+                        var form_group = $("#id_fecha_desde").parent();
+
+                        form_group.append("<strong>" +
+                        "<ul class='errorlist'><li>La fecha desde no puede ser menor o igual a ninguna fecha hasta del historial.</li></ul>" +
+                        "</strong>");
+
+                        $('.errorlist').css('color', '#a94442');
+
+                        $("#id_fecha_desde").select();
+                        $("#id_fecha_desde").focus();
+
+                        return;
+
+                    } else {
+                        // seguir con el submit
+                        $("#frm").submit();
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

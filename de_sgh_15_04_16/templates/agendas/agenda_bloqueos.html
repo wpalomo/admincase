@@ -1,0 +1,313 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+
+<div style="background-color:#ccc">
+    <a href='/agendas/listado'><strong>LISTADO</strong></a> --
+
+    <a href='/agendas/modi/{{ agenda.id }}'><strong>AGENDA</strong></a> --
+
+    <a href="/agendas/configuracion_por_dias/{{ agenda.id }}">
+        <strong>CONFIGURACION POR DIAS</strong>
+    </a> --
+
+    <strong>BLOQUEOS</strong> --
+
+    <a href="/agendas/extender/{{ agenda.id }}">
+        <strong>EXTENDER</strong>
+    </a>
+
+    <br><br>
+</div>
+
+<br>
+
+{% for msg in messages %}
+
+<br><br>
+
+<strong>{{ msg }}</strong>
+<br><br>
+
+{% endfor %}
+
+
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    <div style="width:1000px">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>AGENDA</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <table id="example" class="table table-striped responsive-utilities jambo_table">
+                    <thead>
+                        <tr class="headings">
+                            <th>Profesional </th>
+                            <th>Tipo Agenda </th>
+                            <th>Fecha Desde</th>
+                            <th>Fecha Hasta</th>
+                            <th>Especialidad </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class=" ">
+                            {{ agenda.profesional.persona.apellido }},
+                            {{ agenda.profesional.persona.nombre }}
+                        </td>
+                        <td class=" ">{{ agenda.tipo_agenda.descripcion }}</td>
+                        <td class=" ">{{ agenda.fecha_desde | date:"d/m/Y" }}</td>
+                        <td class=" ">{{ agenda.fecha_hasta | date:"d/m/Y" }}</td>
+                        <td class=" ">{{ agenda.especialidad.nombre }}</td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div style="width:1000px">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>1 - BLOQUEO POR FECHA (#1015)</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                Fecha: {{ form.bloqueo_por_fecha_fecha }} <br><br>
+                Motivo: {{ form.bloqueo_por_fecha_motivo_bloqueo }} <br><br>
+                Observaciones: {{ form.bloqueo_por_fecha_observaciones }} <br><br>
+
+            </div>
+
+            <br>
+            <input type="submit" name="BLOQUEO_POR_FECHA" value="Bloquear Fecha" id="btnGuardar" class="btn btn-primary">
+
+            <br><br>
+
+            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                <thead>
+                    <tr class="headings">
+                        <th colspan=6 style="background-color:#FE642E">FECHAS BLOQUEADAS</th>
+                    </tr>
+                    <tr class="headings" style="background-color:#FE642E">
+                        <th>Fecha</th>
+                        <th>Practica</th>
+                        <th>Hora</th>
+                        <th>Motivo Bloqueo</th>
+                        <th>Observaciones</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+
+                {% for bloqueo in bloqueos_por_fechas %}
+
+                    <tr>
+                        <td>{{ bloqueo.fecha_detalle.fecha | date:"d/m/Y" }}</td>
+                        <td>{{ bloqueo.fecha_detalle.practica }}</td>
+                        <td>{{ bloqueo.fecha_detalle.hora_desde }} - {{ bloqueo.fecha_detalle.hora_hasta }}</td>
+                        <td>{{ bloqueo.motivo_bloqueo.descripcion }}</td>
+                        <td>{{ bloqueo.observacion }}</td>
+                        <th>
+                            <a href='/agendas/bloqueo/fecha_detalle/delete/{{bloqueo.id}}'>
+                                Borrar Bloqueo
+                            </a>
+                        </th>
+                    </tr>
+
+                {% endfor %}
+            </table>
+
+        </div>
+
+    </div>
+
+    <br><br>
+
+
+    <div style="width:1000px">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>2 - BLOQUEO POR DIA (#1014)</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                <thead>
+                    <tr class="headings">
+                        <th>Dia </th>
+                        <th>Fecha Desde</th>
+                        <th>Fecha Hasta</th>
+                        <th>Practica</th>
+                        <th>Hora</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+
+                {% for configuracion in agenda_dia_configuracion %}
+
+                    <tr>
+                        <td class=" ">{{ configuracion.dia.nombre }}</td>
+                        <td class=" ">{{ configuracion.fecha_desde | date:"d/m/Y" }}</td>
+                        <td class=" ">{{ configuracion.fecha_hasta | date:"d/m/Y" }}</td>
+                        <td class=" ">{{ configuracion.practica.nombre | default:"-" }}</td>
+                        <td class=" ">
+                            {{ configuracion.hora_desde }} - {{ configuracion.hora_hasta }}
+                        </td>
+                        <th>
+                            <a href='/agendas/bloqueo/dia_configuracion/{{configuracion.id}}'>
+                                Crear Bloqueo
+                            </a>
+                        </th>
+                    </tr>
+
+                {% endfor %}
+            </table>
+            <br><br>
+
+            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                <thead>
+                    <tr class="headings">
+                        <th colspan=8 style="background-color:#FE642E">DIAS BLOQUEADOS</th>
+                    </tr>
+                    <tr class="headings" style="background-color:#FE642E">
+                        <th>Dia </th>
+                        <th>Fecha Desde</th>
+                        <th>Fecha Hasta</th>
+                        <th>Practica</th>
+                        <th>Hora</th>
+                        <th>Motivo</th>
+                        <th>Observaciones</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+
+                {% for bloqueo in bloqueos_por_dia_configuracion %}
+
+                    <tr>
+                        <td class=" ">{{ bloqueo.dia_configuracion.dia.nombre }}</td>
+                        <td class=" ">{{ bloqueo.fecha_desde | date:"d/m/Y" }}</td>
+                        <td class=" ">{{ bloqueo.fecha_hasta | date:"d/m/Y" }}</td>
+                        <td class=" ">{{ bloqueo.dia_configuracion.practica.nombre | default:"-" }}</td>
+                        <td class=" ">
+                            {{ bloqueo.dia_configuracion.hora_desde }} -
+                            {{ bloqueo.dia_configuracion.hora_hasta }}
+                        </td>
+                        <td class=" ">{{ bloqueo.motivo_bloqueo.descripcion }}</td>
+                        <td class=" ">{{ bloqueo.observacion }}</td>
+                        <th>
+                            <a href='/agendas/bloqueo/dia_configuracion/delete/{{bloqueo.id}}'>
+                                Borrar Bloqueo
+                            </a>
+                        </th>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+    <br><br>
+
+
+    <div style="width:1000px">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>3 - BLOQUEO POR PERIODO (#1013)</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                {% if form.bloqueo_por_periodo_fecha_desde.errors %}
+                    {{form.bloqueo_por_periodo_fecha_desde.errors}}
+                {% endif %}
+                Fecha desde: {{ form.bloqueo_por_periodo_fecha_desde }} <br><br>
+
+                {% if form.bloqueo_por_periodo_fecha_hasta.errors %}
+                    {{form.bloqueo_por_periodo_fecha_hasta.errors}}
+                {% endif %}
+                Fecha hasta: {{ form.bloqueo_por_periodo_fecha_hasta }} <br><br>
+
+                Motivo: {{ form.bloqueo_por_periodo_motivo_bloqueo }} <br><br>
+                Observaciones: {{ form.bloqueo_por_periodo_observaciones }} <br><br>
+
+            </div>
+
+            <br>
+            <input type="submit" name="BLOQUEO_POR_PERIODO" value="Bloquear" id="btnGuardar2" class="btn btn-primary">
+
+            <br><br>
+
+            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                <thead>
+                    <tr class="headings">
+                        <th colspan=5 style="background-color:#FE642E">PERIODOS BLOQUEADOS</th>
+                    </tr>
+                    <tr class="headings" style="background-color:#FE642E">
+                        <th>Fecha Desde</th>
+                        <th>Fecha Hasta</th>
+                        <th>Motivo Bloqueo</th>
+                        <th>Observaciones</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+
+                {% for bloqueo in bloqueos_por_periodos %}
+
+                    <tr>
+                        <td>{{ bloqueo.fecha_desde | date:"d/m/Y" }}</td>
+                        <td>{{ bloqueo.fecha_hasta | date:"d/m/Y" }}</td>
+                        <td>{{ bloqueo.motivo_bloqueo.descripcion }}</td>
+                        <td>{{ bloqueo.observacion }}</td>
+                        <th>
+                            <a href='/agendas/bloqueo/periodo/delete/{{bloqueo.id}}'>
+                                Borrar Bloqueo
+                            </a>
+                        </th>
+                    </tr>
+
+                {% endfor %}
+            </table>
+
+        </div>
+
+    </div>
+
+</form>
+
+<script>
+
+    $(document).ready(function()
+    {
+        // MALA SOLUCION
+        // REFACTORING
+        // SE REMUEVEN DEL SELECT LAS FECHAS QUE YA ESTAN BLOQUEADAS
+        // YA DESDE EL FORM EBERIA TRAER ASI
+        $("#id_bloqueo_por_fecha_fecha option").each(function()
+        {
+            {% for bloqueo in bloqueos_por_fechas %}
+                if ( {{bloqueo.fecha_detalle.id}} == $(this).val() )
+                {
+                    $(this).remove();
+                }
+            {% endfor %}
+
+            {% if not agenda_dia_configuracion %}
+                $("#btnGuardar2").prop("disabled", true);
+            {% endif %}
+        });
+    });
+
+</script>
+
+{% endblock %}

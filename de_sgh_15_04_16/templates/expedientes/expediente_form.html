@@ -1,0 +1,442 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<div class="title_right" style="background-color:#ccc">
+    <div class="x_title">
+
+        <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+        <strong>EXPEDIENTE</strong> --
+
+        {% if expediente %}
+            {% if tiene_clase_creada %}
+                    <a href='/expedientes/{{ expediente.clase.valor|lower }}/modi/{{ expediente.id }}'>
+                        <strong>{{ expediente.clase.descripcion|upper }}</strong>
+                    </a>
+            {% else %}
+                    <a href='/expedientes/{{ expediente.clase.valor|lower }}/alta/{{ expediente.id }}'>
+                        <strong>{{ expediente.clase.descripcion|upper }}</strong>
+                    </a>
+            {% endif%}
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-6">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>EXPEDIENTE</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            {% for msg in messages %}
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="alert alert-success" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{ msg }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <br><br>
+
+            <form class="form-horizontal form-label-left" action="" method="post">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {% if form.fecha.errors %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                {{ form.fecha.label }}
+                                {{ form.fecha.errors }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Fecha:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.fecha }}</div>
+                </div>
+                <br>
+
+                {% if form.letra.errors or form.numero.errors or form.anio.errors %}
+                    <strong>EL EXPEDIENTE ES OBLIGATORIO</strong>
+                    <br>
+                {% endif %}
+
+
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Expediente (letra-año):</label></div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">{{ form.letra }}</div>
+                    <div class="col-md-5 col-sm-5 col-xs-5">{{ form.numero }}</div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">{{ form.anio }}</div>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    {% if form.clase.errors %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                {{ form.clase.label }}
+                                 {{ form.clase.errors }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Instrumento Legal / Clase *:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.clase }}</div>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    {% if form.tipo_resolucion.errors %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                {{ form.tipo_resolucion.label }}
+                                 {{ form.tipo_resolucion.errors }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Tipo Resolución:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.tipo_resolucion }}</div>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    {% if form.estado.errors %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                {{ form.estado.label }}
+                                 {{ form.estado.errors }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Estado:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.estado }}</div>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    {% if form.empleado_solicitante.errors %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                {{ form.empleado_solicitante.label }}
+                                 {{ form.empleado_solicitante.errors }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!--div class="col-md-3 col-sm-3 col-xs-12"><label>Codigo:</label></div-->
+                    <div class="col-md-9 col-sm-9 col-xs-12"><label>Empleado Solicitante *:</label></div>
+
+                    <!--div class="col-md-3 col-sm-3 col-xs-12">
+                        <input class="form-control" type="text" id="id_codigo_empleado_solicitante" value="{{ expediente.empleado_solicitante.id }}"/>
+                    </div-->
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <input class="form-control" type="text" id="buscar_empleado_solicitante" value="{{ expediente.empleado_solicitante }}"/>
+                        <input type="hidden" name="empleado_solicitante" id="id_empleado_solicitante" value="{{ expediente.empleado_solicitante.id }}"/>
+                    </div>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    {% if form.descripcion.errors %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                {{ form.descripcion.label }}
+                                 {{ form.descripcion.errors }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-12 col-sm-12 col-xs-12"><label>Descripción:</label></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">{{ form.descripcion }}</div>
+                </div>
+
+                <br>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+    <link href="{% static 'css/autocomplete/autocomplete.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/autocomplete/jquery.autocomplete.js' %}"></script>
+
+<script>
+
+
+    $('#buscar_empleado_solicitante').autocomplete({
+        serviceUrl: '/empleados/get_empleado_autocomplete',
+        //lookup: countriesArray,
+        lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+            var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+            return re.test(suggestion.value);
+        },
+
+        onSelect: function(suggestion) {
+            $('#id_empleado_solicitante').val(suggestion.data);
+        },
+
+        onInvalidateSelection: function() {
+            $('#buscar_empleado_solicitante').html('You selected: none');
+        }
+    });
+
+
+    var estado_previo;
+    var clase_valor;
+    var clase_previo = 0;
+
+    $(document).ready(function()
+    {
+        estado = $("#id_estado").val();
+
+        if ("{{expediente.etapa_id}}" == "")
+        {
+            $("#id_estado").prop("disabled", true);
+        }
+        else
+        {
+            $.ajax({
+                url:"/expedientes/get_estado_valor/",
+                cache: false,
+                type: "GET",
+                data: {estado_id: estado},
+                success: function(valor) {
+                    //console.log(valor);
+
+                    if (valor == "RESERVADO" || valor == "DISPONIBLE")
+                    {
+                        $("#id_estado").prop("disabled", false);
+                    }
+                    else
+                    {
+                        $("#id_estado").prop("disabled", true);
+                    }
+
+                    if (valor == "CERRADO")
+                    {
+                        $("#btnGuardar").prop("disabled", true);
+                    }
+                }
+            });
+        }
+
+        {% if tiene_clase_creada %}
+            $("#id_clase").prop("disabled", true);
+        {% endif %}
+
+        {% if expediente.clase.valor == "RESOLUCIONES_VARIAS" %}
+            $("#id_tipo_resolucion").prop("disabled", false);
+        {% else %}
+            $("#id_tipo_resolucion").prop("disabled", true);
+        {% endif %}
+
+        clase_valor = "{{ expediente.clase.valor }}";
+
+        if (clase_valor == "RESOLUCIONES_VARIAS")
+        {
+            $("#id_clase").prop("disabled", true);
+        }
+        else
+        {
+            set_anio_expediente();
+        }
+
+        {% if expediente %}
+            clase_previo = $("#id_clase").val();
+        {% endif %}
+
+        {% if expediente.clase.valor == "RESOLUCIONES_VARIAS" %}
+            $("#id_letra").prop("disabled", true);
+        {% endif %}
+
+        {% if expediente %}
+            $("#id_fecha").prop("disabled", true);
+        {% endif %}
+    });
+
+    $("#id_estado").focus(function()
+    {
+        estado_previo = $("#id_estado").val();
+    });
+
+    $("#id_estado").change(function()
+    {
+        var estado_id = $("#id_estado").val();
+
+        $.ajax({
+            url:"/expedientes/get_estado_valor/",
+            cache: false,
+            type: "GET",
+            data: {estado_id: estado_id},
+            success: function(valor)
+            {
+                //console.log(valor);
+
+                if (valor != "RESERVADO" && valor != "DISPONIBLE")
+                {
+                    alert("El estado solo puede ser cambiado manualmente a Reservado o Disponible");
+                    $("#id_estado").val(estado_previo);
+                    return;
+                }
+
+                estado_previo = estado_id;
+            }
+        });
+
+    });
+
+    $("#btnGuardar").click(function()
+    {
+
+        if (clase_valor == "RESOLUCIONES_VARIAS")
+        {
+            tipo_resolucion = $("#id_tipo_resolucion").val();
+
+            if (tipo_resolucion == "")
+            {
+                alert("Debe seleccionar un TIPO de RESOLUCIÓN");
+                return false;
+            }
+        }
+        else
+        {
+            var anio_full = $("#id_fecha").val().slice(-4);
+            var fecha_actual = new Date();
+            anio_actual = fecha_actual.getFullYear();
+
+            if (anio_actual != anio_full)
+            {
+                if ($("#id_numero").val() == "")
+                {
+                    alert("Debe ingresar un número de expediente");
+                    $("#id_numero").focus();
+                    return false;
+                }
+            }
+        }
+
+        $("#id_fecha").prop("disabled", false);
+        $("#id_clase").prop("disabled", false);
+        $("#id_estado").prop("disabled", false);
+        $("#id_letra").prop("disabled", false);
+        $("#id_clase").prop("disabled", false);
+
+    });
+
+    $("#id_codigo_empleado_solicitante").blur(function()
+    {
+        if (isNaN($("#id_codigo_empleado_solicitante").val()))
+        {
+            alert("Introduzca un numero por favor!");
+            $("#id_codigo_empleado_solicitante").select();
+            $("#id_codigo_empleado_solicitante").focus();
+            return;
+        }
+    });
+
+    $("#id_fecha").keyup(function()
+    {
+        if (clase_valor == "RESOLUCIONES_VARIAS")
+        {
+            $("#id_numero").val("");
+            $("#id_numero").prop("readonly", true);
+            return;
+        }
+
+        var anio_full = $("#id_fecha").val().slice(-4);
+        var fecha_actual = new Date();
+        anio_actual = fecha_actual.getFullYear();
+
+        $("#id_numero").val("");
+
+        if (anio_actual == anio_full)
+        {
+            $("#id_numero").prop("readonly", true);
+        }
+        else
+        {
+            $("#id_numero").prop("readonly", false);
+        }
+    });
+
+    $("#id_fecha").focusout(function()
+    {
+        set_anio_expediente();
+    });
+
+    function set_anio_expediente()
+    {
+        var anio = $("#id_fecha").val().slice(-2);
+        $("#id_anio").val(anio);
+    }
+
+    $("#id_clase").change(function()
+    {
+        var clase_id = $("#id_clase").val();
+        $("#id_tipo_resolucion").val("");
+
+        $.ajax({
+            url:"/expedientes/get_clase_valor/",
+            cache: false,
+            type: "GET",
+            data: {clase_id: clase_id},
+            success: function(result) {
+                //console.log(result);
+
+                if (result.valor == "RESOLUCIONES_VARIAS")
+                {
+                    {% if expediente %}
+                        alert("No puede seleccionar esta opción");
+                        $("#id_clase").val(clase_previo);
+                        return;
+                    {% endif %}
+
+                    $("#id_tipo_resolucion").prop("disabled", false);
+                    $("#id_letra").prop("disabled", true);
+                    $("#id_numero").val();
+                    $("#id_numero").prop("disabled", true);
+                    alert("Al seleccionar Resoluciones Varias, el Registro se guardará sin Número de Expediente");
+                }
+                else
+                {
+                    $("#id_tipo_resolucion").prop("disabled", true);
+                    $("#id_letra").prop("disabled", false);
+                    $("#id_numero").val();
+                    $("#id_numero").prop("disabled", false);
+
+                    clase_previo = $("#id_clase").val();
+                }
+
+                clase_valor = result.valor;
+            }
+        });
+
+    });
+
+
+</script>
+
+{% endblock %}

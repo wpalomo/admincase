@@ -1,0 +1,541 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+{% load expediente_tags %}
+{% block content %}
+    <div style="background-color:#ccc">
+        <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+        <a href='/expedientes/modi/{{expediente.id}}'><strong>EXPEDIENTE</strong></a> --
+        <strong>RESOLUCIÓN</strong>
+        <br><br>
+    </div>
+    <br>
+
+    {% for msg in messages %}
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+               {{ msg }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <form action="" method="post">{% csrf_token %}
+        <div style="width:800px">
+            Etapa: {{ form.etapa }}<br>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>COMPROMISO</h2>
+                    <div align="right">
+                        Caja Chica:
+                        {% if form.caja_chica.value == "1" %}
+                            <input type="checkbox" name="caja_chica" id="id_caja_chica" CHECKED value="1">
+                        {% else %}
+                            <input type="checkbox" name="caja_chica" id="id_caja_chica" value="0">
+                        {% endif %}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="divCompromiso">
+                        <input type="hidden" id="id_expediente" name="expediente" value="{{expediente.id}}">
+
+                        {% if form.resolucion_adjudicacion.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.resolucion_adjudicacion.label }}
+                                    {{ form.resolucion_adjudicacion.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        Resolución de Adjudicación:
+                        {% if form.resolucion_adjudicacion.value %}
+                            <input class="form-control" value="{{ form.resolucion_adjudicacion.value | agregar_ceros:4 }}" name="resolucion_adjudicacion" id="id_resolucion_adjudicacion"> <br>
+                        {% else %}
+                            {{ form.resolucion_adjudicacion }} <br>
+                        {% endif %}
+                        <br>
+
+                        {% if form.fecha_resolucion_adjudicacion.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.fecha_resolucion_adjudicacion.label }}
+                                    {{ form.fecha_resolucion_adjudicacion.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        Fecha Resolución de Adjudicación *: {{ form.fecha_resolucion_adjudicacion }} <br>
+
+                        {% if form.proveedor.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.proveedor.label }}
+                                    {{ form.proveedor.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        Proveedor *:
+
+                        <input class="form-control" type="text" id="buscar_proveedor" value="{{ expediente_resolucion.proveedor }}"/>
+                        <input type="hidden" name="proveedor" id="id_proveedor" value="{{ expediente_resolucion.proveedor.id }}"/>
+
+                        <br>
+
+
+                        {% if form.importe.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.importe.label }}
+                                    {{ form.importe.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        Importe *: {{ form.importe }}
+                        {{ form.tipo_transaccion }}
+
+                        {% if form.numero_identificacion_transaccion.value %}
+                            <input value="{{ form.numero_identificacion_transaccion.value | agregar_ceros:4 }}" name="numero_identificacion_transaccion" id="id_numero_identificacion_transaccion"> <br>
+                        {% else %}
+                            {{ form.numero_identificacion_transaccion }} <br>
+                        {% endif %}
+                        <br>
+
+                        {% if form.orden_provision.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.orden_provision.label }}
+                                    {{ form.orden_provision.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if form.orden_provision.value %}
+                            Orden de Provisión:  <input class="form-control" value="{{ form.orden_provision.value | agregar_ceros:4 }}" name="orden_provision" id="id_orden_provision"> <br>
+                        {% else %}
+                            Orden de Provisión: {{ form.orden_provision }} <br>
+                        {% endif %}
+
+                        {% if form.acta_recepcion.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.acta_recepcion.label }}
+                                    {{ form.acta_recepcion.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if form.acta_recepcion.value %}
+                            Acta de Recepción: <input class="form-control" value="{{ form.acta_recepcion.value | agregar_ceros:4 }}" name="acta_recepcion" id="id_acta_recepcion"> <br>
+                        {% else %}
+                            Acta de Recepción: {{ form.acta_recepcion }} <br>
+                        {% endif %}
+
+                        {% if form.fuente_financiamiento.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.fuente_financiamiento.label }}
+                                    {{ form.fuente_financiamiento.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        Fuente de Finaciamiento *: {{ form.fuente_financiamiento }} <br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>ORDENADO</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="divOrdenado">
+                        {% if form.numero_resolucion_pago.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.numero_resolucion_pago.label }}
+                                    {{ form.numero_resolucion_pago.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if form.numero_resolucion_pago.value %}
+                            N° Resolución de Pago: <input class="form-control" value="{{ form.numero_resolucion_pago.value | agregar_ceros:4 }}" name="numero_resolucion_pago" id="id_numero_resolucion_pago"> <br>
+                        {% else %}
+                            N° Resolución de Pago: {{ form.numero_resolucion_pago }} <br>
+                        {% endif %}
+
+                        {% if form.fecha_resolucion_pago.errors %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ form.fecha_resolucion_pago.label }}
+                                    {{ form.fecha_resolucion_pago.errors }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        Fecha de Resolución de Pago: {{ form.fecha_resolucion_pago }} <br>
+                        Observaciones: {{ form.observaciones }} <br><br>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-primary">
+        </div>
+    </form>
+
+    <link href="{% static 'css/autocomplete/autocomplete.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/autocomplete/jquery.autocomplete.js' %}"></script>
+
+<script>
+
+
+    $('#buscar_proveedor').autocomplete({
+        serviceUrl: '/empleados/get_proveedor_autocomplete',
+        //lookup: countriesArray,
+        lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+            var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+            return re.test(suggestion.value);
+        },
+
+        onSelect: function(suggestion) {
+            $('#id_proveedor').val(suggestion.data);
+        },
+
+        onInvalidateSelection: function() {
+            $('#buscar_proveedor').html('You selected: none');
+        }
+    });
+
+    $(document).ready(function()
+    {
+        {% if not form.errors %}
+            $("#id_etapa").val({{expediente.etapa_id}});
+        {% endif %}
+
+        $("#id_orden_provision").prop("placeholder", "Si no ingresa valor, el sistema lo creará automáticamente.");
+        $("#id_acta_recepcion").prop("placeholder", "Si no ingresa valor, el sistema lo creará automáticamente.");
+        $("#id_numero_resolucion_pago").prop("placeholder", "Si no ingresa valor, el sistema lo creará automáticamente.");
+        $("#id_resolucion_adjudicacion").prop("placeholder", "Si no ingresa valor, el sistema lo creará automáticamente.");
+
+        inicializar_controles();
+        setear_campos_autoincrementales();
+
+    });
+
+    function setear_campos_autoincrementales()
+    {
+        {% if not_update_numeros_compromiso %}
+            $("#id_resolucion_adjudicacion").prop("disabled", true);
+            $("#id_orden_provision").prop("disabled", true);
+            $("#id_acta_recepcion").prop("disabled", true);
+            $("#id_importe").prop("disabled", true);
+            $("#id_numero_identificacion_transaccion").prop("disabled", true);
+        {% endif %}
+
+        {% if not_update_numeros_ordenado %}
+            $("#id_numero_resolucion_pago").prop("disabled", true);
+        {% endif %}
+
+    }
+
+    $("#id_etapa").change(function() {
+
+        var etapa_id = $("#id_etapa").val();
+
+        $.ajax({
+            url:"/expedientes/get_etapa/",
+            cache: false,
+            type: "GET",
+            data: {etapa_id: etapa_id},
+            success: function(request) {
+                console.log(request);
+
+                if ("{{expediente.etapa.valor}}" == "PREVENTIVO")
+                {
+                    if (request.valor == "ORDENADO")
+                    {
+                        alert("No se puede saltear etapas");
+                        $("#id_etapa").val({{expediente.etapa_id}})
+                        inicializar_controles();
+                        return;
+                    }
+                }
+
+                inicializar_controles();
+            }
+        });
+
+    });
+
+    $("#btnGuardar").click(function() {
+        if (!($("#id_caja_chica").is(":checked")))
+        {
+            if ($("#id_fecha_resolucion_adjudicacion").val() == "")
+            {
+                alert("Debe seleccionar la Fecha de Resolución de Adjudicación");
+                return false;
+            }
+
+            if ($("#id_proveedor").val() == "")
+            {
+                alert("Debe seleccionar el Proveedor");
+                return false;
+            }
+
+            if ($("#id_fuente_financiamiento").val() == "")
+            {
+                alert("Debe seleccionar la Fuente de Financiamiento");
+                return false;
+            }
+        }
+
+        $("#id_caja_chica").prop("disabled", false);
+        $("#divCompromiso").children().prop("disabled", false);
+        $("#divOrdenado").children().prop("disabled", false);
+    });
+
+    $("#id_caja_chica").click(function()
+    {
+       if ($("#id_caja_chica").is(":checked"))
+       {
+           $("#id_caja_chica").val(1);
+
+           $("#id_resolucion_adjudicacion").val("");
+           $("#id_resolucion_adjudicacion").prop("disabled", true);
+           $("#id_fecha_resolucion_adjudicacion").val("");
+           $("#id_fecha_resolucion_adjudicacion").prop("disabled", true);
+           $("#id_proveedor").val("");
+           $("#buscar_proveedor").val("");
+           $("#buscar_proveedor").prop("disabled", true);
+
+           $("#id_importe").prop("disabled", false);
+           $("#id_importe").val("");
+           $("#id_importe").focus();
+
+           $("#id_tipo_transaccion").val("");
+           $("#id_tipo_transaccion").prop("disabled", true);
+           $("#id_numero_identificacion_transaccion").val("");
+           $("#id_orden_provision").val("");
+           $("#id_orden_provision").prop("disabled", true);
+           $("#id_acta_recepcion").val("");
+           $("#id_acta_recepcion").prop("disabled", true);
+           $("#id_fuente_financiamiento").val("");
+           $("#id_fuente_financiamiento").prop("disabled", true);
+       }
+       else
+       {
+           $("#id_caja_chica").val(0);
+
+            $("#id_resolucion_adjudicacion").prop("disabled", false);
+           $("#id_fecha_resolucion_adjudicacion").prop("disabled", false);
+           $("#buscar_proveedor").val("");
+           $("#buscar_proveedor").prop("disabled", false);
+           $("#id_importe").prop("disabled", false);
+           $("#id_importe").val("");
+           $("#id_tipo_transaccion").prop("disabled", false);
+           $("#id_orden_provision").prop("disabled", false);
+           $("#id_acta_recepcion").prop("disabled", false);
+           $("#id_fuente_financiamiento").prop("disabled", false);
+
+            var fecha = new Date();
+            fecha = ("0" + fecha.getDate()).slice(-2) + "/" + ("0" + (fecha.getMonth() + 1)).slice(-2) + "/" + fecha.getFullYear();
+            $("#id_fecha_resolucion_adjudicacion").val(fecha)
+
+       }
+    });
+
+    function inicializar_controles()
+    {
+        if ("{{expediente.estado.valor}}" == "CERRADO")
+        {
+            $("#id_etapa").prop("disabled", true);
+            $("#btnGuardar").prop("disabled", true);
+            $("#divCompromiso").children().prop("disabled", true);
+            $("#id_caja_chica").prop("disabled", true);
+            $("#divOrdenado").children().prop("disabled", true);
+            return;
+        }
+
+        var etapa_id = $("#id_etapa").val();
+
+        if (etapa_id == 0)
+        {
+            $("#btnGuardar").prop("disabled", true);
+            $("#id_caja_chica").prop("disabled", true);
+            $("#divCompromiso").children().prop("disabled", true);
+            $("#divOrdenado").children().prop("disabled", true);
+            return;
+        }
+
+        $.ajax({
+            url:"/expedientes/get_etapa/",
+            cache: false,
+            type: "GET",
+            data: {etapa_id: etapa_id},
+            success: function(etapa) {
+                console.log(etapa);
+
+                if (etapa.valor == "PREVENTIVO")
+                {
+                    $("#btnGuardar").prop("disabled", true);
+                    $("#divCompromiso").children().prop("disabled", true);
+                    $("#id_caja_chica").prop("disabled", true);
+                    $("#divOrdenado").children().prop("disabled", true);
+                }
+                else
+                {
+                    $("#divCompromiso").children().prop("disabled", true);
+                    $("#id_caja_chica").prop("disabled", true);
+                    $("#divOrdenado").children().prop("disabled", true);
+
+                    if (etapa.valor == "COMPROMISO")
+                    {
+                        $("#divCompromiso").children().prop("disabled", false);
+
+                        if ("{{expediente.etapa.valor}}" != "COMPROMISO")
+                        {
+                            $("#id_caja_chica").prop("disabled", false);
+                        }
+
+                        if ($("#id_caja_chica").is(":checked"))
+                        {
+                            $("#id_resolucion_adjudicacion").prop("disabled", true);
+                            $("#id_fecha_resolucion_adjudicacion").prop("disabled", true);
+                            $("#id_proveedor").prop("disabled", true);
+
+                            $("#id_importe").focus();
+
+                            $("#id_tipo_transaccion").prop("disabled", true);
+                            $("#id_numero_identificacion_transaccion").prop("disabled", true);
+                            $("#id_orden_provision").prop("disabled", true);
+                            $("#id_acta_recepcion").prop("disabled", true);
+                            $("#id_fuente_financiamiento").prop("disabled", true);
+                        }
+
+                    }
+                    else if (etapa.valor == "ORDENADO")
+                    {
+                        $("#divOrdenado").children().prop("disabled", false);
+
+                        if ($("#id_numero_resolucion_pago").val() == "")
+                        {
+                            var fecha = new Date();
+                            fecha = ("0" + fecha.getDate()).slice(-2) + "/" + ("0" + (fecha.getMonth() + 1)).slice(-2) + "/" + fecha.getFullYear();
+                            $("#id_fecha_resolucion_pago").val(fecha)
+                        }
+                    }
+
+                    $("#btnGuardar").prop("disabled", false);
+                }
+
+                setear_campos_autoincrementales();
+            }
+
+        });
+
+    }
+
+    $("#id_importe").keypress(function(event)
+    {
+        if (event.which == 13)
+        {
+            if ($("#id_caja_chica").is(":checked"))
+            {
+                var importe = parseFloat($("#id_importe").val());
+
+                if (importe > 5000)
+                {
+                    alert("El Importe debe ser hasta 5000");
+                    $("#id_importe").focus();
+                }
+
+                return false;
+            }
+            else
+            {
+                get_tipo_transaccion();
+                return false;
+            }
+        }
+    });
+
+    $("#id_importe").blur(function()
+    {
+        if ($("#id_caja_chica").is(":checked"))
+        {
+            var importe = parseFloat($("#id_importe").val());
+
+            if (importe > 5000)
+            {
+                alert("El Importe debe ser hasta 5000");
+                $("#id_importe").focus();
+            }
+        }
+        else
+        {
+            get_tipo_transaccion();
+        }
+    });
+
+    function get_tipo_transaccion()
+    {
+        var importe = parseFloat($("#id_importe").val());
+
+        if (isNaN(importe))
+        {
+            $("#id_importe").val("")
+            $("#id_tipo_transaccion").val("");
+            $("#id_numero_identificacion_transaccion").val("");
+            return;
+        }
+
+        $.ajax({
+            url:"/expedientes/get_tipo_transaccion/",
+            cache: false,
+            type: "GET",
+            data: {importe: importe},
+            success: function(request) {
+                console.log(request);
+
+                if (request.result == 'error')
+                {
+                    alert(request.msg);
+                    $("#id_importe").focus()
+                    $("#id_tipo_transaccion").val("");
+                    $("#id_numero_identificacion_transaccion").val("");
+                    return
+                }
+
+                $("#id_tipo_transaccion").val(request.tipo_transaccion);
+                $("#id_numero_identificacion_transaccion").val(
+                    request.numero_identificacion_transaccion);
+                $("#id_numero_identificacion_transaccion").val(("000" + $("#id_numero_identificacion_transaccion").val()).slice(-4));
+            }
+        });
+    }
+
+</script>
+
+{% endblock %}

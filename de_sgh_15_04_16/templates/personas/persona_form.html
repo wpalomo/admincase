@@ -1,0 +1,13 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    {{ formset.as_p }}
+
+<input type="submit" value="Siguiente">
+</form>
+{% endblock %}

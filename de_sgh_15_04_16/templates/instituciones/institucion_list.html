@@ -1,0 +1,106 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="">
+    <div class="page-title">
+        <div class="title_right">
+
+        </div>
+    </div>
+
+    <form method="get">
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-horizontal pull-right top_search">
+                <div class="input-group">
+                    <select name="combo_busqueda" id="combo_busqueda" class="form-control">
+                        <option value="codigo">Código</option>
+                        <option value="nombre">Nombre</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="input_buscar" id="input_buscar" class="form-control" placeholder="Buscar por...">
+                    <span class="input-group-btn">
+                    <input class="btn btn-default" type="submit" value="Buscar">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Lista de Instituciones</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Código </th>
+                                <th>Cuit </th>
+                                <th>Nombre </th>
+                                <th>Telefono </th>
+                                <th>Provincia </th>
+                                <th>Domicilio </th>
+                                <th class=" no-link last"><span class="nobr">Acción</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for institucion in object_list %}
+                        <tr class="odd pointer">
+                            <td class=" ">{{ institucion.codigo }}</td>
+                            <td class=" ">{{ institucion.cuit }}</td>
+                            <td class=" ">{{ institucion.nombre }}</td>
+                            <td class=" ">{{ institucion.telefono }}</td>
+                            <td class=" ">{{ institucion.provincia }}</td>
+                            <td class=" ">{{ institucion.domicilio }}</td>
+                            <td class=" last"><a href="/instituciones/modi/{{ institucion.id }}" >Editar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if is_paginated %}
+
+                    <center>
+                    <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
+                    </center>
+                    <center>
+                       <ul class="pagination">
+                           <li id="n_pag_inicio" ><a href="/pacientes/listado/" title="Ir al inicio"> << </a></li>
+
+                            {% if page_obj.has_previous %}
+                                <li id="n_pag_{{page_obj.number}}"><a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a></li>
+                            {% endif %}
+
+                            <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                            {% if page_obj.has_next %}
+                                <li id="n_pag_{{page_obj.number}}"><a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a></li>
+                            {% endif %}
+
+                            <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
+                        </ul>
+                    </center>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+

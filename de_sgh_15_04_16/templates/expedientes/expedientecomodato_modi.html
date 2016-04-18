@@ -1,0 +1,146 @@
+{% extends 'arbol_item.html' %}
+
+{% load expediente_tags %}
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/expedientes/listado'><strong>LISTADO</strong></a> --
+
+            <a href='/expedientes/modi/{{ expediente.id }}/'>
+                <strong>EXPEDIENTE</strong>
+            </a> --
+
+            <strong>COMODATO</strong>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <form id="frm" action="" method="post">
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="form-group">
+                           <strong>ETAPA: COMPROMISO Y ORDENADO</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+    <div id="divCompromisoOrdenado">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+             <div class="x_panel">
+                <div class="x_title">
+                    <h2>COMODATO</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content" >
+
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Proveedor: <select class="form-control" id="id_proveedor" name="proveedor">
+                    <option value="" selected="selected">{{ expediente_comodato.0.proveedor }}</option></select>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Resolución de Contratación: <input class="form-control" id="id_resolucion_contratacion" name="resolucion_contratacion" type="text" /><br>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Fecha de Resolución de Contratación: <input class="form-control" id="id_fecha_resolucion_contratacion" name="fecha_resolucion_contratacion" type="text" value="" />
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Importe: $ <input class="form-control" id="id_importe" name="importe" type="text" /><br>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Orden de Provisión: <input class="form-control" id="id_orden_provision" name="orden_provision" type="text" value="0" /><br>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Resolución de Pago: <input class="form-control" id="id_resolucion_pago" name="resolucion_pago" type="text" value="0" /><br>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Fecha Resolución de Pago: <input class="form-control" id="id_fecha_resolucion_pago" name="fecha_resolucion_pago" type="text" value="" /><br>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    * Solicitante Resolución Pago: <select class="form-control" id="id_solicitante_resolucion_pago" name="solicitante_resolucion_pago">
+                    <option value="" selected="selected">---------</option></select><br>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    Fuente de Financiamiento *: <select class="form-control" id="id_fuente_financiamiento" name="fuente_financiamiento"><br>
+                    <option value="" selected="selected">{{ expediente_comodato.0.fuente_financiamiento }}</option></select><br>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    Observaciones: <input class="form-control" id="id_observaciones" name="observaciones" type="text" /><br>
+                    </div>
+
+                    </form>
+                </div>
+            </div>
+         </div>
+    </div>
+
+
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_content">
+
+                                    <table id="tabla_comodato" name="tabla_comodato" class="table table-striped responsive-utilities jambo_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Resolución de Contratación</th>
+                                                <th>N° de Contratación Directa</th>
+                                                <th>Importe</th>
+                                                <th>Orden de Provisión</th>
+                                                <th>Resolución de Pago</th>
+                                                <th>Fecha Resolución de Pago</th>
+                                                <th>Solicitante de la R. de Pago</th>
+                                                <th>Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for expediente in expediente_comodato %}
+                                        <tr>
+                                            <td>{{ expediente.resolucion_contratacion }}</td>
+                                            <td>{{ expediente.numero_contratacion_directa | agregar_ceros:4 }}</td>
+                                            <td>{{ expediente.importe }}</td>
+                                            <td>{{ expediente.orden_provision | agregar_ceros:4 }}</td>
+                                            <td>{{ expediente.resolucion_pago | agregar_ceros:4 }}</td>
+                                            <td>{{ expediente.fecha_resolucion_pago }}</td>
+                                            <td>{{ expediente.solicitante_resolucion_pago }}</td>
+                                            <td>{{ expediente.observaciones }}</td>
+                                        </tr>
+
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+    </div>
+
+<script>
+    $(document).ready(function()
+    {
+            $("#btnGuardar").prop("disabled", true);
+            $("#btnAgregar").prop("disabled", true);
+            $("#divCompromisoOrdenado :input").prop("disabled", true)
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="">
+    <div class="page-title">
+        <div class="title_right">
+
+        </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+
+    <div class="x_content">
+        <label for="heard">Filtrar:</label>
+        <div class="row">
+            <form method="get" id="frm">
+                <div class="col-md-3 col-sm-12 col-xs-12 form-group">
+                    <select class="form-control col-md-3 col-sm-12 col-xs-12" id="id_filtro" name="filtro">
+                        <option value="SELECCIONE">Seleccione..</option>
+                        <option value="TODOS">TODOS</option>
+                        <option value="NOMBRE">Nombre de Perfil</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3 col-sm-12 col-xs-12" id="div_parametro">
+                    <input type="text" id="id_nombre" name="nombre" class="form-control col-md-3 col-sm-12 col-xs-12">
+                </div>
+                <div class="form-group col-md-3 col-sm-12 col-xs-12">
+                    <input class="btn btn-success col-md-3 col-sm-12 col-xs-12" type="button" id="btnBuscar" value="Buscar">
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Lista de Perfiles</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table id="example" class="table table-striped responsive-utilities jambo_table">
+                            <thead>
+                                <tr class="headings">
+                                    <th>Código </th>
+                                    <th>Nombre </th>
+                                    <th>Descripción </th>
+                                    <th>Permisos </th>
+                                    <th class=" no-link last"><span class="nobr">Acción</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for perfil in perfil_list %}
+                                <tr class="odd pointer">
+                                    <td class=" ">{{ perfil.id }}</td>
+                                    <td class=" ">{{ perfil.nombre }}</td>
+                                    <td class=" ">{{ perfil.descripcion }}</td>
+                                    <td class=" ">
+                                      <a href="/seguridad/perfil/modulos/{{ perfil.id }}" >
+                                        Módulos
+                                      </a>
+                                    </td>
+                                    <td class=" last">
+                                      <a href="/seguridad/perfil/modi/{{ perfil.id }}" >Editar</a>  |
+                                      <a href="/seguridad/perfil/borrar/{{ perfil.id }}" >Borrar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <script>
+
+    $(document).ready(function() {
+        var param;
+
+        if (location.search != ''){ // mantener filtro
+        param = /filtro=([^&]+)/.exec(location.search)[1];
+        $('#id_filtro').val(param);}
+
+        if(param == "NOMBRE"){
+            $("#div_parametro").css("display", "block");
+            $("#id_nombre").val("");
+        }else{
+            $("#div_parametro").css("display", "none");
+            $("#id_nombre").val("");}
+    });
+
+    $("#id_filtro").change(function() {
+
+        if($("#id_filtro").val() == "SELECCIONE" || $("#id_filtro").val() == "TODOS"){
+
+            $("#div_parametro").css("display", "none");
+            $("#id_nombre").val("");
+
+        }
+
+        if($("#id_filtro").val() == "NOMBRE"){
+
+            $("#div_parametro").css("display", "block");
+            $("#id_nombre").val("");
+
+        }
+
+    });
+
+    $("#btnBuscar").click(function() {
+
+        if ($("#id_filtro").val() == "SELECCIONE") {
+
+            alert("Por favor seleccione una filtro para la búsqueda!");
+            return;
+
+        }
+
+        if($("#id_filtro").val() == "NOMBRE") {
+
+            if($("#id_nombre").val() == "") {
+                alert("Por favor instroduzca un valor para la búsqueda!");
+                $("#id_nombre").focus();
+                return;
+            }
+
+        }
+
+        $("#frm").submit();
+    });
+
+    </script>
+
+{% endblock %}
+
+
+

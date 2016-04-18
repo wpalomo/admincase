@@ -1,0 +1,59 @@
+[
+  {
+    "model": "locacion.Pais",
+    "pk": 1,
+    "fields": {
+      "nombre": "Argentina"
+    }
+  },
+  {
+    "model": "locacion.Provincia",
+    "pk": 1,
+    "fields": {
+      "nombre": "Formosa",
+      "pais": 1
+    }
+  },
+   {
+    "model": "locacion.Departamento",
+    "pk": 1,
+    "fields": {
+      "nombre": "Formosa",
+      "provincias": 1
+    }
+  },
+   {
+    "model": "locacion.Localidad",
+    "pk": 1,
+    "fields": {
+      "nombre": "Formosa",
+      "departamentos": 1
+    },
+      "pk": 2,
+      "fields": {
+      "nombre": "Clorinda",
+      "departamentos": 1
+    }
+  },
+  {
+    "model": "locacion.Barrio",
+    "pk": 1,
+    "fields": {
+      "nombre": "Vial",
+      "descripcion": "Vial",
+      "localidades": 1
+    },
+    "pk": 2,
+    "fields": {
+      "nombre": "Guadalupe",
+      "descripcion": "Guadalupe",
+      "localidades": 1
+    },
+      "pk": 3,
+      "fields": {
+      "nombre": "Virgen del Rosario",
+      "descripcion": "Virgen del Rosario",
+      "localidades": 1
+    }
+  }
+]
