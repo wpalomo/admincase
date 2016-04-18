@@ -143,28 +143,25 @@ class ClienteUpdate(UpdateView):
 
     def get(self, request, *args, **kwargs):
 
-        persona = Persona.objects.get(pk=kwargs['pk'])
+        cliente = Cliente.objects.get(pk=kwargs['pk'])
+
+        persona = Persona.objects.get(pk=cliente.persona.id)
         persona_form = PersonaForm(instance=persona)
 
-        cliente = Cliente.objects.get(persona=persona)
         cliente_form = ClienteForm(instance=cliente)
-
-        # tiene_clase_creada = self.tiene_clase_creada(expediente)
 
         return render_to_response(
             'clientes/cliente_form.html',
             {
                 'form': persona_form,
-                'cliente_form': cliente_form,
-                'persona': persona
-                # 'tiene_clase_creada': tiene_clase_creada
+                'cliente_form': cliente_form
             },
             context_instance=RequestContext(request)
         )
 
     def post(self, request, *args, **kwargs):
-        persona = Persona.objects.get(pk=kwargs['pk'])
-        cliente = Cliente.objects.get(persona=persona)
+        cliente = Cliente.objects.get(pk=kwargs['pk'])
+        persona = Persona.objects.get(pk=cliente.persona.id)
 
         persona_form = PersonaForm(self.request.POST, self.request.FILES,
                                    instance=persona)

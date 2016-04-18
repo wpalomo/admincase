@@ -7,10 +7,11 @@
 
 <div class="title_right" style="background-color:#ccc">
     <div class="x_title">
-
-        <a href='/tramites/listado'><strong>LISTADO</strong></a> --
+        <a href='/'><strong>INICIO</strong></a> --
+        <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
+        <a href='/clientes/modi/{{ cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
+        <a href='/tramites/listado/{{ cliente.id }}'><strong>HISTORIAL DE TRAMITES</strong></a> --
         <strong>TRAMITE</strong>
-
     </div>
 </div>
 
@@ -30,7 +31,6 @@
                 {% endfor %}
                 <br>
                 <input id="id_cliente" name="cliente" type="hidden" value="{{ cliente.id }}" />
-            {{ form.persona.errors }}
 
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -59,14 +59,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <!--div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <label for="id_estado">Estado:</label>
                             {{ form.estado }}
                         </div>{{ form.estado.errors }}
                     </div>
-                </div>
+                </div-->
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="id_observaciones"  class="col-md-12 col-sm-12 col-xs-12">Observaciones:</label>
@@ -79,6 +79,7 @@
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" id="btnCancelar" class="btn btn-primary">Cancelar</button>
                             <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
@@ -94,7 +95,13 @@
             </div>
             <div class="x_content">
                 <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
-                <div  id="check_requisitos"></div>
+                <div  id="check_requisitos">
+                    {% for requisito in requisitos %}
+                        <label>
+                            <input type='checkbox' class='flat' id="{{ requisito.requisito.id }}" name="{{ requisito.requisito.valor }}" value='0' {% if requisito.presentado %} checked {% endif %}> {{ requisito.requisito }}
+                        </label><br>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -102,10 +109,25 @@
 </form>
 
 <script>
+
+    $(document).ready(function(){
+        /*if('{{ form.instance.id }}' != ""){
+            $("#id_tipo").attr('disabled', true);
+        }*/
+    });
+
     var frm = document.getElementById('frm');
     var requisito = "";
 
     $("#id_tipo").change(function() {
+
+        if('{{ form.instance.id }}' != 'None'){
+            alert("No puede modificar el tipo de tramite, debe eliminar y crear un tramite nuevo!");
+            $("#id_tipo option[value="+ {{ form.tipo.value }} +"]").prop('selected', true);
+            return;
+        }
+
+        $("#check_requisitos").html("");
 
         $.ajax({
             url:"/tramites/get_requisitos_tipo_tramite/",
@@ -139,6 +161,11 @@
         $('#id_requisitos_presentados').val(requisito.slice(0,-1));
 
         frm.submit();
+    });
+
+    $('#btnCancelar').click(function(){
+
+        location.href = '/tramites/listado/{{ form.instance.cliente.id }}';
     });
 </script>
 

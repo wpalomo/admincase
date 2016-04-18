@@ -6,9 +6,9 @@
 {% block content %}
     <div class="title_right" style="background-color:#ccc">
         <div class="x_title">
-            <a href='/'><strong>HOME</strong></a> --
-            <a href='/clientes/listado'><strong>LISTADO</strong></a> --
-            <a href='/clientes/modi/{{ cliente.id }}'><strong>CLIENTE</strong></a> --
+            <a href='/'><strong>INICIO</strong></a> --
+            <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
+            <a href='/clientes/modi/{{ cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
             <strong>HISTORIAL DE TRAMITES</strong>
         </div>
     </div>
@@ -18,10 +18,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                  <div class="x_title">
-                    <h2>HISTORIAL DE TRAMITES - {{ cliente }}</h2>
+                    <h2>Historial de trámites de {{ cliente }}</h2>
                     <div style="text-align: right">
                         {% if cliente %}
-                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/{{ cliente.persona.id }}'">Iniciar Trámite</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/{{ cliente.id }}'"><i class="fa fa-plus"></i> Iniciar Trámite</button>
                         {% endif %}
                     </div>
                     <div class="clearfix"></div>
@@ -30,25 +30,32 @@
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
                         <thead>
                             <tr class="headings">
-                                <th>CASO</th>
-                                <th>ORIGEN</th>
-                                <th>FECHA INICIO</th>
-                                <th>ESTADO TRAMITE</th>
-                                <th>OBSERVACIONES</th>
-                                <th>VER</th>
+                                <th>Tipo de Trámite</th>
+                                <th>Destino</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Turno</th>
+                                <th>Fecha Alarma</th>
+                                <th>Observaciones</th>
+                                <th colspan="2">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for tramite in tramite_cliente %}
                             <tr class="odd pointer">
-                                <td class=" ">{{ tramite.tipo | upper }}</td>
+                                <td class=" ">{{ tramite.tipo.descripcion }}</td>
                                 <td class=" ">{{ tramite.tipo.entidad | upper }}</td>
-                                <td class=" ">{{ tramite.fecha_inicio | date:"d/m/Y - H:i:s" }}</td>
-                                <td class=" ">{{ tramite.estado }}</td>
+                                <td class=" ">{{ tramite.fecha_alta | date:"d/m/Y" }}</td>
+                                <td class=" ">{{ tramite.fecha_turno | date:"d/m/Y" }}</td>
+                                <td class=" ">{{ tramite.fecha_alarma | date:"d/m/Y" }}</td>
                                 <td class=" ">{{ tramite.observaciones }}</td>
                                 <td class=" last">
                                     <a href="/tramites/modi/{{ tramite.id }}">
-                                        <i class="fa fa-pencil"></i>
+                                        <i class="glyphicon glyphicon-pencil" title="Ver / Editar"></i>
+                                    </a>
+                                </td>
+                                <td class=" last">
+                                    <a href="/tramites/modi/{{ tramite.id }}">
+                                        <i class="glyphicon glyphicon-trash" title="Eliminar"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -61,32 +68,6 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    {% if is_paginated %}
-                    <center>
-                    <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
-                    </center>
-                    <center>
-                       <ul class="pagination">
-                           <li id="n_pag_inicio" ><a href="/tramites/listado/{{ cliente.id }}" title="Ir al inicio"> << </a></li>
-
-                            {% if page_obj.has_previous %}
-                                <li id="n_pag_{{page_obj.number}}">
-                                  <a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a>
-                                </li>
-                            {% endif %}
-
-                            <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
-
-                            {% if page_obj.has_next %}
-                                <li id="n_pag_{{page_obj.number}}">
-                                  <a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a>
-                                </li>
-                            {% endif %}
-
-                            <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
-                        </ul>
-                    </center>
-                    {% endif %}
 
                 </div>
             </div>

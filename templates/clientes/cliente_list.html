@@ -5,8 +5,8 @@
 {% block content %}
     <div class="title_right" style="background-color:#ccc">
         <div class="x_title">
-            <a href='/'><strong>HOME</strong></a> --
-            <strong>LISTADO</strong></a>
+            <a href='/'><strong>INICIO</strong></a> --
+            <strong>LISTA DE CLIENTES</strong></a>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -48,12 +48,12 @@
                                 <td class=" ">{{ cliente.persona.fecha_nacimiento |date:"d/m/Y" }}</td>
                                 <td class=" ">{{ cliente.fecha_alta_sistema |date:"d/m/Y" }}</td>
                                 <td class=" last">
-                                    <a href="/clientes/modi/{{ cliente.persona.id }}">
+                                    <a href="/clientes/modi/{{ cliente.id }}">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                 </td>
                                 <td class=" last">
-                                    <a href="/tramites/listado/{{ cliente.persona.id }}">
+                                    <a href="/tramites/listado/{{ cliente.id }}">
                                         <i class="fa fa-file"></i>
                                     </a>
                                 </td>

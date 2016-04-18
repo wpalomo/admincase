@@ -34,9 +34,9 @@ class TramiteForm(forms.ModelForm):
     tipo = forms.ModelChoiceField(
         queryset=TipoTramite.objects.all(), required=True)
     fecha_alta = forms.DateTimeField(required=False)
-    fecha_turno = forms.DateField(required=True)
-    fecha_alarma = forms.DateField(required=True)
-    estado = forms.BooleanField(initial=1)
+    fecha_turno = forms.DateField(required=False)
+    fecha_alarma = forms.DateField(required=False)
+    # estado = forms.BooleanField(initial=1)
     observaciones = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 3}), required=False)
 
@@ -55,37 +55,39 @@ class TramiteForm(forms.ModelForm):
         for name, field in list(self.fields.items()):
             if name == 'estado':
                 continue
-            if name == 'tipo':
-                field.widget.attrs.update({'class': 'form-control select2_single'})
-                continue
+            # if name == 'tipo':
+            #     field.widget.attrs.update({'class': 'form-control select2_single'})
+            #     continue
 
             field.widget.attrs.update({'class': 'form-control'})
 
     def clean_fecha_turno(self):
         fecha = self.cleaned_data['fecha_turno']
 
-        try:
-            datetime.strptime(str(fecha), '%Y-%m-%d')
+        if fecha:
+            try:
+                datetime.strptime(str(fecha), '%Y-%m-%d')
 
-            if fecha < datetime.now().date():
-                raise forms.ValidationError('La fecha del turno no puede '
-                                            'ser menor a la actual')
-        except ValueError:
-            raise ValueError("Fecha no valida")
+                if fecha < datetime.now().date():
+                    raise forms.ValidationError('La fecha del turno no puede '
+                                                'ser menor a la actual')
+            except ValueError:
+                raise ValueError("Fecha no valida")
 
         return fecha
 
     def clean_fecha_alarma(self):
         fecha = self.cleaned_data['fecha_alarma']
 
-        try:
-            datetime.strptime(str(fecha), '%Y-%m-%d')
+        if fecha:
+            try:
+                datetime.strptime(str(fecha), '%Y-%m-%d')
 
-            if fecha <= datetime.now().date():
-                raise forms.ValidationError('La fecha de alarma no puede '
-                                            'ser menor o igual a la actual')
-        except ValueError:
-            raise ValueError("Fecha no valida")
+                if fecha <= datetime.now().date():
+                    raise forms.ValidationError('La fecha de alarma no puede '
+                                                'ser menor o igual a la actual')
+            except ValueError:
+                raise ValueError("Fecha no valida")
 
         return fecha
 

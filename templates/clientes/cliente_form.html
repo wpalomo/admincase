@@ -3,8 +3,10 @@
 {% block content %}
     <div class="title_right" style="background-color:#ccc">
         <div class="x_title">
-            <a href='/'><strong>HOME</strong></a> --
-            <a href='/clientes/listado'><strong>LISTADO</strong></a>
+            <a href='/'><strong>INICIO</strong></a> --
+            <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
+            <strong>DATOS DEL CLIENTE</strong> --
+            <a href='/tramites/listado/{{ cliente_form.instance.id }}'><strong>HISTORIAL DE TRAMITES</strong></a>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -12,7 +14,7 @@
     <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
     <div class="row">
 
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-10 col-sm-10 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2><strong>DATOS PERSONALES</strong></h2>
@@ -156,57 +158,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>ÚLTIMOS TRAMITES <small></small></h2>
-                    <div style="text-align: right">
-                        {% if persona %}
-                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/listado/{{ persona.id }}'">Ver Historial</button>
-                        {% endif %}
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <table id="example" class="table table-striped responsive-utilities jambo_table">
-                        <thead>
-                            <tr class="headings">
-                                <th>ORIGEN</th>
-                                <th>TIPO</th>
-                                <th>ESTADO</th>
-                                <th>OBSERVACIONES</th>
-                                <th class=" no-link last">
-                                    <span class="nobr">Ver</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for tramite in persona_tramites %}
-                            <tr class="odd pointer">
-                                <td class=" ">{{ tramite.tipo.entidad | upper }}</td>
-                                <td class=" ">{{ tramite.tipo | upper  }}</td>
-                                <td class=" ">{{ tramite.estado | upper  }}</td>
-                                <td class=" ">{{ tramite.observaciones | upper  }}</td>
-                                <td class=" last">
-                                    <a href="/tramites/modi/{{ tramite.id }}">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                                <div class="alert alert-danger" role="alert">
-                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                  <span class="sr-only">Error:</span>
-                                    No se encontraron registros
-                                </div>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
         </div>
 
     </div>
