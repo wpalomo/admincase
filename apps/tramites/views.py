@@ -145,6 +145,8 @@ class TramiteUpdate(UpdateView):
             if requisitos:
                 parametros = requisitos.split("|")
 
+                print(requisitos)
+
                 for item in parametros:
                     requisito_parametro = item.split("#")
                     requisito = RequisitoTramite.objects.get(
