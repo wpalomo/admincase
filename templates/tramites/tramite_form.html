@@ -12,7 +12,17 @@
         <strong>TRAMITE</strong>
     </div>
 </div>
-
+{% if messages %}
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="alert alert-success" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 <div class="clearfix"></div>
 <form id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
 <div class="row">
@@ -23,11 +33,6 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                {% for msg in messages %}
-                    <strong>{{ msg }}</strong>
-                    <br>
-                {% endfor %}
-                <br>
                 <input id="id_cliente" name="cliente" type="hidden" value="{{ cliente.id }}" />
 
                 <div class="form-group">

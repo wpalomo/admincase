@@ -6,18 +6,11 @@ from django.template import RequestContext
 
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from .forms import TramiteForm
-
 from apps.clientes.models import Cliente
 from apps.complementos.organigrama.models import Entidad
-from apps.personas.models import Persona
-from apps.tramites.models import (Tramite, RequisitoTramite, TipoTramite,
-                                  Requisito)
+from apps.tramites.models import (Tramite, RequisitoTramite, Requisito)
 
-
-# def home(request):
-#     if request.user.is_authenticated():
-#         return render(request, 'tramites/home.html')
+from .forms import TramiteForm
 
 
 class TramiteListView(ListView):
@@ -75,10 +68,7 @@ class TramiteCreate(CreateView):
 
                     requisito = Requisito.objects.get(
                         valor=requisito_parametro[0])
-                    # presentado = 0
-                    # if requisito_parametro[1] == 1:
-                    #     presentado = 1
-                    print(requisito_parametro[1])
+
                     presentado = (False, True)[requisito_parametro[1] == '1']
 
                     RequisitoTramite.objects.create(
@@ -100,7 +90,6 @@ class TramiteCreate(CreateView):
             {
                 'form': form,
                 'cliente': cliente
-                # 'tipos_tramites': tipos_tramites
             },
             context_instance=RequestContext(request)
         )
@@ -145,7 +134,7 @@ class TramiteUpdate(UpdateView):
             if requisitos:
                 parametros = requisitos.split("|")
 
-                print(requisitos)
+                # print(requisitos)
 
                 for item in parametros:
                     requisito_parametro = item.split("#")
@@ -196,69 +185,3 @@ class TramiteClienteListView(ListView):
             },
             context_instance=RequestContext(request)
         )
-
-
-# ANSES #
-#
-# class AnsesTramitesListView(ListView):
-#     queryset = TipoTramite.objects.filter(
-#         entidad__nombre='ANSES'
-#     )
-#     context_object_name = 'cliente_anses'
-#     template_name = 'tramites/tramite_anses_list.html'
-#     paginate_by = 10
-#
-
-# CAJA - PREVISION #
-#
-# class CajaPrevisionListView(ListView):
-#     queryset = Tramite.objects.filter(
-#         tipo__entidad__nombre='CAJA',
-#         estado=False
-#     )
-#     context_object_name = 'cliente_caja'
-#     template_name = 'tramites/tramite_caja_list.html'
-#     paginate_by = 10
-#
-#
-# class CajaPrevisionTramitesListView(ListView):
-#     queryset = Tramite.objects.filter(
-#         tipo__entidad__nombre='CAJA',
-#         estado=False
-#     )
-#     context_object_name = 'cliente_caja'
-#     template_name = 'tramites/tramite_caja_list.html'
-#     paginate_by = 10
-
-#
-# # FAMILIA #
-#
-# class FamiliaListView(ListView):
-#     model = Cliente
-#     template_name = 'tramites/tramite_familia_list.html'
-#     paginate_by = 10
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super(FamiliaListView, self).get_context_data(*args, **kwargs)
-#         # context['tipo_tramite_familia'] = Tramite.objects.filter(entidad__id=3)
-#         return context
-#
-#
-# class FamiliaTramitesListView(ListView):
-#     model = Cliente
-#     template_name = 'tramites/tramite_familia_list.html'
-#     paginate_by = 10
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super(FamiliaListView, self).get_context_data(*args, **kwargs)
-#         # context['tipo_tramite_familia'] = Tramite.objects.filter(entidad__id=3)
-#         return context
-#
-#
-# class CivilComercialListView(ListView):
-#     model = Cliente
-#     # queryset = Tramite.objects.filter(entidad__id=4)
-#     context_object_name = 'cliente_civil_comercial'
-#     template_name = 'tramites/tramite_civilcomercial_list.html'
-#     paginate_by = 10
-
