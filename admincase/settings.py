@@ -39,18 +39,16 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admincase',
-    # 'apps.agendas',
     'apps.clientes',
     'apps.complementos',
     'apps.complementos.locacion',
     'apps.complementos.organigrama',
     'apps.complementos.persona',
     'apps.complementos.salud',
+    'apps.contactos',
     'apps.domicilios',
     'apps.personas',
     'apps.tramites',
-    # 'apps.empleados',
-    # 'apps.turnos',
 )
 
 MIDDLEWARE_CLASSES = (
