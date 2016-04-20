@@ -4,9 +4,14 @@ from django.forms.utils import ErrorList
 
 from .models import Contacto, TipoContacto
 
-proveedores = (('', '------'),
-               ('Personal', 'Personal'), ('Movistar', 'Movistar'),
-               ('Claro', 'Claro'), ('Otro', 'Otro'),)
+proveedores = (
+    ('', '------'),
+    ('Telecom', 'Telecom'),
+    ('Personal', 'Personal'),
+    ('Movistar', 'Movistar'),
+    ('Claro', 'Claro'),
+    ('Otro', 'Otro'),
+)
 
 
 class ContactoForm(forms.ModelForm):
@@ -19,12 +24,7 @@ class ContactoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ContactoForm, self).__init__(*args, **kwargs)
-        if not TipoContacto.objects.filter(valor='INTERNO').exists():
-            tipo_contacto = TipoContacto(descripcion='INTERNO', valor='INTERNO')
-            tipo_contacto.save()
-        if not TipoContacto.objects.filter(descripcion='MÓVIL').exists():
-            tipo_contacto = TipoContacto(descripcion='MÓVIL', valor='MÓVIL')
-            tipo_contacto.save()
+
         for name, field in list(self.fields.items()):
             field.widget.attrs.update({'class': 'form-control'})
 

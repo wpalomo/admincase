@@ -2,11 +2,8 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import CreateView, DeleteView, UpdateView
 
-from apps.familiares.models import Familiar
-from apps.pacientes.models import Paciente
-
 from .models import Contacto
-from apps.personas.models import Persona
+from apps.clientes.models import Cliente
 
 from .forms import ContactoForm
 
@@ -19,24 +16,15 @@ class ContactoCreate(SuccessMessageMixin, CreateView):
     success_message = 'El contacto se creo de forma correcta'
 
     def dispatch(self, *args, **kwargs):
-        self.persona = Persona.objects.get(pk=kwargs['id'])
+        self.cliente = Cliente.objects.get(pk=kwargs['id'])
         return super(ContactoCreate, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ContactoCreate, self).get_context_data(**kwargs)
         context['contacto_list'] = Contacto.objects.filter(
-            persona=self.persona)
-        context['persona_list'] = Persona.objects.filter(
-            pk=self.persona.id)
-
-        # if self.request.session['modulo'] == '':
-        #     paciente = Paciente.objects.filter(persona__id=self.persona.id)
-        #     if paciente.exists():
-        #         familiar = Familiar.objects.filter(persona__id=self.persona.id)
-        #         if familiar.exists():
-        #             self.request.session['modulo_titulo'] = ' '
-        #         else:
-        #             self.request.session['modulo_titulo'] = 'pacientes'
+            persona=self.cliente.persona)
+        context['persona_list'] = Cliente.objects.filter(
+            pk=self.cliente.persona.id)
 
         return context
 

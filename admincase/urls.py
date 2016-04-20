@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^ayuda/', views.ayuda),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^clientes/', include('apps.clientes.urls', namespace='clientes')),
+    url(r'^contactos/', include('apps.contactos.urls', namespace='contactos')),
     url(r'^domicilios/', include('apps.domicilios.urls',
                                  namespace='domicilios')),
     url(r'^inicio/', views.inicio),

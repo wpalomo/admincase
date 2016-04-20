@@ -1,20 +1,14 @@
     {% extends 'arbol_item.html' %}
     {% load staticfiles %}
-    {% load global_tags %}
     {% block content %}
 
         <div class="title_right" style="background-color:#ccc">
             <div class="x_title">
-                <a href='/{{ request.session.modulo }}/listado'><strong>Listado</strong></a> --
-                <a href='/{{ request.session.modulo }}/modi/{{ request.session.id }}'><strong>Datos Personales</strong></a> --
-                <a href='/domicilios/alta/{{ request.session.id }}'><strong>Domicilio</strong></a> --
-                <strong>Contacto</strong> --
-                <a href='/obrassociales/alta/{{ request.session.id }}'><strong>Obra Social</strong></a> --
-                <a href='/familiares/busqueda/{{ request.session.id }}'><strong>Familia</strong></a> --
-                <a href='/notas/alta/{{ request.session.id }}'><strong>Notas</strong></a>
-                {% if request.session.modulo != 'empleados'  %}
-                    -- <a href='/fichassociales/alta/{{ request.session.id }}'><strong>Ficha Social</strong></a>
-                {% endif %}
+                <a href='/'><strong>INICIO</strong></a> --
+                <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
+                <a href='/clientes/modi/{{ form.cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
+                <strong>CONTACTO</strong> --
+                <a href='/tramites/listado/{{ cliente_form.instance.id }}'><strong>HISTORIAL DE TRAMITES</strong></a>
             </div>
         </div>
 
@@ -95,8 +89,6 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <br><br>
-                        <br><br>
                         <br>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
@@ -133,94 +125,46 @@
                             </thead>
                             <tbody>
                             {% for contacto in contacto_list %}
-                                {% if contacto.tipo_contacto.descripcion != 'INTERNO' %}
-                                    <tr class="odd pointer">
-                                        {% if contacto.tipo_contacto.descripcion == 'SITIO WEB' %}
-                                            <td class><img src="/media/logo/icon-web.png" class="img-circle" width="27px" height="27px"></td>
-                                        {% endif %}
+                                <tr class="odd pointer">
+                                    {% if contacto.tipo_contacto.valor == 'SITIO WEB' %}
+                                        <td class><i class="fa fa-sitemap"></i></td>
+                                    {% endif %}
 
-                                        {% if contacto.tipo_contacto.descripcion == 'E-MAIL' %}
-                                            <td class><img src="/media/logo/icon-email.png" class="img-circle" width="27px" height="27px"></td>
-                                        {% endif %}
-                                        
-                                        {% if contacto.tipo_contacto.descripcion == 'PARTICULAR' %}
-                                            <td class><img src="/media/logo/icon-personal.png" class="img-circle" width="27px" height="27px"></td>
-                                        {% endif %}
-                                        
-                                        {% if contacto.tipo_contacto.descripcion == 'LABORAL' %}
-                                            <td class><img src="/media/logo/icon-laboral.jpg" class="img-circle" width="27px" height="27px"></td>
-                                        {% endif %}
-                                        
-                                        {% if contacto.tipo_contacto.descripcion == 'MÓVIL' %}
-                                            <td class><img src="/media/logo/icon-mobile.png" class="img-circle" width="27px" height="27px"></td>
-                                        {% endif %}
-                                        
-                                        <td class=" "><strong>{{ contacto.tipo_contacto }}: </strong> {{ contacto.descripcion }}</td>
-                                        <td class=" ">{{ contacto.observacion }}</td>
-                                        <td>
-                                        <a href="/contactos/delete/{{contacto.id}}">
-                                            <i class="fa fa-trash-o"></i>
+                                    {% if contacto.tipo_contacto.valor == 'E-MAIL' %}
+                                        <td class><i class="fa fa-mail-forward"></i></td>
+                                    {% endif %}
+
+                                    {% if contacto.tipo_contacto.valor == 'TELEFONO_FIJO' %}
+                                        <td class><i class="fa fa-phone-square"></i></td>
+                                    {% endif %}
+
+                                    {% if contacto.tipo_contacto.valor == 'LABORAL' %}
+                                        <td class><i class="fa fa-phone"></i></td>
+                                    {% endif %}
+
+                                    {% if contacto.tipo_contacto.valor == 'TELEFONO_MOVIL' %}
+                                        <td class><i class="fa fa-mobile-phone"></i></td>
+                                    {% endif %}
+
+                                    <td class=" ">{{ contacto.tipo_contacto }}: {{ contacto.descripcion }}</td>
+                                    <td class=" ">{{ contacto.observacion }}</td>
+                                    <td>
+                                    <a href="/contactos/delete/{{contacto.id}}">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                    </td>
+                                    <td>
+                                        <a href="/contactos/modi/{{contacto.id}}">
+                                        <i class="fa fa-edit"></i>
                                         </a>
-                                        </td>
-                                        <td>
-                                            <a href="/contactos/modi/{{contacto.id}}">
-                                            <i class="fa fa-edit"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endif %}
+                                    </td>
+                                </tr>
                             {% empty %}
                                 <div class="alert alert-danger" role="alert">
                                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                     <span class="sr-only">Error:</span>
                                     No se encontraron registros
                                 </div>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Internos</h2>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <table id="example" class="table table-striped responsive-utilities jambo_table">
-                            <thead>
-                                <tr class="headings">
-                                    <th> </th>
-                                    <th>Número </th>
-                                    <th>Observación </th>
-                                    <th class=" no-link last">
-                                        <span class="nobr">Eliminar</span>
-                                    </th>
-                                    <th class=" no-link last">
-                                        <span class="nobr">Editar</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for contacto in contacto_list %}
-                                {% if contacto.tipo_contacto.descripcion == 'INTERNO' %}
-                                    <tr class="odd pointer">
-                                        <td class=" "> <img src="/media/logo/videocall.png" class="img-circle" width="27px" height="27px"></td>
-                                        <td class=" "><strong>{{ contacto.tipo_contacto }}: </strong> {{ contacto.descripcion }}</td>
-                                        <td class=" ">{{ contacto.observacion }}</td>
-                                        <td>
-                                            <a href="/contactos/delete/{{contacto.id}}">
-                                                <i class="fa fa-trash-o"></i>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/contactos/modi/{{contacto.id}}">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>
