@@ -53,11 +53,6 @@ class TramiteForm(forms.ModelForm):
 
     def set_css_controls(self):
         for name, field in list(self.fields.items()):
-            if name == 'estado':
-                continue
-            # if name == 'tipo':
-            #     field.widget.attrs.update({'class': 'form-control select2_single'})
-            #     continue
 
             field.widget.attrs.update({'class': 'form-control'})
 

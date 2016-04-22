@@ -10,38 +10,32 @@
             <a href='/tramites/listado/{{ cliente_form.instance.id }}'><strong>HISTORIAL DE TRAMITES</strong></a>
         </div>
     </div>
+    <!-- mensaje -->
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Info:</span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <!-- mensaje -->
+
     <div class="clearfix"></div>
 
-    <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+    <form enctype="multipart/form-data" id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
     <div class="row">
 
-        <div class="col-md-10 col-sm-10 col-xs-12">
+        <div class="col-md-7 col-sm-7 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2><strong>DATOS PERSONALES</strong></h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    {% if messages %}
-                        <ul class="messages">
-                            {% for message in messages %}
-                                <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    <br />
-                    <!--div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Apellido</label>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                {{ form.foto }}
-                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                        </div>
-                    </div-->
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Apellido</label>
@@ -86,10 +80,10 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Nacimiento</label>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
                                 {{ form.fecha_nacimiento }}
-                                <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
-                            </div>
+                                <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
+                            </div>{{ form.fecha_nacimiento.errors }}
                         </div>
                     </div>
                     <div class="form-group">
@@ -148,8 +142,54 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- IMAGEN CLIENTE -->
+        <div class="col-md-5 col-sm-5 col-xs-12">
             <div class="x_panel">
+                <div class="x_title">
+                    <h2><strong>IMAGEN DE PERFIL</strong></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div align="center">
+                        <!--Este es el preview -->
+                        <div class="img-preview img-preview-sm">
+                            <!--img id=”blah” src=”/static/img/a2.jpg” alt=”your image”    width=”100" height=”100" /-->
+                            {% if form.instance.foto %}
+                                <img id="img_tag" src="/media/foto_persona/miniatura/{{ form.instance.foto }}" class="img-circle" width="150px" height="150px">
+                                <br>
+                                Actual: <a href="/media/foto_persona/normal/{{ form.instance.foto }}">{{ form.instance.foto }}</a>
+                                <input id="foto-clear_id" name="foto-clear" type="checkbox" />
+                                <label for="foto-clear_id">Limpiar</label>
+                            {% else %}
+                                <img id="img_tag" src="/media/images/user.png" class="img-circle" width="150px" height="150px">
+                            {% endif %}
+                        </div>
 
+                        <!--Este es el boton de upload-->
+                        <div class="form-group">
+                            <!--asociamos el for del label a la llamada del script de JS -->
+                            <label title="Subir Imagen" for="id_foto" class="btn btn-primary">
+                            <div style="display: none"> {{ form.foto }} </div>
+                            <!-- hacer style="display: none es equivalente a class="hide" "-->
+                            {% if form.instance.foto %}
+                                Cambiar foto
+                            {% else %}
+                                Cargar foto
+                            {% endif %}
+                            </label>
+                        </div>
+                        {% if form.errors.foto %}
+                             <strong>
+                                   {{ form.errors.foto }}
+                             </strong>
+                         {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
                 <div class="x_content">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <br>
@@ -166,6 +206,26 @@
     </form>
 
     <script>
+
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    alert();
+                    $("#img_tag").attr("src", e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#id_foto').change(function() {
+            readURL(this);
+        });
+
         $("#id_pais").change(function(){
 
             $('#id_provincia').html("");

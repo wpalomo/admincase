@@ -17,7 +17,7 @@ def cambiar_nombre_imagen(nombre_foto, numero_documento_persona):
                        str(fecha.day) + str(fecha.hour) + \
                        str(fecha.minute) + str(fecha.second)
 
-    nombre = "foto_personal/{documento}_{fecha_nombre}.{ext}".format(
+    nombre = "foto_persona/{documento}_{fecha_nombre}.{ext}".format(
         documento=numero_documento_persona, fecha_nombre=fecha_hora_texto,
         ext=extension)
 
@@ -63,9 +63,9 @@ def redimensionar_imagen(foto, nombre_foto):
     imagen_miniatura = imagen.resize(resolucion_miniatura, Image.ANTIALIAS)
 
     ubicacion_foto_normal = \
-        foto.path.rsplit('/', 1)[0] + '/foto_personal/normal/' + nombre_foto
+        foto.path.rsplit('/', 1)[0] + '/foto_persona/normal/' + nombre_foto
     ubicacion_foto_miniatura = \
-        foto.path.rsplit('/', 1)[0] + '/foto_personal/miniatura/' + nombre_foto
+        foto.path.rsplit('/', 1)[0] + '/foto_persona/miniatura/' + nombre_foto
 
     imagen_normal.save(ubicacion_foto_normal)
     imagen_miniatura.save(ubicacion_foto_miniatura)

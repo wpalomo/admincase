@@ -1,6 +1,9 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseRedirect
+from django.template import RequestContext
 from django.views.generic import CreateView, DeleteView, UpdateView
+from django.shortcuts import render_to_response
 
 from .models import Contacto
 from apps.clientes.models import Cliente
@@ -12,29 +15,57 @@ class ContactoCreate(SuccessMessageMixin, CreateView):
 
     model = Contacto
     form_class = ContactoForm
-    success_url = '/contacto/listado/'
-    success_message = 'El contacto se creo de forma correcta'
 
-    def dispatch(self, *args, **kwargs):
-        self.cliente = Cliente.objects.get(pk=kwargs['id'])
-        return super(ContactoCreate, self).dispatch(*args, **kwargs)
+    def get(self, request, *args, **kwargs):
 
-    def get_context_data(self, **kwargs):
-        context = super(ContactoCreate, self).get_context_data(**kwargs)
-        context['contacto_list'] = Contacto.objects.filter(
-            persona=self.cliente.persona)
-        context['persona_list'] = Cliente.objects.filter(
-            pk=self.cliente.persona.id)
+        form = ContactoForm()
 
-        return context
+        cliente = Cliente.objects.get(pk=kwargs['pk'])
 
-    def form_valid(self, form):
-        form.instance.persona = self.persona
+        contactos_list = Contacto.objects.filter(persona_id=cliente.persona.id)
 
-        return super(ContactoCreate, self).form_valid(form)
+        return render_to_response(
+            'contactos/contacto_form.html',
+            {
+                'form': form,
+                'cliente': cliente,
+                'contactos_list': contactos_list
+            },
+            context_instance=RequestContext(request)
+        )
 
-    def get_success_url(self):
-        return '/contactos/alta/' + str(self.persona.id)
+    def post(self, request, *args, **kwargs):
+
+        print(self.request.POST)
+
+        form = ContactoForm(data=self.request.POST)
+
+        cliente = Cliente.objects.get(pk=kwargs['pk'])
+
+        contactos_list = cliente.persona.contacto_set.all()
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.add_message(
+                request, messages.SUCCESS,
+                'CONTACTO CREADO CON EXITO')
+
+            return HttpResponseRedirect('/contactos/alta/' + str(cliente.id))
+
+        messages.add_message(
+            request, messages.SUCCESS, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'contactos/contacto_form.html',
+            {
+                'form': form,
+                'cliente': cliente,
+                'contactos_list': contactos_list
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 class ContactoDelete(DeleteView):
@@ -42,17 +73,10 @@ class ContactoDelete(DeleteView):
     model = Contacto
     success_message = 'El contacto fue eliminado con éxito'
 
-    def dispatch(self, *args, **kwargs):
-        id_persona = Contacto.objects.filter(id=kwargs['pk']).values('persona')
-        self.persona = Persona.objects.get(pk=id_persona)
-        return super(ContactoDelete, self).dispatch(*args, **kwargs)
-
     def get_success_url(self):
-        return '/contactos/alta/' + str(self.persona.id)
+        cliente = Cliente.objects.get(pk=self.kwargs['pk'])
 
-    def delete(self, request, *args, **kwargs):
-        messages.error(self.request, self.success_message)
-        return super(ContactoDelete, self).delete(request, *args, **kwargs)
+        return '/contactos/alta/' + str(cliente.id)
 
 
 class ContactoUpdate(SuccessMessageMixin, UpdateView):

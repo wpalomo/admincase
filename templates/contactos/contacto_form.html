@@ -6,9 +6,9 @@
             <div class="x_title">
                 <a href='/'><strong>INICIO</strong></a> --
                 <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
-                <a href='/clientes/modi/{{ form.cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
+                <a href='/clientes/modi/{{ cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
                 <strong>CONTACTO</strong> --
-                <a href='/tramites/listado/{{ cliente_form.instance.id }}'><strong>HISTORIAL DE TRAMITES</strong></a>
+                <a href='/tramites/listado/{{ cliente.id }}'><strong>HISTORIAL DE TRAMITES</strong></a>
             </div>
         </div>
 
@@ -30,17 +30,14 @@
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Contacto -
-                            {% for persona in persona_list %}
-                                {{ persona.apellido|upper }}, {{ persona.nombre|upper}}
-                            {% endfor %}
-                        </h2>
+                        <h2>Contacto - {{ cliente | title }}</h2>
                         <div class="clearfix"></div>
                     </div>
 
 
                     <div class="x_content">
                         <form id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+                        <input id="id_persona" name="persona" type="hidden" value="{{ cliente.persona.id }}" />
 
                         <div class="form-group">
                             <label class="control-label" for="first-name">Tipo de Contacto(*) <span class="required"></span></label>
@@ -113,18 +110,19 @@
                             <thead>
                                 <tr class="headings">
                                     <th></th>
+                                    <th>Tipo</th>
                                     <th>Decripción </th>
                                     <th>Observación </th>
                                     <th class=" no-link last">
-                                        <span class="nobr">Eliminar</span>
+                                        <span class="nobr">Editar</span>
                                     </th>
                                     <th class=" no-link last">
-                                        <span class="nobr">Editar</span>
+                                        <span class="nobr">Eliminar</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for contacto in contacto_list %}
+                            {% for contacto in contactos_list %}
                                 <tr class="odd pointer">
                                     {% if contacto.tipo_contacto.valor == 'SITIO WEB' %}
                                         <td class><i class="fa fa-sitemap"></i></td>
@@ -146,18 +144,11 @@
                                         <td class><i class="fa fa-mobile-phone"></i></td>
                                     {% endif %}
 
-                                    <td class=" ">{{ contacto.tipo_contacto }}: {{ contacto.descripcion }}</td>
+                                    <td class=" ">{{ contacto.tipo_contacto }}</td>
+                                    <td class=" ">{{ contacto.descripcion }}</td>
                                     <td class=" ">{{ contacto.observacion }}</td>
-                                    <td>
-                                    <a href="/contactos/delete/{{contacto.id}}">
-                                        <i class="fa fa-trash-o"></i>
-                                    </a>
-                                    </td>
-                                    <td>
-                                        <a href="/contactos/modi/{{contacto.id}}">
-                                        <i class="fa fa-edit"></i>
-                                        </a>
-                                    </td>
+                                    <td><a href="/contactos/modi/{{contacto.id}}"><i class="fa fa-pencil"></i></a></td>
+                                    <td><a href="/contactos/delete/{{contacto.id}}"><i class="fa fa-trash-o"></i></a></td>
                                 </tr>
                             {% empty %}
                                 <div class="alert alert-danger" role="alert">

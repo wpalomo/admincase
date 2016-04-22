@@ -1,0 +1,60 @@
+{% extends 'arbol_item.html' %}
+{% block content %}
+
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/'><strong>INICIO</strong></a> --
+            <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
+            <a href='/clientes/modi/{{ cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
+            <a href='/contactos/alta/{{ cliente.id }}'><strong>CONTACTO</strong></a> --
+            <a href='/tramites/listado/{{ cliente.id }}'><strong>HISTORIAL DE TRAMITES</strong></a>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row">
+
+        <form method="post"> {% csrf_token %}
+        <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInDown">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Cliente - {{ object.cliente }}</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-sm-12">
+                        <h2 class="brief"><i> Está seguro de eliminar el siguiente tramite?</i></h2>
+                        <ul class="list-unstyled">
+                            {% if object.tipo %}
+                            <li> <label>Tipo de Tramite</label> : {{ object.tipo }} </li>
+                            {% endif %}
+                            {% if object.tipo.entidad %}
+                            <li> <label>Destino</label> : {{ object.tipo.entidad }} </li>
+                            {% endif %}
+                            {% if object.fecha_turno %}
+                            <li> <label>Fecha de Turno</label> : {{ object.fecha_turno }} </li>
+                            {% endif %}
+                            {% if object.fecha_alarma %}
+                            <li> <label>Fecha de Alarma</label> : {{ object.fecha_alarma }} </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-5">
+                        <div class="col-xs-3 col-sm-3 emphasis">
+                            <a class="btn btn-success btn-xl" href="/tramites/listado/{{ object.cliente.id }}" type="button"> <i class="fa fa-arrow-left"></i> Cancelar</a>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 emphasis">
+                            <button class="btn btn-danger btn-xl" type="submit" ><i class="fa fa-trash"></i> Eliminar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+{% endblock %}

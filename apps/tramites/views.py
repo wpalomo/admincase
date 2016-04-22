@@ -100,8 +100,6 @@ class TramiteUpdate(UpdateView):
     form_class = TramiteForm
 
     def get(self, request, *args, **kwargs):
-
-
         tramite = Tramite.objects.get(pk=kwargs['pk'])
         cliente = Cliente.objects.get(pk=tramite.cliente.id)
         requisitos_tramite = tramite.requisitotramite_set.all()
@@ -121,6 +119,8 @@ class TramiteUpdate(UpdateView):
     def post(self, request, *args, **kwargs):
 
         tramite = Tramite.objects.get(pk=kwargs['pk'])
+
+        cliente = Cliente.objects.get(pk=tramite.cliente.id)
 
         requisitos_tramite = tramite.requisitotramite_set.all()
 
@@ -158,6 +158,7 @@ class TramiteUpdate(UpdateView):
             {
                 'form': form,
                 'tramite': tramite,
+                'cliente': cliente,
                 'requisitos': requisitos_tramite
             },
             context_instance=RequestContext(request)
@@ -165,6 +166,18 @@ class TramiteUpdate(UpdateView):
 
     def get_success_url(self):
         return self.request.get_full_path()
+
+
+class TramiteDelete(DeleteView):
+
+    model = Tramite
+    success_message = 'El trámite fue eliminado con éxito'
+
+    def get_success_url(self):
+        tramite = Tramite.objects.get(pk=self.kwargs['pk'])
+        cliente = Cliente.objects.get(pk=tramite.cliente.id)
+
+        return '/tramites/listado/' + str(cliente.id)
 
 
 class TramiteClienteListView(ListView):

@@ -8,6 +8,7 @@
         <a href='/'><strong>INICIO</strong></a> --
         <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
         <a href='/clientes/modi/{{ cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
+        <a href='/contactos/alta/{{ cliente.id }}'><strong>CONTACTO</strong></a> --
         <a href='/tramites/listado/{{ cliente.id }}'><strong>HISTORIAL DE TRAMITES</strong></a> --
         <strong>TRAMITE</strong>
     </div>
@@ -48,17 +49,17 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Turno</label>
-                            <!--div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker"-->
+                            <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
                                 {{ form.fecha_turno }}
-                                <!--span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span-->
-                            <!--/div-->{{ form.fecha_turno.errors }}
+                                <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
+                            </div>{{ form.fecha_turno.errors }}
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha Alarma</label>
-                             <!--div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker"-->
+                             <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
                                 {{ form.fecha_alarma }}
-                                <!--span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span-->
-                            <!--/div-->{{ form.fecha_alarma.errors }}
+                                <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
+                            </div>{{ form.fecha_alarma.errors }}
                         </div>
                     </div>
                 </div>
@@ -82,6 +83,7 @@
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" id="btnEliminar" class="btn btn-danger">Eliminar</button>
                             <button type="button" id="btnCancelar" class="btn btn-primary">Cancelar</button>
                             <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
                         </div>
@@ -99,11 +101,13 @@
             <div class="x_content">
                 <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
                 <div  id="check_requisitos">
+                    <ul class="to_do">
                     {% for requisito in requisitos %}
-                        <label>
-                            <input type='checkbox' class='flat' id="{{ requisito.requisito.id }}" name="{{ requisito.requisito.valor }}" value='0' {% if requisito.presentado %} checked {% endif %}> {{ requisito.requisito }}
-                        </label><br>
+                        <li>
+                            <label><p><input type='checkbox' class='flat' id="{{ requisito.requisito.id }}" name="{{ requisito.requisito.valor }}" value='0' {% if requisito.presentado %} checked {% endif %}> {{ requisito.requisito }} </p></label>
+                        </li>
                     {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -117,6 +121,18 @@
         /*if('{{ form.instance.id }}' != ""){
             $("#id_tipo").attr('disabled', true);
         }*/
+
+        //$('.errorlist').css('padding', '15px');
+        //$('.errorlist').css('margin-top', '10px');
+        //$('.errorlist').css('margin-bottom', '10px');
+        $('.errorlist').css('border', '1px solid transparent');
+        $('.errorlist').css('border-radius', '4px');
+        $('.errorlist').css('color', '#a94442');
+        $('.errorlist').css('background', '#f2dede');
+        $('.errorlist').css('border-color', '#ebccd1');
+        $('.errorlist').css('font-size', '0.9em');
+        $('.errorlist').css('list-style-type', 'none');
+        //$('.errorlist').css('text-align', 'center');
     });
 
     var frm = document.getElementById('frm');
@@ -168,8 +184,15 @@
 
     $('#btnCancelar').click(function(){
 
-        location.href = '/tramites/listado/{{ form.instance.cliente.id }}';
+        location.href = '/tramites/listado/{{ cliente.id }}';
     });
+
+    $('#btnEliminar').click(function(){
+
+        location.href = '/tramites/delete/{{ form.instance.id }}';
+    });
+
+
 </script>
 
 

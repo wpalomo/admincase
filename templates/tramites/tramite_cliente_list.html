@@ -9,6 +9,7 @@
             <a href='/'><strong>INICIO</strong></a> --
             <a href='/clientes/listado'><strong>LISTA DE CLIENTES</strong></a> --
             <a href='/clientes/modi/{{ cliente.id }}'><strong>DATOS DEL CLIENTE</strong></a> --
+            <a href='/contactos/alta/{{ cliente.id }}'><strong>CONTACTO</strong></a> --
             <strong>HISTORIAL DE TRAMITES</strong>
         </div>
     </div>
@@ -18,10 +19,12 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                  <div class="x_title">
-                    <h2>Historial de trámites de {{ cliente }}</h2>
-                    <div style="text-align: right">
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <h2>Historial de trámites de {{ cliente }}</h2>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="text-align: right">
                         {% if cliente %}
-                        <button type="button" class="btn btn-primary" onclick="window.location='/tramites/alta/{{ cliente.id }}'"><i class="fa fa-plus"></i> Iniciar Trámite</button>
+                        <button type="button" class="btn btn-primary btn-round" onclick="window.location='/tramites/alta/{{ cliente.id }}'"><i class="fa fa-plus"></i> Iniciar Trámite</button>
                         {% endif %}
                     </div>
                     <div class="clearfix"></div>
@@ -55,7 +58,7 @@
                                     </a>
                                 </td>
                                 <td class=" last">
-                                    <a href="/tramites/modi/{{ tramite.id }}">
+                                    <a href="/tramites/delete/{{ tramite.id }}">
                                         <i class="glyphicon glyphicon-trash" title="Eliminar"></i>
                                     </a>
                                 </td>
