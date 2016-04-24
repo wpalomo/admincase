@@ -126,7 +126,7 @@
 
                     <!-- /menu footer buttons -->
                     <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                        <!--a data-toggle="tooltip" data-placement="top" title="Settings">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
                         <a data-toggle="tooltip" data-placement="top" title="FullScreen">
@@ -135,9 +135,9 @@
                         <a data-toggle="tooltip" data-placement="top" title="Lock">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout">
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="window.location='/salir'">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                        </a>
+                        </a-->
                     </div>
                     <!-- /menu footer buttons -->
                 </div>
@@ -245,12 +245,14 @@
     <script src="{% static 'js/bootstrap/bootstrap-datepicker.min.js' %}"></script>
     <script src="{% static 'js/bootstrap/locales/bootstrap-datepicker.es.js' %}"></script>
     <!-- ALMANAQUE -->
+    <script src="{% static 'js/jquery.maskedinput.min.js' %}"></script>
 
     <script>
         NProgress.done();
 
         $('#dateRangePicker, #dateRangePicker2').datepicker({
             format: 'dd/mm/yyyy',
+            forceParse: false,
             startDate: '01/01/1900',
             endDate: '30/12/2100',
             language: 'es'

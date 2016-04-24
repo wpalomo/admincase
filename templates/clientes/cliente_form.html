@@ -42,6 +42,7 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.apellido }}
                                 <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                {{ form.apellido.errors }}
                             </div>
                         </div>
 
@@ -50,6 +51,7 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.nombre }}
                                 <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                {{ form.nombre.errors }}
                             </div>
                         </div>
                     </div>
@@ -58,6 +60,7 @@
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Tipo de Documento</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.tipo_documento }}
+                                {{ form.tipo_documento.errors }}
                             </div>
                         </div>
 
@@ -66,6 +69,26 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.numero_documento }}
                                 <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
+                                {{ form.numero_documento.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Sexo</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.sexo }}
+                                {{ form.sexo.errors }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Nacimiento (dd/mm/aaaa)</label>
+                            <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
+                                {{ form.fecha_nacimiento }}
+                                <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
+                                {{ form.fecha_nacimiento.errors }}
                             </div>
                         </div>
                     </div>
@@ -75,29 +98,14 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ cliente_form.cuil }}
                                 <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Nacimiento</label>
-                            <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
-                                {{ form.fecha_nacimiento }}
-                                <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
-                            </div>{{ form.fecha_nacimiento.errors }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Sexo</label>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                {{ form.sexo }}
+                                {{ cliente_form.cuil.errors }}
                             </div>
                         </div>
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Edad</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Edad" value="{{ persona.edad }}" readonly>
+                                <input type="text" class="form-control has-feedback-right" id="inputSuccess2" placeholder="Edad" value="{{ form.instance.edad }}" readonly>
                                 <span class="fa fa-sort-numeric-asc form-control-feedback right" aria-hidden="true"></span>
                             </div>
                         </div>
@@ -107,6 +115,7 @@
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Estado Civil</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.estado_civil }}
+                                {{ form.estado_civil.errors }}
                             </div>
                         </div>
 
@@ -114,6 +123,7 @@
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Obra Social</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.obra_social }}
+                                {{ form.obra_social.errors }}
                             </div>
                         </div>
                     </div>
@@ -122,6 +132,7 @@
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Nivel de Educación</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.nivel_educacion }}
+                                {{ form.nivel_educacion.errors }}
                             </div>
                         </div>
 
@@ -129,6 +140,7 @@
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Profesión</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ form.profesion }}
+                                {{ form.profesion.errors }}
                             </div>
                         </div>
                     </div>
@@ -137,6 +149,7 @@
                             <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Situación Laboral</label>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 {{ cliente_form.situacion_laboral }}
+                                {{ cliente_form.situacion_laboral.errors }}
                             </div>
                         </div>
                     </div>
@@ -156,7 +169,7 @@
                         <div class="img-preview img-preview-sm">
                             <!--img id=”blah” src=”/static/img/a2.jpg” alt=”your image”    width=”100" height=”100" /-->
                             {% if form.instance.foto %}
-                                <img id="img_tag" src="/media/foto_persona/miniatura/{{ form.instance.foto }}" class="img-circle" width="150px" height="150px">
+                                <img id="img_tag" style="border: 1px solid rgba(52, 73, 94, 0.44); padding: 4px;" src="/media/foto_persona/miniatura/{{ form.instance.foto }}" class="img-circle" width="150px" height="150px">
                                 <br>
                                 Actual: <a href="/media/foto_persona/normal/{{ form.instance.foto }}">{{ form.instance.foto }}</a>
                                 <input id="foto-clear_id" name="foto-clear" type="checkbox" />
@@ -206,23 +219,42 @@
     </form>
 
     <script>
+        $(document).ready(function(){
 
+            $("#id_numero_documento").attr("placeholder","________");
+            $("#id_numero_documento").mask("99999999");
 
-        function readURL(input) {
+            $("#id_fecha_nacimiento").attr("placeholder","__/__/____");
+            $("#id_fecha_nacimiento").mask("99/99/9999");
 
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+            $("#id_cuil").attr("placeholder","__-________-_");
+            $("#id_cuil").mask("99-99999999-9");
 
-                reader.onload = function(e) {
-                    $("#img_tag").attr("src", e.target.result);
+            $('.errorlist').css('border', '1px solid transparent');
+            $('.errorlist').css('border-radius', '4px');
+            $('.errorlist').css('color', '#a94442');
+            $('.errorlist').css('background', '#f2dede');
+            $('.errorlist').css('border-color', '#ebccd1');
+            $('.errorlist').css('font-size', '0.9em');
+            $('.errorlist').css('list-style-type', 'none');
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $("#img_tag").attr("src", e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
                 }
-
-                reader.readAsDataURL(input.files[0]);
             }
-        }
 
-        $('#id_foto').change(function() {
-            readURL(this);
+            $('#id_foto').change(function() {
+                readURL(this);
+            });
+
         });
 
         $("#id_pais").change(function(){

@@ -48,15 +48,15 @@
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                           <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Turno</label>
+                           <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha de Turno (dd/mm/aaaa)</label>
                             <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
                                 {{ form.fecha_turno }}
                                 <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
                             </div>{{ form.fecha_turno.errors }}
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                           <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha Alarma</label>
-                             <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker">
+                           <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Fecha Alarma (dd/mm/aaaa)</label>
+                             <div class="input-group input-append date col-md-12 col-sm-12 col-xs-12" id="dateRangePicker2">
                                 {{ form.fecha_alarma }}
                                 <span class="input-group-addon add-on"><span class="fa fa-calendar has-feedback-right"></span></span>
                             </div>{{ form.fecha_alarma.errors }}
@@ -118,9 +118,12 @@
 <script>
 
     $(document).ready(function(){
-        /*if('{{ form.instance.id }}' != ""){
-            $("#id_tipo").attr('disabled', true);
-        }*/
+
+        $("#id_fecha_turno").attr("placeholder","__/__/____");
+        $("#id_fecha_turno").mask("99/99/9999");
+
+        $("#id_fecha_alarma").attr("placeholder","__/__/____");
+        $("#id_fecha_alarma").mask("99/99/9999");
 
         //$('.errorlist').css('padding', '15px');
         //$('.errorlist').css('margin-top', '10px');

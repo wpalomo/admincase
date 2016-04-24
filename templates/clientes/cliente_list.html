@@ -12,6 +12,7 @@
     <div class="clearfix"></div>
 
     <div class="row">
+        <form method="get" id="frm">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
 
@@ -19,25 +20,25 @@
                     <div class="x_title">
                         <h2>LISTA DE CLIENTES</h2>
                         <div style="text-align: right">
-                            <button type="button" class="btn btn-primary" onclick="window.location='/clientes/alta/'">Nuevo Cliente</button>
+                            <button type="button" class="btn btn-primary btn-round" onclick="window.location='/clientes/alta/'"><i class="fa fa-plus"></i> Nuevo Cliente</button>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="input-group form-horizontal top_search col-md-6 col-sm-6 col-xs-6">
-                        <input type="text" name="q" class="form-control" placeholder="Buscar por...">
+                        <input type="text" name="parametro" id="parametro" class="form-control" placeholder="Introduzca un parametro...">
                         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Buscar!</button>
+                            <input class="btn btn-success" type="button" id="btnBuscar" value="Buscar">
                         </span>
                     </div><br>
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
                         <thead>
                             <tr class="headings">
-                                <th>PERSONA </th>
-                                <th>DOCUMENTO</th>
-                                <th>CONTACTO</th>
-                                <th>FECHA ALTA </th>
-                                <th>DATOS</th>
-                                <th>TRAMITES</th>
+                                <th>Cliente </th>
+                                <th>Tipo/N°Documento</th>
+                                <th>Fecha de Nacimiento</th>
+                                <th>Fecha de Alta</th>
+                                <th>Datos Personales</th>
+                                <th>Tramites</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,14 +49,10 @@
                                 <td class=" ">{{ cliente.persona.fecha_nacimiento |date:"d/m/Y" }}</td>
                                 <td class=" ">{{ cliente.fecha_alta_sistema |date:"d/m/Y" }}</td>
                                 <td class=" last">
-                                    <a href="/clientes/modi/{{ cliente.id }}">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
+                                    <a href="/clientes/modi/{{ cliente.id }}"><i class="fa fa-pencil"></i></a>
                                 </td>
                                 <td class=" last">
-                                    <a href="/tramites/listado/{{ cliente.id }}">
-                                        <i class="fa fa-file"></i>
-                                    </a>
+                                    <a href="/tramites/listado/{{ cliente.id }}"><i class="fa fa-file"></i></a>
                                 </td>
                             </tr>
                             {% empty %}
@@ -96,13 +93,18 @@
                     </center>
                     {% endif %}
                 </div>
-                </div>
             </div>
         </div>
+        </form>
+    </div>
 
-    <br />
-    <br />
-    <br />
+    <script>
+
+        $("#btnBuscar").click(function () {
+            $("#frm").submit();
+        });
+
+    </script>
 
 
 {% endblock %}

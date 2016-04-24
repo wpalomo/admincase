@@ -1,4 +1,5 @@
 
+from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -21,53 +22,22 @@ class ClienteListView(ListView):
 
         query = super(ClienteListView, self).get_queryset()
 
-        parametro1 = self.request.GET.get('parametro1')
-        parametro2 = self.request.GET.get('parametro2')
+        parametro = self.request.GET.get('parametro')
 
-        if self.request.GET.get('filtro') == 'NUMERO_EXPEDIENTE':
+        print(parametro)
 
-            query = self.buscar_por_numero(parametro1, parametro2)
+        if parametro:
 
-        if self.request.GET.get('filtro') == 'NUMERO_RESOLUCION_PAGO':
+            query = Cliente.objects.filter(
+                Q(persona__apellido__icontains=parametro) |
+                Q(persona__nombre__icontains=parametro) |
+                Q(persona__numero_documento__icontains=parametro)
+            )
 
-            query = self.buscar_por_numero_resolucion_pago(parametro1)
+            print("#dentro#")
+            print(query)
 
         return query
-
-    def buscar_por_numero(self, numero, anio):
-
-        numero = numero.strip()
-        anio = anio.strip()
-
-        expedientes = Cliente.objects.filter(
-            numero=numero,
-            anio__icontains=anio
-        )
-
-        return expedientes
-
-    def buscar_por_numero_resolucion_pago(self, numero_resolucion_pago):
-
-        numero_resolucion_pago = numero_resolucion_pago.strip()
-
-        expediente_resolucion_list =\
-                Cliente.objects.filter(
-                    numero_resolucion_pago=numero_resolucion_pago)\
-                    .values('expediente_id')
-        expediente_servicio_medico_list =\
-            Cliente.objects.filter(
-                numero_resolucion_pago=numero_resolucion_pago)\
-                .values('expediente_id')
-
-        expediente_ids = set(
-            [expediente['expediente_id']
-             for expediente in expediente_resolucion_list] +
-            [expediente['expediente_id']
-             for expediente in expediente_servicio_medico_list]
-        )
-
-        expedientes = Cliente.objects.filter(pk__in=expediente_ids)
-        return expedientes
 
 
 class ClienteCreate(CreateView):
@@ -105,16 +75,16 @@ class ClienteCreate(CreateView):
             messages.add_message(
                 request, messages.SUCCESS, 'CLIENTE CREADO CON EXITO')
 
-            return HttpResponseRedirect('/clientes/modi/%s' % str(persona.id))
+            return HttpResponseRedirect('/clientes/modi/%s' % str(cliente_form.instance.id))
 
         messages.add_message(
             request, messages.SUCCESS, 'EL FORMULARIO CONTIENE ERRORES')
 
         return render_to_response(
-            'empleados/empleado_form.html',
+            'clientes/cliente_form.html',
             {
                 'form': persona_form,
-                'empleado_form': cliente_form
+                'cliente_form': cliente_form
             },
             context_instance=RequestContext(request)
         )

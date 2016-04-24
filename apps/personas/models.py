@@ -40,7 +40,7 @@ class Persona(models.Model):
     numero_documento = models.CharField(max_length=20, null=True, blank=True,
                                         unique=False)
     sexo = models.ForeignKey(Sexo, null=True, blank=True)
-    fecha_nacimiento = models.DateField(default='01/01/1900', null=False)
+    fecha_nacimiento = models.DateField(null=False)
     estado_civil = models.ForeignKey(EstadoCivil, null=True, blank=True)
     obra_social = models.ForeignKey(ObraSocial, null=True, blank=True)
     nivel_educacion = models.ForeignKey(NivelEducacion, null=True, blank=True)
