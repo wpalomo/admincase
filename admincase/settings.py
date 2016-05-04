@@ -86,13 +86,25 @@ WSGI_APPLICATION = 'admincase.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
+# SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
     }
 }
+
+# # MySql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'admincase',
+#         'USER': 'root',
+#         'PASSWORD': 'rootadmin',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
 
 
 # Internationalization

@@ -75,7 +75,8 @@ class ClienteCreate(CreateView):
             messages.add_message(
                 request, messages.SUCCESS, 'CLIENTE CREADO CON EXITO')
 
-            return HttpResponseRedirect('/clientes/modi/%s' % str(cliente_form.instance.id))
+            return HttpResponseRedirect('/clientes/modi/%s' %
+                                        str(cliente_form.instance.id))
 
         messages.add_message(
             request, messages.SUCCESS, 'EL FORMULARIO CONTIENE ERRORES')

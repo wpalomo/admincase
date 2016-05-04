@@ -15,6 +15,7 @@ class ClienteForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ClienteForm, self).__init__(*args, **kwargs)
+
         for name, field in self.fields.items():
             # print(name)
             field.widget.attrs.update({
