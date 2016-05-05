@@ -1,0 +1,116 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/'><strong>INICIO</strong></a> --
+            <strong>LISTA DE ENTIDADES</strong></a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <form method="get" id="frm">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="x_content">
+                    <div class="x_title">
+                        <h2>LISTA DE ENTIDADES</h2>
+                        <div style="text-align: right">
+                            <button type="button" class="btn btn-primary btn-round" onclick="window.location='/entidades/alta/'"><i class="fa fa-plus"></i> Nueva Entidad</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="input-group form-horizontal top_search col-md-6 col-sm-6 col-xs-6">
+                        <input type="text" name="parametro" id="parametro" class="form-control" placeholder="Introduzca un parametro...">
+                        <span class="input-group-btn">
+                            <input class="btn btn-success" type="button" id="btnBuscar" value="Buscar">
+                        </span>
+                    </div><br>
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Icono </th>
+                                <th>Descripcion</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entidad in object_list %}
+                            <tr class="odd pointer">
+                                <td class=" ">
+                                {% if entidad.imagen %}
+                                     <img src="/media/logo/tramites_entidades/miniatura/{{ entidad.imagen }}" class="img-thumbnail" width="42px" height="42px">
+                                {% else %}
+                                    <img src="/media/logo/logoentidad.jpg" class="img-thumbnail" width="42px" height="42px">
+                                {% endif %}
+                                </td>
+
+                                <td class=" ">{{ entidad.nombre }}</td>
+                                <td class=" last">
+                                    <a href="/entidades/modi/{{ entidad.id }}"><i class="fa fa-pencil"></i></a>
+                                </td>
+                                <td class=" last">
+                                    <a href="/entidades/delete/{{ entidad.id }}"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                                <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                    No se encontraron registros
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if is_paginated %}
+
+                    <center>
+                    <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
+                    </center>
+                    <center>
+                       <ul class="pagination">
+                           <li id="n_pag_inicio" ><a href="/entidades/listado" title="Ir al inicio"> << </a></li>
+
+                            {% if page_obj.has_previous %}
+                                <li id="n_pag_{{page_obj.number}}">
+                                  <a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a>
+                                </li>
+                            {% endif %}
+
+                            <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                            {% if page_obj.has_next %}
+                                <li id="n_pag_{{page_obj.number}}">
+                                  <a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a>
+                                </li>
+                            {% endif %}
+
+                            <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
+                        </ul>
+                    </center>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <script>
+
+        $("#btnBuscar").click(function () {
+            $("#frm").submit();
+        });
+
+    </script>
+
+
+{% endblock %}
+
+
+

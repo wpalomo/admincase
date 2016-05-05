@@ -169,13 +169,13 @@
                         <div class="img-preview img-preview-sm">
                             <!--img id=”blah” src=”/static/img/a2.jpg” alt=”your image”    width=”100" height=”100" /-->
                             {% if form.instance.foto %}
-                                <img id="img_tag" style="border: 1px solid rgba(52, 73, 94, 0.44); padding: 4px;" src="/media/foto_persona/miniatura/{{ form.instance.foto }}" class="img-circle" width="150px" height="150px">
+                                <img id="img_tag" src="/media/foto_persona/miniatura/{{ form.instance.foto }}" class="img-circle img-thumbnail" width="150px" height="150px">
                                 <br>
                                 Actual: <a href="/media/foto_persona/normal/{{ form.instance.foto }}">{{ form.instance.foto }}</a>
                                 <input id="foto-clear_id" name="foto-clear" type="checkbox" />
                                 <label for="foto-clear_id">Limpiar</label>
                             {% else %}
-                                <img id="img_tag" src="/media/images/user.png" class="img-circle" width="150px" height="150px">
+                                <img id="img_tag" src="/media/images/user.png" class="img-circle  img-thumbnail" width="150px" height="150px">
                             {% endif %}
                         </div>
 

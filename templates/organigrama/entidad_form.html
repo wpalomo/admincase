@@ -1,0 +1,142 @@
+{% extends 'arbol_item.html' %}
+
+{% block content %}
+    <div class="title_right" style="background-color:#ccc">
+        <div class="x_title">
+            <a href='/'><strong>INICIO</strong></a> --
+            <a href='/entidades/listado'><strong>LISTA DE ENTIDADES</strong></a> --
+            <strong>DATOS DE LA ENTIDAD</strong>
+        </div>
+    </div>
+    <!-- mensaje -->
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Info:</span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <!-- mensaje -->
+
+    <div class="clearfix"></div>
+
+    <form enctype="multipart/form-data" id="demo-form2" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+    <div class="row">
+
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><strong>DATOS ENTIDAD</strong></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Nombre de Entidad</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.nombre }}
+                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                {{ form.nombre.errors }}
+                            </div>
+                            <label for="fullname" class="col-md-12 col-sm-12 col-xs-12">Valor de Entidad</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{ form.valor }}
+                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                {{ form.valor.errors }}
+                            </div>
+                        </div>
+                        <!-- IMAGEN ENTIDAD -->
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div align="center">
+                                <!--Este es el preview -->
+                                <div class="img-preview img-preview-sm">
+                                    {% if form.instance.imagen %}
+                                        <img id="img_tag" src="/media/logo/tramites_entidades/miniatura/{{ form.instance.imagen }}" class="img-thumbnail" width="150px" height="150px">
+                                        <br>
+                                        Actual: <a href="/media/logo/tramites_entidades/normal/{{ form.instance.imagen }}">{{ form.instance.imagen }}</a>
+                                        <input id="foto-clear_id" name="foto-clear" type="checkbox" />
+                                        <label for="foto-clear_id">Limpiar</label>
+                                    {% else %}
+                                        <img id="img_tag" src="/media/logo/logoentidad.jpg" class="img-thumbnail" width="150px" height="150px">
+                                    {% endif %}
+                                </div>
+
+                                <!--Este es el boton de upload-->
+                                <div class="form-group">
+                                    <!--asociamos el for del label a la llamada del script de JS -->
+                                    <label title="Subir Imagen" for="id_imagen" class="btn btn-primary">
+                                        <div style="display: none"> {{ form.imagen }} </div>
+                                        <!-- hacer style="display: none es equivalente a class="hide" "-->
+                                        {% if form.instance.imagen %}
+                                            Cambiar foto  <i class="fa fa-undo"></i>
+                                        {% else %}
+                                            Cargar foto  <i class="fa fa-upload"></i>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                {% if form.errors.imagen %}
+                                     <strong>
+                                           {{ form.errors.imagen }}
+                                     </strong>
+                                 {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <br>
+                        <br>
+                        <input type="button" class="btn btn-primary" onclick="window.location='/entidades/listado/'" value="Cancelar"/>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </form>
+
+    <script>
+        $(document).ready(function(){
+
+            $('.errorlist').css('border', '1px solid transparent');
+            $('.errorlist').css('border-radius', '4px');
+            $('.errorlist').css('color', '#a94442');
+            $('.errorlist').css('background', '#f2dede');
+            $('.errorlist').css('border-color', '#ebccd1');
+            $('.errorlist').css('font-size', '0.9em');
+            $('.errorlist').css('list-style-type', 'none');
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $("#img_tag").attr("src", e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $('#id_imagen').change(function() {
+                readURL(this);
+            });
+
+        });
+
+
+    </script>
+
+{% endblock %}

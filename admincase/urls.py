@@ -35,5 +35,7 @@ urlpatterns = [
     url(r'^personas/', include('apps.personas.urls', namespace='personas')),
     url(r'^salir/', views.salir),
     url(r'^tramites/', include('apps.tramites.urls', namespace='tramites')),
+    url(r'^entidades/', include('apps.complementos.organigrama.urls',
+                                namespace='entidades')),
 ]
 
