@@ -51,18 +51,17 @@ class EntidadCreate(CreateView):
         form = EntidadForm(self.request.POST, self.request.FILES)
 
         if form.is_valid():
-            form_entidad = form.save(commit=False)
+            # form_entidad = form.save(commit=False)
 
             if 'imagen' in self.request.FILES:
-                self.set_foto(form_entidad, (self.request.FILES['imagen']))
+                self.set_foto(form, (self.request.FILES['imagen']))
 
-            form_entidad.save()
+            form.save()
 
             messages.add_message(
                 request, messages.SUCCESS, 'ENTIDAD CREADA CON EXITO')
 
-            return HttpResponseRedirect('/entidades/modi/%s' %
-                                        str(form_entidad.id))
+            return HttpResponseRedirect('/entidades/modi/%s' % str(form.id))
 
         messages.add_message(
             request, messages.SUCCESS, 'EL FORMULARIO CONTIENE ERRORES')
@@ -77,13 +76,13 @@ class EntidadCreate(CreateView):
             foto.name, int(Persona.objects.latest('id').id) + 1)
         '''
 
-        entidad_nombre = self.request.POST['nombre']
-
-        foto.name = helpers.cambiar_nombre_imagen(foto.name, entidad_nombre)
+        foto.name = helpers.cambiar_nombre_imagen(
+            foto.name, entidad.instance.valor)
 
         foto = helpers.redimensionar_imagen(entidad.imagen, foto.name)
         # Se envia foto subida y el cambio de nombre, como parametros
-        entidad.foto = foto
+        entidad.instance.imagen = foto
+        entidad.save()
 
     def get_success_url(self):
         return self.request.get_full_path()
@@ -103,50 +102,45 @@ class EntidadUpdate(UpdateView):
                                   context_instance=RequestContext(request))
 
     def post(self, request, *args, **kwargs):
-        pass
-    #     cliente = Cliente.objects.get(pk=kwargs['pk'])
-    #     persona = Persona.objects.get(pk=cliente.persona.id)
-    #
-    #     persona_form = PersonaForm(self.request.POST, self.request.FILES,
-    #                                instance=persona)
-    #     cliente_form = ClienteForm(self.request.POST, instance=cliente)
-    #
-    #     if persona_form.is_valid() and cliente_form.is_valid():
-    #
-    #         if 'foto' in self.request.FILES:
-    #             self.set_foto(persona_form, self.request.FILES['foto'])
-    #
-    #         persona = persona_form.save()
-    #         cliente_form.instance.persona = persona
-    #
-    #         cliente_form.save()
-    #
-    #         messages.add_message(
-    #             request, messages.SUCCESS, 'CLIENTE MODIFICADO CON EXITO')
-    #
-    #         return HttpResponseRedirect('/clientes/modi/%s' % kwargs['pk'])
-    #
-    #     messages.add_message(
-    #         request, messages.SUCCESS, 'EL FORMULARIO CONTIENE ERRORES')
-    #
-    #     return render_to_response(
-    #         'organigrama/entidad_form.html',
-    #         {
-    #             'form': persona_form,
-    #             'cliente_form': cliente_form
-    #         },
-    #         context_instance=RequestContext(request)
-    #     )
-    #
-    # def set_foto(self, persona, foto):
-    #     foto.name = \
-    #         helpers.cambiar_nombre_imagen(foto.name, persona.instance.id)
-    #     persona.instance.foto = helpers.redimensionar_imagen(
-    #         persona.instance.foto, foto.name)
-    #     persona.save()
-    #
-    # def get_success_url(self):
-    #     return self.request.get_full_path()
+
+        entidad = Entidad.objects.get(pk=kwargs['pk'])
+        form = EntidadForm(
+            self.request.POST, self.request.FILES, instance=entidad)
+
+        if form.is_valid():
+            if 'imagen' in self.request.FILES:
+                self.set_foto(form, (self.request.FILES['imagen']))
+
+            form.save()
+
+            messages.add_message(
+                request, messages.SUCCESS, 'ENTIDAD MODIFICADA CON EXITO')
+
+            return HttpResponseRedirect('/entidades/modi/%s' %
+                                        str(form.instance.id))
+
+        messages.add_message(
+            request, messages.SUCCESS, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'organigrama/entidad_form.html', {'form': form},
+            context_instance=RequestContext(request))
+
+    def set_foto(self, entidad, foto):
+        '''
+        foto.name = helpers.cambiar_nombre_imagen(
+            foto.name, int(Persona.objects.latest('id').id) + 1)
+        '''
+
+        foto.name = helpers.cambiar_nombre_imagen(
+            foto.name, entidad.instance.valor)
+        foto = helpers.redimensionar_imagen(entidad.instance.imagen, foto.name)
+        # Se envia foto subida y el cambio de nombre, como parametros
+        entidad.instance.imagen = foto
+        entidad.save()
+
+    def get_success_url(self):
+        return self.request.get_full_path()
 
 
 class EntidadDelete(DeleteView):

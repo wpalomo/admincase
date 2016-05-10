@@ -26,6 +26,9 @@ def cambiar_nombre_imagen(nombre_foto, numero_documento_persona):
 
 def redimensionar_imagen(foto, nombre_foto):
 
+    print(foto)
+    print(foto.path)
+
     imagen = Image.open(foto)
     # Imagen para Abrir
 

@@ -167,7 +167,7 @@ class ClienteUpdate(UpdateView):
 
     def set_foto(self, persona, foto):
         foto.name = \
-            helpers.cambiar_nombre_imagen(foto.name, persona.instance.id)
+            helpers.cambiar_nombre_imagen(foto.name, persona.instance.numero_documento)
         persona.instance.foto = helpers.redimensionar_imagen(
             persona.instance.foto, foto.name)
         persona.save()

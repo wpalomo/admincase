@@ -23,7 +23,7 @@ def _generar_ruta_imagen(instance, filename):
         # el archivo, usando la fecha actual (año/mes)
         # ruta = os.path.join('foto_persona', date.today().strftime("%Y/%m"))
         # ruta = os.path.join('foto_persona')
-        ruta = 'logo/tramites_entidades'
+        ruta = 'tramites_entidades'
 
         # Generamos el nombre del archivo con un identificador
         # aleatorio, y la extension del archivo original.

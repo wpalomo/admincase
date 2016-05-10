@@ -17,13 +17,15 @@ def cambiar_nombre_imagen(nombre_foto, entidad):
         str(fecha.second))
 
     nombre = "tramites_entidades/{entidad}_{fecha}.{ext}".format(
-        entidad=entidad, fecha=fecha_hora_texto,
-        ext=extension)
+        entidad=entidad, fecha=fecha_hora_texto, ext=extension)
 
     return nombre
 
 
 def redimensionar_imagen(foto, nombre_foto):
+
+    print(foto)
+    print(foto.path)
 
     imagen = Image.open(foto)
     # Imagen para Abrir
