@@ -6,28 +6,100 @@
     <div class="title_right" style="background-color:#ccc">
         <div class="x_title">
             <a href='/'><strong>INICIO</strong></a> --
-            <strong>LISTA DE TRAMITES</strong></a>
+            <strong>HISTORIAL DE TRAMITES</strong></a>
         </div>
     </div>
     <div class="clearfix"></div>
 
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            {% for tramites_entidades in tramites_entidades_list %}
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="window.location='/tramites/{{ tramites_entidades.valor | lower }}/listado/'">
-                    <div class="tile-stats">
-                        <div class="icon">
-                            <!--i class="fa fa-user"></i-->
-
-                        </div>
-                        <div class="count">
-                            <img style="padding: 5px" class="img-responsive img-portfolio img-hover" width="95px" height="35px" src="{{ MEDIA_URL }}{{ tramites_entidades.imagen }}" alt="">
-                        </div>
-                        <h3>Tramites - Requisitos</h3>
-                        <p>&nbsp;</p>
-                    </div>
+            <div class="x_content">
+                <div class="x_title">
+                    <h2>HISTORIAL DE TODOS LOS TRAMITES</h2>
+                    <!--div style="text-align: right">
+                        <button type="button" class="btn btn-primary btn-round" onclick="window.location='/tramites/alta/'"><i class="fa fa-plus"></i> Nuevo Cliente</button>
+                    </div-->
+                    <div class="clearfix"></div>
                 </div>
-            {% endfor %}
+                <div class="input-group form-horizontal top_search col-md-6 col-sm-6 col-xs-6">
+                    <input type="text" name="parametro" id="parametro" class="form-control" placeholder="Introduzca un parametro...">
+                    <span class="input-group-btn">
+                        <input class="btn btn-success" type="button" id="btnBuscar" value="Buscar">
+                    </span>
+                </div><br>
+                <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Cliente</th>
+                                <th>Tipo de Trámite</th>
+                                <th>Destino</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Turno</th>
+                                <th>Fecha Alarma</th>
+                                <th>Observaciones</th>
+                                <th>Ver / Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tramite in object_list %}
+                            <tr class="odd pointer">
+                                <td class=" ">{{ tramite.cliente }}</td>
+                                <td class=" ">{{ tramite.tipo.descripcion }}</td>
+                                <td class=" ">{{ tramite.tipo.entidad | upper }}</td>
+                                <td class=" ">{{ tramite.fecha_alta | date:"d/m/Y" }}</td>
+                                <td class=" ">{{ tramite.fecha_turno | date:"d/m/Y" }}</td>
+                                <td class=" ">{{ tramite.fecha_alarma | date:"d/m/Y" }}</td>
+                                <td class=" ">{{ tramite.observaciones }}</td>
+                                <td class=" last">
+                                    <a href="/tramites/modi/{{ tramite.id }}">
+                                        <i class="glyphicon glyphicon-pencil" title="Ver / Editar"></i>
+                                    </a>
+                                </td>
+                                <td class=" last">
+                                    <a href="/tramites/delete/{{ tramite.id }}">
+                                        <i class="glyphicon glyphicon-trash" title="Eliminar"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                                <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                    No se encontraron registros
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% if is_paginated %}
+
+                <center>
+                <!--label>Ir a la página: <input type="text" id="page" name="page" size=3></label-->
+                </center>
+                <center>
+                   <ul class="pagination">
+                       <li id="n_pag_inicio" ><a href="/empleados/listado" title="Ir al inicio"> << </a></li>
+
+                        {% if page_obj.has_previous %}
+                            <li id="n_pag_{{page_obj.number}}">
+                              <a href="?page={{ page_obj.previous_page_number }}" title="Volver uno"> < </a>
+                            </li>
+                        {% endif %}
+
+                        <li><a>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                        {% if page_obj.has_next %}
+                            <li id="n_pag_{{page_obj.number}}">
+                              <a href="?page={{ page_obj.next_page_number }}" title="Avanzar uno"> > </a>
+                            </li>
+                        {% endif %}
+
+                        <li id="n_pag_fin"><a href="?page=last" title="Ir al final"> >> </a></li>
+                    </ul>
+                </center>
+                {% endif %}
+            </div>
         </div>
     </div>
     <!-- end content -->

@@ -17,17 +17,11 @@ class TramiteListView(ListView):
     model = Tramite
     paginate_by = 10
 
-    def get(self, request, *args, **kwargs):
+    def get_queryset(self):
 
-        tramites_entidades = Entidad.objects.all()
+        query = super(TramiteListView, self).get_queryset()
 
-        return render_to_response(
-            'tramites/tramite_list.html',
-            {
-                'tramites_entidades_list': tramites_entidades
-            },
-            context_instance=RequestContext(request)
-        )
+        return query
 
 
 class TramiteCreate(CreateView):

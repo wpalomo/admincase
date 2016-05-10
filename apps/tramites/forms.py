@@ -47,9 +47,7 @@ class TramiteForm(forms.ModelForm):
         self.set_css_controls()
 
     def set_initial_values(self):
-        fecha = datetime.now()
-        fecha = fecha.strftime('%d/%m/%Y')
-        self.fields['fecha_alta'].initial = fecha
+        self.fields['fecha_alta'].initial = datetime.now()
 
     def set_css_controls(self):
         for name, field in list(self.fields.items()):

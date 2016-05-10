@@ -41,8 +41,8 @@ class RequisitoTipoTramite(models.Model):
 class Tramite(models.Model):
     cliente = models.ForeignKey(Cliente, null=True, blank=True)
     tipo = models.ForeignKey(TipoTramite, null=True, blank=True)
-    fecha_alta = models.DateTimeField(default=datetime.now, null=True,
-                                      blank=True)
+    fecha_alta = models.DateTimeField(
+        default=datetime.now, null=True, blank=True)
     fecha_turno = models.DateField(null=True, blank=True)
     fecha_alarma = models.DateField(null=True, blank=True)
     fecha_fin = models.DateField(null=True, blank=True)
@@ -53,6 +53,7 @@ class Tramite(models.Model):
         return str(self.tipo)
 
     class Meta:
+        ordering = ['-fecha_alta']
         verbose_name_plural = "Tramites"
 
 
