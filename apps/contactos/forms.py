@@ -16,9 +16,9 @@ proveedores = (
 
 class ContactoForm(forms.ModelForm):
 
-    proveedor = forms.ChoiceField(choices=proveedores, required=False)
     tipo_contacto = forms.ModelChoiceField(
         queryset=TipoContacto.objects.all(), required=True)
+    proveedor = forms.ChoiceField(choices=proveedores, required=False)
     descripcion = forms.CharField(required=True)
     observacion = forms.CharField(
         required=False, widget=forms.Textarea(attrs={'rows': 3}))

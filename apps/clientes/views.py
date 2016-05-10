@@ -24,7 +24,7 @@ class ClienteListView(ListView):
 
         parametro = self.request.GET.get('parametro')
 
-        print(parametro)
+        # print(parametro)
 
         if parametro:
 
@@ -34,8 +34,8 @@ class ClienteListView(ListView):
                 Q(persona__numero_documento__icontains=parametro)
             )
 
-            print("#dentro#")
-            print(query)
+            # print("#dentro#")
+            # print(query)
 
         return query
 
