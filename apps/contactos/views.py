@@ -94,7 +94,6 @@ class ContactoUpdate(SuccessMessageMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
 
-
         contacto = Contacto.objects.get(pk=kwargs['pk'])
 
         cliente = contacto.persona.cliente
@@ -129,9 +128,11 @@ class ContactoUpdate(SuccessMessageMixin, UpdateView):
 class ContactoDelete(DeleteView):
 
     model = Contacto
-    success_message = 'El contacto fue eliminado con éxito'
 
     def get_success_url(self):
-        cliente = Cliente.objects.get(pk=self.kwargs['pk'])
+        contacto = Contacto.objects.get(pk=self.kwargs['pk'])
 
-        return '/contactos/alta/' + str(cliente.id)
+        messages.add_message(
+            self.request, messages.SUCCESS, 'EL CONTACTO FUE ELIMINADO CON ÉXITO')
+
+        return '/contactos/alta/' + str(contacto.persona.cliente.id)
