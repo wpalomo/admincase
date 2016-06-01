@@ -61,7 +61,8 @@ class EntidadCreate(CreateView):
             messages.add_message(
                 request, messages.SUCCESS, 'ENTIDAD CREADA CON EXITO')
 
-            return HttpResponseRedirect('/entidades/modi/%s' % str(form.id))
+            return HttpResponseRedirect('/entidades/modi/%s' %
+                                        str(form.instance.id))
 
         messages.add_message(
             request, messages.SUCCESS, 'EL FORMULARIO CONTIENE ERRORES')
@@ -79,7 +80,7 @@ class EntidadCreate(CreateView):
         foto.name = helpers.cambiar_nombre_imagen(
             foto.name, entidad.instance.valor)
 
-        foto = helpers.redimensionar_imagen(entidad.imagen, foto.name)
+        foto = helpers.redimensionar_imagen(entidad.instance.imagen, foto.name)
         # Se envia foto subida y el cambio de nombre, como parametros
         entidad.instance.imagen = foto
         entidad.save()
