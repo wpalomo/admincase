@@ -51,7 +51,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><strong>REQUISITOS PARA EL TIPO DE TRAMITE</strong> (Seleccione)</h2>
+                <h2><strong>REQUISITOS</strong> (Seleccione los que son necesarios)</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -92,6 +92,16 @@
         $('#id_requisitos_presentados').val(requisito.slice(0,-1));
 
         frm.submit();
+    });
+
+    $('#btnCancelar').click(function(){
+
+        location.href = '/tramites/tipo/listado/';
+    });
+
+    $('#btnEliminar').click(function(){
+
+        location.href = '/tramites/tipo/delete/{{ form.instance.id }}';
     });
 
 

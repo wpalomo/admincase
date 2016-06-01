@@ -22,6 +22,4 @@ def get_requisitos_tipo_tramite(request):
         for tipo in requisito_tipo_tramite
     ]
 
-    print(requisitos)
-
     return HttpResponse(json.dumps(requisitos), content_type='application/json')

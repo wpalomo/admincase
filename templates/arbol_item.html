@@ -16,12 +16,12 @@
             </ul>
         </li>
         <li><a><i class="fa fa-files-o"></i> Trámites <span class="fa fa-chevron-down"></span></a>
-            <ul id="ul_empleados" class="nav child_menu" style="display: none">
+            <ul id="ul_tramites" class="nav child_menu" style="display: none">
                 <li><a href="/tramites/listado/">Lista de Trámites</a></li>
             </ul>
         </li>
         <li><a><i class="fa fa-gears"></i> Settings <span class="fa fa-chevron-down"></span></a>
-            <ul id="ul_empleados" class="nav child_menu" style="display: none">
+            <ul id="ul_tipo" class="nav child_menu" style="display: none">
                 <li><a href="/entidades/listado/">Lista de Entidades</a></li>
                 <li><a href="/tramites/tipo/listado/">Tipos de Trámites</a></li>
             </ul>
@@ -30,8 +30,13 @@
 
     <script type="text/javascript">
         var url_completa = window.location.toString();
+        // http://127.0.0.1:8008/tramites/tipo/modi/7/
         var url = url_completa.split('/');
-        $('#ul_' + url[3]).append('<li style="display: none"><a href="/' + url[3] + '/' + url[4] + '/' + url[5] + '/"></a></li>');
+        if (url.length < 6 || url[4] != "tipo"){
+            $('#ul_' + url[3]).append('<li style="display: none"><a href="/' + url[3] + '/' + url[4] + '/' + url[5] + '/"></a></li>');
+        } else {
+            $('#ul_' + url[4]).append('<li style="display: none"><a href="/' + url[3] + '/' + url[4] + '/' + url[5] + '/' + url[6] + '/"></a></li>');
+        }
     </script>
 
 {% endblock %}
