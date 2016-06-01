@@ -87,3 +87,54 @@ class TramiteForm(forms.ModelForm):
     class Meta:
         model = Tramite
         fields = '__all__'
+
+
+class TipoTramiteForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(TipoTramiteForm, self).__init__(*args, **kwargs)
+
+        # self.set_initial_values()
+        self.set_css_controls()
+
+    # def set_initial_values(self):
+    #     self.fields['fecha_alta'].initial = datetime.now()
+
+    def set_css_controls(self):
+        for name, field in list(self.fields.items()):
+
+            field.widget.attrs.update({'class': 'form-control'})
+    #
+    # def clean_fecha_turno(self):
+    #     fecha = self.cleaned_data['fecha_turno']
+    #
+    #     if fecha:
+    #         try:
+    #             datetime.strptime(str(fecha), '%Y-%m-%d')
+    #
+    #             if fecha < datetime.now().date():
+    #                 raise forms.ValidationError('La fecha del turno no puede '
+    #                                             'ser menor a la actual')
+    #         except ValueError:
+    #             raise ValueError("Fecha no valida")
+    #
+    #     return fecha
+    #
+    # def clean_fecha_alarma(self):
+    #     fecha = self.cleaned_data['fecha_alarma']
+    #
+    #     if fecha:
+    #         try:
+    #             datetime.strptime(str(fecha), '%Y-%m-%d')
+    #
+    #             if fecha <= datetime.now().date():
+    #                 raise forms.ValidationError('La fecha de alarma no puede '
+    #                                             'ser menor o igual a la actual')
+    #         except ValueError:
+    #             raise ValueError("Fecha no valida")
+    #
+    #     return fecha
+
+    class Meta:
+        model = TipoTramite
+        fields = '__all__'

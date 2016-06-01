@@ -13,6 +13,7 @@ class TipoTramite(models.Model):
         return self.descripcion + ' - ' + str(self.entidad)
 
     class Meta:
+        ordering = ['entidad']
         verbose_name_plural = "Tipos de Tramite"
 
 

@@ -1,0 +1,82 @@
+{% extends 'arbol_item.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="title_right" style="background-color:#ccc">
+    <div class="x_title">
+        <a href='/'><strong>INICIO</strong></a> --
+        <a href='/tramites/tipo/listado'><strong>LISTADO TIPO TRAMITES</strong></a> --
+        <strong>TIPO TRAMITE</strong>
+    </div>
+</div>
+{% if messages %}
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="alert alert-success" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+<div class="clearfix"></div>
+<form id="frm" method="post" data-parsley-validate class="form-horizontal form-label-left">{% csrf_token %}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><strong>DATOS TIPO DE TRAMITE</strong></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                {{ form.as_p }}
+                <br>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" id="btnEliminar" class="btn btn-danger">Eliminar</button>
+                            <button type="button" id="btnCancelar" class="btn btn-primary">Cancelar</button>
+                            <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><strong>REQUISITOS PARA EL TIPO DE TRAMITE</strong> (Seleccione)</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <input type="hidden" id="id_requisitos_presentados" name="requisitos_presentados" value=""/>
+                <div  id="check_requisitos">
+                    <ul class="to_do">
+                        {% for requisito in requisitos %}
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <li>
+                                    <label><p><input type='checkbox' class='flat' id="{{ requisito.id }}" name="{{ requisito.valor }}" value='0' {% if requisito.presentado %} checked {% endif %}> {{ requisito.descripcion }} </p></label>
+                                </li>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<script>
+
+    $(document).ready(function(){});
+
+
+</script>
+
+
+
+{% endblock %}
