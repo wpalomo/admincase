@@ -31,9 +31,10 @@ class Requisito(models.Model):
 class RequisitoTipoTramite(models.Model):
     tipo_tramite = models.ForeignKey(TipoTramite, null=False, blank=True)
     requisito = models.ForeignKey(Requisito, null=False, blank=True)
+    estado = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.tipo_tramite) + '-' + str(self.requisito)
+        return str(self.tipo_tramite) + '-' + str(self.requisito) + '-' + str(self.estado)
 
     class Meta:
         verbose_name_plural = "Requisitos del Tipo de Tramite"

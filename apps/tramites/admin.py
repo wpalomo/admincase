@@ -62,7 +62,7 @@ class RequisitoAdmin(admin.ModelAdmin):
 
 
 class RequisitoTipoTramiteAdmin(admin.ModelAdmin):
-    list_display = ['id', 'tipo_tramite', 'requisito']
+    list_display = ['id', 'tipo_tramite', 'requisito', 'estado']
 
     ordering = ['tipo_tramite']
 

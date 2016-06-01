@@ -220,8 +220,7 @@ class TipoTramiteCreate(CreateView):
             'tramites/tipotramite_form.html',
             {
                 'form': form,
-                'requisitos': requisitos,
-                'requisitos_tramite': '',
+                'requisitos': requisitos
             },
             context_instance=RequestContext(request)
         )
@@ -248,11 +247,12 @@ class TipoTramiteCreate(CreateView):
 
                     es_requisito = (False, True)[requisito_necesario[1] == '1']
 
-                    if es_requisito:
-                        RequisitoTipoTramite.objects.create(
-                            tipo_tramite=tipo_tramite,
-                            requisito=requisito
-                        )
+                    # if es_requisito:
+                    RequisitoTipoTramite.objects.create(
+                        tipo_tramite=tipo_tramite,
+                        requisito=requisito,
+                        estado=es_requisito
+                    )
 
             messages.add_message(
                 request, messages.SUCCESS,
@@ -268,8 +268,7 @@ class TipoTramiteCreate(CreateView):
             'tramites/tipotramite_form.html',
             {
                 'form': form,
-                'requisitos': requisitos,
-                'requisitos_tramite': '',
+                'requisitos': requisitos
             },
             context_instance=RequestContext(request)
         )
@@ -284,15 +283,13 @@ class TipoTramiteUpdate(UpdateView):
         tipo_tramite = TipoTramite.objects.get(pk=kwargs['pk'])
         form = TipoTramiteForm(instance=tipo_tramite)
 
-        requisitos = Requisito.objects.all()
-        requisitos_tramite = tipo_tramite.requisitotipotramite_set.all()
+        requisitos = tipo_tramite.requisitotipotramite_set.all()
 
         return render_to_response(
             'tramites/tipotramite_form.html',
             {
                 'form': form,
-                'requisitos': requisitos,
-                'requisitos_tramite': requisitos_tramite,
+                'requisitos': requisitos
             },
             context_instance=RequestContext(request)
         )
@@ -302,8 +299,7 @@ class TipoTramiteUpdate(UpdateView):
         tipo_tramite = TipoTramite.objects.get(pk=kwargs['pk'])
         form = TipoTramiteForm(data=self.request.POST, instance=tipo_tramite)
 
-        requisitos = Requisito.objects.all()
-        requisitos_tramite = tipo_tramite.requisitotipotramite_set.all()
+        requisitos = tipo_tramite.requisitotipotramite_set.all()
 
         if form.is_valid():
             tipo_tramite = form.save()
@@ -315,17 +311,12 @@ class TipoTramiteUpdate(UpdateView):
 
                 for item in parametros:
                     requisito_necesario = item.split("#")
-
-                    requisito = Requisito.objects.get(
-                        valor=requisito_necesario[0])
-
-                    es_requisito = (False, True)[requisito_necesario[1] == '1']
-
-                    if es_requisito:
-                        RequisitoTipoTramite.objects.create(
-                            tipo_tramite=tipo_tramite,
-                            requisito=requisito
-                        )
+                    requisito_tramite = RequisitoTipoTramite.objects.get(
+                        tipo_tramite__id=tipo_tramite.id,
+                        requisito__valor=requisito_necesario[0])
+                    es_necesario = (False, True)[requisito_necesario[1] == '1']
+                    requisito_tramite.estado = es_necesario
+                    requisito_tramite.save()
 
 
             messages.add_message(
@@ -342,8 +333,7 @@ class TipoTramiteUpdate(UpdateView):
             'tramites/tipotramite_form.html',
             {
                 'form': form,
-                'requisitos': requisitos,
-                'requisitos_tramite': requisitos_tramite,
+                'requisitos': requisitos
             },
             context_instance=RequestContext(request)
         )

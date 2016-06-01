@@ -11,7 +11,7 @@ def get_requisitos_tipo_tramite(request):
     tipo = request.GET.get('id_tipo')
 
     requisito_tipo_tramite = RequisitoTipoTramite.objects.filter(
-        tipo_tramite__id=int(tipo))
+        tipo_tramite__id=int(tipo), estado=True)
 
     requisitos = [
         {
