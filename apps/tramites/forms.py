@@ -1,32 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from django import forms
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 
 from apps.complementos.organigrama.models import Entidad
 # from apps.personas.models import Persona
 from .models import Tramite, TipoTramite, Requisito
-
-
-# class TipoTramiteForm(forms.ModelForm):
-#
-#     descripcion = forms.CharField(required=True)
-#     entidad = forms.ModelChoiceField(
-#         queryset=Entidad.objects.all(), required=True)
-#
-#     requisitos = forms.ModelMultipleChoiceField(
-#         queryset=Requisito.objects.all(), required=True)
-#
-#     def __init__(self, *args, **kwargs):
-#         super(TramiteForm, self).__init__(*args, **kwargs)
-#         for name, field in list(self.fields.items()):
-#             if name == 'estado':
-#                 continue
-#             field.widget.attrs.update({'class': 'form-control'})
-#
-#     class Meta:
-#         model = Tramite
-#         fields = '__all__'
-#         exclude = []
 
 
 class TramiteForm(forms.ModelForm):
@@ -91,18 +70,16 @@ class TramiteForm(forms.ModelForm):
 
 class TipoTramiteForm(forms.ModelForm):
 
+    descripcion = forms.CharField(max_length=50, required=True)
+    entidad = forms.ModelChoiceField(
+        queryset=Entidad.objects.all(), required=True)
+
     def __init__(self, *args, **kwargs):
         super(TipoTramiteForm, self).__init__(*args, **kwargs)
-
-        # self.set_initial_values()
         self.set_css_controls()
-
-    # def set_initial_values(self):
-    #     self.fields['fecha_alta'].initial = datetime.now()
 
     def set_css_controls(self):
         for name, field in list(self.fields.items()):
-
             field.widget.attrs.update({'class': 'form-control'})
     #
     # def clean_fecha_turno(self):

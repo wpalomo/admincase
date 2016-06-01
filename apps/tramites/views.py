@@ -9,7 +9,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from apps.clientes.models import Cliente
 from apps.complementos.organigrama.models import Entidad
 from apps.tramites.models import (Tramite, TipoTramite, RequisitoTramite,
-                                  Requisito)
+                                  Requisito, RequisitoTipoTramite)
 
 from .forms import TramiteForm, TipoTramiteForm
 
@@ -221,6 +221,7 @@ class TipoTramiteCreate(CreateView):
             {
                 'form': form,
                 'requisitos': requisitos,
+                'requisitos_tramite': '',
             },
             context_instance=RequestContext(request)
         )
@@ -229,8 +230,10 @@ class TipoTramiteCreate(CreateView):
 
         form = TipoTramiteForm(data=self.request.POST)
 
+        requisitos = Requisito.objects.all()
+
         if form.is_valid():
-            tramite = form.save()
+            tipo_tramite = form.save()
 
             requisitos_tramite = self.request.POST['requisitos_presentados']
 
@@ -238,33 +241,35 @@ class TipoTramiteCreate(CreateView):
                 parametros = requisitos_tramite.split("|")
 
                 for item in parametros:
-                    print(item)
-                    requisito_parametro = item.split("#")
+                    requisito_necesario = item.split("#")
 
                     requisito = Requisito.objects.get(
-                        valor=requisito_parametro[0])
+                        valor=requisito_necesario[0])
 
-                    presentado = (False, True)[requisito_parametro[1] == '1']
+                    es_requisito = (False, True)[requisito_necesario[1] == '1']
 
-                    RequisitoTramite.objects.create(
-                        tramite=tramite,
-                        requisito=requisito,
-                        presentado=presentado
-                    )
+                    if es_requisito:
+                        RequisitoTipoTramite.objects.create(
+                            tipo_tramite=tipo_tramite,
+                            requisito=requisito
+                        )
 
             messages.add_message(
-                request, messages.SUCCESS, 'EL TRAMITE SE HA CREADO CON EXITO')
+                request, messages.SUCCESS,
+                'EL TIPO DE TRAMITE SE HA CREADO CON EXITO')
 
-            return HttpResponseRedirect('/tramites/modi/' + str(tramite.id))
+            return HttpResponseRedirect('/tramites/tipo/modi/' +
+                                        str(tipo_tramite.id))
 
         messages.add_message(
             request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
 
         return render_to_response(
-            'tramites/tramite_form.html',
+            'tramites/tipotramite_form.html',
             {
                 'form': form,
-                'cliente': cliente
+                'requisitos': requisitos,
+                'requisitos_tramite': '',
             },
             context_instance=RequestContext(request)
         )
@@ -272,6 +277,76 @@ class TipoTramiteCreate(CreateView):
 
 class TipoTramiteUpdate(UpdateView):
     model = TipoTramite
+    form_class = TipoTramiteForm
+
+    def get(self, request, *args, **kwargs):
+
+        tipo_tramite = TipoTramite.objects.get(pk=kwargs['pk'])
+        form = TipoTramiteForm(instance=tipo_tramite)
+
+        requisitos = Requisito.objects.all()
+        requisitos_tramite = tipo_tramite.requisitotipotramite_set.all()
+
+        return render_to_response(
+            'tramites/tipotramite_form.html',
+            {
+                'form': form,
+                'requisitos': requisitos,
+                'requisitos_tramite': requisitos_tramite,
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def post(self, request, *args, **kwargs):
+
+        tipo_tramite = TipoTramite.objects.get(pk=kwargs['pk'])
+        form = TipoTramiteForm(data=self.request.POST, instance=tipo_tramite)
+
+        requisitos = Requisito.objects.all()
+        requisitos_tramite = tipo_tramite.requisitotipotramite_set.all()
+
+        if form.is_valid():
+            tipo_tramite = form.save()
+
+            requisitos_tramite = self.request.POST['requisitos_presentados']
+
+            if requisitos_tramite:
+                parametros = requisitos_tramite.split("|")
+
+                for item in parametros:
+                    requisito_necesario = item.split("#")
+
+                    requisito = Requisito.objects.get(
+                        valor=requisito_necesario[0])
+
+                    es_requisito = (False, True)[requisito_necesario[1] == '1']
+
+                    if es_requisito:
+                        RequisitoTipoTramite.objects.create(
+                            tipo_tramite=tipo_tramite,
+                            requisito=requisito
+                        )
+
+
+            messages.add_message(
+                request, messages.SUCCESS,
+                'EL TIPO DE TRAMITE SE HA MODIFICADO  CON EXITO')
+
+            return HttpResponseRedirect('/tramites/tipo/modi/' +
+                                        str(tipo_tramite.id))
+
+        messages.add_message(
+            request, messages.ERROR, 'EL FORMULARIO CONTIENE ERRORES')
+
+        return render_to_response(
+            'tramites/tipotramite_form.html',
+            {
+                'form': form,
+                'requisitos': requisitos,
+                'requisitos_tramite': requisitos_tramite,
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 class TipoTramiteDelete(DeleteView):

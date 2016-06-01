@@ -31,15 +31,18 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                {{ form.as_p }}
-                <br>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    {{ form }}
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_content">
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <button type="button" id="btnEliminar" class="btn btn-danger">Eliminar</button>
-                            <button type="button" id="btnCancelar" class="btn btn-primary">Cancelar</button>
-                            <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
-                        </div>
+                        <button type="button" id="btnEliminar" class="btn btn-danger">Eliminar</button>
+                        <button type="button" id="btnCancelar" class="btn btn-primary">Cancelar</button>
+                        <button type="button" id="btnGuardar" class="btn btn-success">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -57,9 +60,7 @@
                     <ul class="to_do">
                         {% for requisito in requisitos %}
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <li>
-                                    <label><p><input type='checkbox' class='flat' id="{{ requisito.id }}" name="{{ requisito.valor }}" value='0' {% if requisito.presentado %} checked {% endif %}> {{ requisito.descripcion }} </p></label>
-                                </li>
+                                <li><label><p><input type='checkbox' class='flat' id="{{ requisito.id }}" name="{{ requisito.valor }}" value='0' {% if requisito.presentado %} checked {% endif %}> {{ requisito.descripcion }} </p></label></li>
                             </div>
                         {% endfor %}
                     </ul>
@@ -71,8 +72,27 @@
 </form>
 
 <script>
+    var frm = document.getElementById('frm');
+    var requisito = "";
 
-    $(document).ready(function(){});
+    $(document).ready(function(){
+        $('#id_descripcion').attr('placeholder', 'Introduzca un nombre...');
+    });
+
+    $('#btnGuardar').click(function(){
+
+        $('div#check_requisitos input[type=checkbox]').each(function() {
+            if ($(this).is(":checked")) {
+                requisito += $(this).attr('name') + '#1|';
+            } else {
+                requisito += $(this).attr('name') + '#0|';
+            }
+        });
+
+        $('#id_requisitos_presentados').val(requisito.slice(0,-1));
+
+        frm.submit();
+    });
 
 
 </script>
