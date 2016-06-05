@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'password_reset',
     'admincase',
     'apps.clientes',
     'apps.complementos',
@@ -133,4 +134,28 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
 MEDIA_URL = '/media/'
+
+# PARA PRUEBA LOCAL EN CONSOLA
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# ACCOUNT_ACTIVATION_DAYS = 5
+# SEND_ACTIVATION_EMAIL = True
+
+#
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+
+# ESTO PARA CONFIGURAR LA RESTAURACION VIA MAIL
+# EMAIL_HOST_USER = 'micorreo@gmail.com'
+# EMAIL_HOST_PASSWORD = 'mipassw'
+# EMAIL_USE_TLS = 1
+
+# https://support.google.com/accounts/answer/6010255?hl=en
+# ENTRAR ACA CON LA CUENTA GMAIL PARA CONFIGURA LA SEGURIDAD
+# https://www.google.com/settings/security/lesssecureapps
+
+# DEFAULT_FROM_EMAIL = 'fernandoriquelme55@gmail.com'
 

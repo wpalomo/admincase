@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -48,39 +49,14 @@
                 <section class="login_content">
                     <label><h2>Cuestión Legal</h2></label><br>
                     <img src="{{ MEDIA_URL }}logo/login_icon/login_ico.png" class="img-circle" width="200px" height="185px">
-                    <form id="frm" method="post" action="/{{action}}/" role="form"> {% csrf_token %}
-                        <h1>Ingreso de Usuario</h1>
-
-                        {% if mensaje != '' %}
-                        <div  class="alert alert-{{alert}}" id={{alert}}>
-                            <a href="#" class="close" data-hide="alert">&times;</a>
-                            {{ mensaje }}
-                        </div>
-                        {% endif %}
-                        <div>
-                            {% if action != 'autenticar_usuario' %}
-                                <input type="text" class="form-control" name="usuario" placeholder="Usuario" required="" readonly value={{usuario}}/>
-                            {%else%}
-                                <input type="text" class="form-control" name="usuario" placeholder="Usuario" required="" />
-                            {%endif%}
-                        </div>
-                        <div>
-                            {% if action != 'autenticar_usuario' %}
-                                <input type="password" class="form-control" name="password" placeholder="Contraseña" required="" />
-                            {% else %}
-                                <input type="password" class="form-control" name="password" placeholder="Contraseña" required="" />
-                            {% endif %}
-                        </div>
-                        <input type="hidden" id="id_contador_login" name="contador_login" value=""/>
-                        <div id="login_reset" style="display: none; color: #2A3F54">
-                            Reset password <label><a href="{% url 'password_reset_recover' %}"> click aqui!</a></label>
-                        </div>
-                        <br>
-                        <div>
-                            <button type="button" class="btn btn-primary btn-block btn-flat" id="btnIngresar">Ingresar</button>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="separator">
+                    <form method="post" action="/reset_password/recover/">{% csrf_token %}
+                        <h1>Restaurar Cuenta</h1>
+                        <p>{% blocktrans with ago=timestamp|timesince %}An email was sent to <strong>{{ email }}</strong> {{ ago }} ago. Use the link in it to set a new password.{% endblocktrans %}</p>
+                        <input type='hidden' name='csrfmiddlewaretoken' value='Ey0UntBIUtybDBSRB19vHrFxH1tEiC4r' />
+                        <p><label for="id_username_or_email">Usuario o Email:</label> <input id="id_username_or_email" name="username_or_email" type="text" /></p>
+                        <p><input type="submit" value="Recuperar mi clave"></p>
+                    </form>
+                    <div class="separator">
                             <div class="clearfix"></div>
                             <br />
                             <div>
@@ -90,13 +66,19 @@
                                 <p>Todos los derechos reservados.</p>
                             </div>
                         </div>
-                    </form>
                     <!-- form -->
                 </section>
                 <!-- content -->
             </div>
         </div>
     </div>
+
+<!--
+{% block title %}{% trans "Password recovery sent" %}{% endblock %}
+
+{% block content %}
+<p>{% blocktrans with ago=timestamp|timesince %}An email was sent to <strong>{{ email }}</strong> {{ ago }} ago. Use the link in it to set a new password.{% endblocktrans %}</p>
+{% endblock %}-->
 
 </body>
 

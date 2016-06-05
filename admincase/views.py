@@ -10,16 +10,25 @@ from apps.personas.models import Persona
 
 def autenticarse(request):
     if not request.user.is_authenticated():
-        return render(request, 'login.html', {'mensaje': '', 'action': 'autenticar_usuario'})
+        return render(request, 'login.html', {
+            'mensaje': '', 'action': 'autenticar_usuario'})
     else:
         return inicio(request)
 
 
+def reset_password(request):
+        return render(request, 'reset_password.html')
+
+
 def autenticar_usuario(request):
-    acceso = authenticate(username=request.POST['usuario'], password=request.POST['password'])
-    # print("asdfd")
-    if acceso is not None:
-        if acceso.is_active:
+    user = authenticate(
+        username=request.POST['usuario'],
+        password=request.POST['password'])
+
+    count_login_error = request.POST['contador_login']
+
+    if user is not None:
+        if user.is_active:
             # if request.POST['usuario'] == request.POST['password']:
             #     return render(request, 'login.html', {'mensaje': 'Debe cambiar su contraseña.',
             #         'usuario': request.POST['usuario'],
@@ -27,14 +36,21 @@ def autenticar_usuario(request):
             #         'action': 'modificar_password'
             #         })
             # else:
-            login(request, acceso)
+            login(request, user)
             return redirect('/inicio')
         else:
-            return render(request, 'login.html',
-            {'mensaje': 'Su cuenta se ecuentra deshabilitada.', 'alert': 'danger', 'action': 'autenticar_usuario'})
+            return render(request, 'login.html', {
+                'mensaje': 'Su cuenta se ecuentra deshabilitada.',
+                'alert': 'danger', 'action': 'autenticar_usuario'})
     else:
-        return render(request, 'login.html', {'mensaje': 'El nombre de usuario o contraseña son incorrectos.',
-            'alert': 'danger', 'action': 'autenticar_usuario'})
+        count_login_error = int(count_login_error) + 1
+        error_login = (count_login_error, 3)[count_login_error >= 3]
+
+        return render(request, 'login.html', {
+            'mensaje': 'El nombre de usuario o contraseña son incorrectos.',
+            'alert': 'danger', 'action': 'autenticar_usuario',
+            'error_login': error_login
+        })
 
 
 def salir(request):
@@ -63,8 +79,8 @@ def inicio(request):
 def ayuda(request):
     usuario = request.user
     fecha = date.today()
-    return render_to_response('ayuda.html',
-        {'usuario': usuario, 'fecha': fecha},
+    return render_to_response('ayuda.html', {
+        'usuario': usuario, 'fecha': fecha},
         context_instance=RequestContext(request))
 
 
@@ -73,5 +89,5 @@ def internos(request):
     usuario = request.user
     fecha = date.today()
     return render_to_response('internos.html',
-        {'usuario': usuario, 'fecha': fecha},
-        context_instance=RequestContext(request))
+                              {'usuario': usuario, 'fecha': fecha},
+                              context_instance=RequestContext(request))

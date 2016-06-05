@@ -22,14 +22,15 @@ from admincase import views
 urlpatterns = [
     url(r'^$', autenticarse),
     url(r'^autenticar_usuario/', views.autenticar_usuario),
+    # url(r'^reset_password/', views.reset_password, name='rest_password'),
     url(r'^ayuda/', views.ayuda),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^clientes/', include('apps.clientes.urls', namespace='clientes')),
     url(r'^contactos/', include('apps.contactos.urls', namespace='contactos')),
     url(r'^domicilios/', include('apps.domicilios.urls',
                                  namespace='domicilios')),
-    url(r'^inicio/', views.inicio),
-    url(r'^internos/', views.internos),
+    url(r'^inicio/', views.inicio, name='inicio'),
+    url(r'^internos/', views.internos, name='internos'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT, }),
     url(r'^personas/', include('apps.personas.urls', namespace='personas')),
@@ -37,5 +38,7 @@ urlpatterns = [
     url(r'^tramites/', include('apps.tramites.urls', namespace='tramites')),
     url(r'^entidades/', include('apps.complementos.organigrama.urls',
                                 namespace='entidades')),
+
+    url(r'^reset_password/', include('password_reset.urls')),
 ]
 
