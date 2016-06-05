@@ -1,7 +1,4 @@
-*.pyc
-/*.pyc
 .pyc
 .idea/workspace.xml
 .idea/admincase.iml
-/.idea/workspace.xml
 .idea/misc.xml
