@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from apps.clientes.models import Cliente
-from apps.complementos.organigrama.models import Entidad
+# from apps.complementos.organigrama.models import Entidad
 from apps.tramites.models import (Tramite, TipoTramite, RequisitoTramite,
                                   Requisito, RequisitoTipoTramite)
 
