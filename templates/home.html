@@ -1,12 +1,13 @@
 {% extends 'arbol_item.html' %}
+{% load global_tags %}
 
 {% block content %}
 
-    <!--style>
+    <style>
         .animated{
             cursor: pointer;
         }
-    </style-->
+    </style>
 
     <!-- content -->
 
@@ -45,6 +46,68 @@
 
     </div>
     <!-- end content -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><strong>NOVEDADES</strong> <small>Tramites a tener en cuenta</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Tipo </th>
+                                <th>Cliente</th>
+                                <th>Tel. Fijo</th>
+                                <th>Tel. Movil</th>
+                                <th>Fecha de Turno</th>
+                                <th>Fecha de Alarma</th>
+                                <th>Observaciones</th>
+                                <th>Requisitos</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for novedad in novedades %}
+                            <tr style="cursor:pointer" onclick="verTramite('{{ novedad.id }}')">
+                                <td>{{ novedad.tipo }}</td>
+                                <td>{{ novedad.cliente }}</td>
+                                <td>{{ novedad.cliente | get_contactos:'TELEFONO_FIJO' }}</td>
+                                <td>{{ novedad.cliente | get_contactos:'TELEFONO_MOVIL' }}</td>
+                                <td style="color: {{ novedad.fecha_turno|set_color_estado }}">
+                                    <b>{{ novedad.fecha_turno | date:'d/m/Y' }} {{ novedad.fecha_turno | get_danger }}</b>
+                                </td>
+                                <td style="color:darkred">{{ novedad.fecha_alarma | date:'d/m/Y'  }}</td>
+                                <td>{{ novedad.observaciones }}</td>
+                                <td>{{ novedad | get_estado_requisitos }}</td>
+                                <td><i style="color: {{ novedad.fecha_turno|set_color_estado }}" class="glyphicon glyphicon-exclamation-sign" title="Ver referencias"></i></td>
+                            </tr>
+                        {% empty %}
+                            <div class="alert alert-danger" role="alert">
+                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                              <span class="sr-only">Error:</span>
+                                No se encontraron registros
+                            </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="x_content">
+                    <label style="text-decoration: underline;">Referencias</label>
+                    <p><i style="color: #ff0000" class="glyphicon glyphicon-exclamation-sign"></i> 0 - 5 dias para el turno |
+                        <i style="color: #FFA500" class="glyphicon glyphicon-exclamation-sign"></i> 5 - 10 dias para el turno |
+                        <i style="color: #008000" class="glyphicon glyphicon-exclamation-sign"></i> Mas de 10 dias para el turno</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function verTramite(tramiteID){
+            location.href = 'tramites/modi/' + tramiteID + '/';
+        }
+    </script>
 
 {% endblock %}
 

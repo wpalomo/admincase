@@ -3,9 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext
 
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from apps.personas.models import Persona
+from apps.tramites.models import Tramite
 
 
 def autenticarse(request):
@@ -58,10 +59,31 @@ def salir(request):
     return redirect('/inicio')
 
 
+def get_novedades():
+    """
+    lt es menor
+    lte es menor e igual
+    gt es mayor
+    gte es mayor e igual
+    """
+
+    fecha = datetime.now()
+    dias = timedelta(days=20)
+    fecha_limite = fecha - dias
+    print(fecha_limite)
+    tramites_alarma = Tramite.objects.filter(
+        fecha_turno__gte=fecha,
+        fecha_alarma__gte=fecha_limite).order_by('fecha_turno')
+
+    # 11/08/2016
+
+    return tramites_alarma
+
+
 @login_required(login_url='/')
 def inicio(request):
-    usuario = request.user
-    persona = Persona.objects.filter(numero_documento=usuario.username)
+
+    persona = Persona.objects.filter(numero_documento=request.user.username)
 
     request.session['institucion_local'] = 'HAC'
 
@@ -71,7 +93,8 @@ def inicio(request):
         request.session['foto'] = 'usuario.png'
 
     return render_to_response('home.html', {
-        'usuario': usuario
+        'usuario': request.user,
+        'novedades': get_novedades()
     }, context_instance=RequestContext(request))
 
 
