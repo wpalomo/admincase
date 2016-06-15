@@ -54,6 +54,14 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <h2></h2>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="cursor:pointer;">
+                        <a>Imprimir Lista <i class="fa fa-print"></i></a> |
+                        <a>Exportar a Excel <i class="fa fa-file-excel-o"></i></a> |
+                        <a>Exportar a PDF <i class="fa fa-file-pdf-o"></i></a>
+                    </div><br><br>
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
                         <thead>
                             <tr class="headings">
@@ -61,6 +69,7 @@
                                 <th>Cliente</th>
                                 <th>Tel. Fijo</th>
                                 <th>Tel. Movil</th>
+                                <th>Email</th>
                                 <th>Fecha de Turno</th>
                                 <th>Fecha de Alarma</th>
                                 <th>Observaciones</th>
@@ -75,6 +84,7 @@
                                 <td>{{ novedad.cliente }}</td>
                                 <td>{{ novedad.cliente | get_contactos:'TELEFONO_FIJO' }}</td>
                                 <td>{{ novedad.cliente | get_contactos:'TELEFONO_MOVIL' }}</td>
+                                <td>{{ novedad.cliente | get_contactos:'EMAIL' }}</td>
                                 <td style="color: {{ novedad.fecha_turno|set_color_estado }}">
                                     <b>{{ novedad.fecha_turno | date:'d/m/Y' }} {{ novedad.fecha_turno | get_danger }}</b>
                                 </td>
@@ -105,7 +115,7 @@
 
     <script>
         function verTramite(tramiteID){
-            location.href = 'tramites/modi/' + tramiteID + '/';
+            location.href = '/tramites/modi/' + tramiteID + '/';
         }
     </script>
 

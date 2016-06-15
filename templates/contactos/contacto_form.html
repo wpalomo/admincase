@@ -124,12 +124,12 @@
                             <tbody>
                             {% for contacto in contactos_list %}
                                 <tr class="odd pointer">
-                                    {% if contacto.tipo_contacto.valor == 'SITIO WEB' %}
+                                    {% if contacto.tipo_contacto.valor == 'SITIO_WEB' %}
                                         <td class><i class="fa fa-sitemap"></i></td>
                                     {% endif %}
 
-                                    {% if contacto.tipo_contacto.valor == 'E-MAIL' %}
-                                        <td class><i class="fa fa-mail-forward"></i></td>
+                                    {% if contacto.tipo_contacto.valor == 'EMAIL' %}
+                                        <td class><i class="fa fa-envelope"></i></td>
                                     {% endif %}
 
                                     {% if contacto.tipo_contacto.valor == 'TELEFONO_FIJO' %}
